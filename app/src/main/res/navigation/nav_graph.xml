@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.systematicshoppers.sysho.fragments.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_resultsFragment"
+            app:destination="@id/resultsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_savedListsFragment"
+            app:destination="@id/savedListsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_logInActivity"
+            app:destination="@id/logInActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.systematicshoppers.sysho.fragments.ResultsFragment"
+        android:label="ResultsFragment" >
+        <action
+            android:id="@+id/action_resultsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_resultsFragment_to_storeFragment"
+            app:destination="@id/storeFragment" />
+        <action
+            android:id="@+id/action_resultsFragment_to_savedListsFragment"
+            app:destination="@id/savedListsFragment" />
+        <action
+            android:id="@+id/action_resultsFragment_to_logInActivity"
+            app:destination="@id/logInActivity" />
+        <action
+            android:id="@+id/action_resultsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.systematicshoppers.sysho.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/storeFragment"
+        android:name="com.systematicshoppers.sysho.fragments.StoreFragment"
+        android:label="StoreFragment" >
+        <action
+            android:id="@+id/action_storeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_storeFragment_to_savedListsFragment"
+            app:destination="@id/savedListsFragment" />
+        <action
+            android:id="@+id/action_storeFragment_to_logInActivity"
+            app:destination="@id/logInActivity" />
+        <action
+            android:id="@+id/action_storeFragment_to_resultsFragment"
+            app:destination="@id/resultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedListsFragment"
+        android:name="com.systematicshoppers.sysho.fragments.SavedListsFragment"
+        android:label="SavedListsFragment" />
+    <activity
+        android:id="@+id/logInActivity"
+        android:name="com.systematicshoppers.sysho.activities.LogInActivity"
+        android:label="LogInActivity" />
+</navigation>
