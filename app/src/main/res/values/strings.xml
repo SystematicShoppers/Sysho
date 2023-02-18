@@ -5,4 +5,14 @@
     <string name="settings">Settings</string>
     <string name="user">User</string>
     <string name="saved_lists">Saved Lists</string>
+
+
+    <string-array name="search_ex_database">
+        <item>Bananas</item>
+        <item>Oranges</item>
+        <item>Watermelon</item>
+        <item>Strawberries</item>
+        <item>Cherries</item>
+        <item>Cookies</item>
+    </string-array>
 </resources>
