@@ -7,6 +7,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -35,38 +36,46 @@ class SearchFragment : Fragment() {
         }
 
         //stand in "database" for testing
-        var database: MutableList<String> = mutableListOf("apple", "orange", "banana")
+        var database: MutableList<String> = mutableListOf("apple", "orange", "banana", "orangutan")
 
         //autofill for search bar
         val adapter = activity?.let {
             ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, database)
         }
-        val editText = view.findViewById<View>(R.id.search_bar) as AutoCompleteTextView
-        editText.setAdapter(adapter)
+
+        val searchbar = view.findViewById<AutoCompleteTextView>(R.id.search_bar)
+        searchbar.setAdapter(adapter)
 
         //grocery list for selected item
         var groceryList: MutableList<String> = mutableListOf("apple")
-        var index = 0
 
-        editText.setOnClickListener {
-            fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-                if (event?.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+
+        fun addItemToList(autoCompleteTextView: AutoCompleteTextView) {
+            autoCompleteTextView.setOnEditorActionListener { textView, actionId, keyEvent ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     val item = view.findViewById<TextView>(R.id.item1)
-                    view.findViewById<TextView>(R.id.grocerylist).text = "Hello"
-                    if (editText.text.isNotEmpty()) {
+                    if (searchbar.text.isNotEmpty()) {
                         //add item to mutable list
 //                        val entry: String = editText.text.toString()
 //                        groceryList.add(index, entry)
 //                        index++
 
-
                         //update the items with the input item
-                        item.text = editText.text.toString()
-                        editText.text.clear()
+                        item.text = searchbar.text.toString()
+                        searchbar.text.clear()
                     }
+                    true
+                } else {
+                    false
                 }
-                return true
             }
+        }
+
+
+
+        //when clicking, to do with search bar
+        searchbar.setOnClickListener {
+            addItemToList(searchbar)
         }
 
         return view
