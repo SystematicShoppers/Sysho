@@ -35,10 +35,10 @@ class SearchFragment : Fragment() {
         navBar?.isVisible = false
 
         //grocery list for selected item
-        var storedList: MutableList<String> = mutableListOf()
+        var storedList: ArrayList<String> = arrayListOf()
         var anyChecked = false
-        val deleteList = mutableListOf<CheckBox>()
-        var checkBoxList = mutableListOf<CheckBox>()
+        val deleteList = arrayListOf<CheckBox>()
+        var checkBoxList = arrayListOf<CheckBox>()
         val groceryList = view.findViewById<LinearLayout>(R.id.grocery_list)
         val scroll_view = view.findViewById<ScrollView>(R.id.scroll_view)
 
@@ -51,7 +51,7 @@ class SearchFragment : Fragment() {
                 navBar?.isVisible = true
                 val fragmentB = ResultsFragment()
                 val bundle = Bundle()
-                bundle.putStringArrayList("storedList", ArrayList(storedList))
+                bundle.putStringArrayList("storedList", storedList)
                 fragmentB.arguments = bundle
 
                 parentFragmentManager.beginTransaction()
