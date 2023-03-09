@@ -2,7 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -19,85 +19,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search for an item..."
-        android:inputType="textAutoComplete"
-        />
+        android:inputType="textAutoComplete" />
 
-    <Space
+    <!--    <Space-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="250dp"-->
+    <!--        android:layout_weight="1" />-->
+
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_weight="1" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/grocery_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
 
     <Button
         android:id="@+id/shopBtn"
-        android:layout_width="262dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom|center"
         android:text="Ready to Shop" />
-
-    <ScrollView
-        android:id="@+id/myLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/scrolly"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/item1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/white"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_700"
-                    android:textSize="30dp"
-                    tools:text="Item 1" />
-
-                <TextView
-                    android:id="@+id/item2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="3dp"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_700"
-                    android:textSize="30dp"
-                    tools:text="Item 2" />
-
-                <TextView
-                    android:id="@+id/item3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="3dp"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_700"
-                    android:textSize="30dp"
-                    tools:text="Item 3" />
-
-                <TextView
-                    android:id="@+id/item4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="3dp"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_700"
-                    android:textSize="30dp"
-                    tools:text="Item 4" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>
