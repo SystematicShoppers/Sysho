@@ -4,6 +4,7 @@ package com.systematicshoppers.sysho.fragments
 import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -34,10 +35,9 @@ class SearchFragment : Fragment() {
         navBar?.isVisible = false
 
         //grocery list for selected item
-        var storedList: MutableList<String> = mutableListOf("")
+        var storedList: MutableList<String> = mutableListOf()
         var anyChecked = false
         val deleteList = mutableListOf<CheckBox>()
-        var count = 0
         var checkBoxList = mutableListOf<CheckBox>()
         val groceryList = view.findViewById<LinearLayout>(R.id.grocery_list)
         val scroll_view = view.findViewById<ScrollView>(R.id.scroll_view)
@@ -45,6 +45,9 @@ class SearchFragment : Fragment() {
         //button to go to results fragment
         shopBtn.setOnClickListener {
             if (!anyChecked) {
+                for (item in checkBoxList) {
+                    storedList.add(item.text.toString())
+                }
                 navBar?.isVisible = true
                 val fragmentB = ResultsFragment()
                 val bundle = Bundle()
@@ -56,10 +59,17 @@ class SearchFragment : Fragment() {
                     .commit()
                 view.findNavController().navigate(R.id.action_searchFragment_to_resultsFragment)
             }
-            else {
+            else { //the button is in Delete mode
                 for (del in deleteList) {
                     groceryList.removeView(del)
+                    checkBoxList.remove(del)
                 }
+                //reset to Ready to shop
+                anyChecked = false
+                shopBtn.text = "Ready to Shop"
+                shopBtn.setBackgroundResource(R.color.green_400_dark)
+                deleteList.clear()
+                Toast.makeText(this.context, checkBoxList.size.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -73,6 +83,28 @@ class SearchFragment : Fragment() {
         }
         searchbar.setAdapter(adapter)
 
+        fun onCheckBoxChecked(isChecked: Boolean, toDelete: CheckBox) {
+            // Check if any of the checkboxes are checked
+            anyChecked = checkBoxList.any { it.isChecked }
+
+            // Set the button functionality/appearance based on whether any checkboxes are checked
+            if (anyChecked) {
+                shopBtn.text = "Delete"
+                shopBtn.setBackgroundResource(R.color.amber_800)
+                deleteList.clear()
+                for (item in checkBoxList) {
+                    if (item.isChecked) {
+                        deleteList.add(item)
+                    }
+                }
+            }
+            else {
+                shopBtn.text = "Ready to Shop"
+                shopBtn.setBackgroundResource(R.color.green_400_dark)
+                deleteList.clear()
+            }
+        }
+
         fun addItemToList(autoCompleteTextView: AutoCompleteTextView) {
             autoCompleteTextView.setOnEditorActionListener { grocery_item, actionId, keyEvent ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -84,47 +116,30 @@ class SearchFragment : Fragment() {
                         //adds new item onto fragment list
                         val checkBox = CheckBox(this.context)
                         checkBox.text = searchbar.text
-                        checkBoxList.add(checkBox)
-                        count++
-                        groceryList.addView(checkBox)
 
-                        //adds new item onto mutable grocery list
-                        storedList.add(searchbar.text.toString())
+                        //adds new item to list and to view
+                        checkBoxList.add(checkBox)
+                        groceryList.addView(checkBox)
+                        Toast.makeText(this.context, checkBoxList.size.toString(), Toast.LENGTH_SHORT).show()
 
                         //focuses on item added to bottom of list
                         scroll_view.fullScroll(View.FOCUS_DOWN)
                         searchbar.text.clear()
                     }
                     //if anything is checked, change button and change to delete mode
-                    for (toDelete in checkBoxList) {
-                        toDelete.setOnCheckedChangeListener { _, isChecked ->
-                            if (toDelete.isChecked) {
-                                anyChecked = true
-                                deleteList.add(toDelete)
-                                shopBtn.text = "Delete"
-                                shopBtn.setBackgroundResource(R.color.red)
-                                Toast.makeText(this.context, "Checked!", Toast.LENGTH_SHORT).show()
+                    if (checkBoxList.size == 0) {
+                        anyChecked = false
+                        shopBtn.text = "Ready to Shop"
+                        shopBtn.setBackgroundResource(R.color.green_400_dark)
+                        deleteList.clear()
+                    }
+                    else {
+                        for (toDelete in checkBoxList) {
+                            toDelete.setOnCheckedChangeListener { _, isChecked ->
+                                onCheckBoxChecked(isChecked, toDelete)
                             }
                         }
                     }
-
-
-//                    for (toDelete in checkBoxList) {
-//                        toDelete.setOnCheckedChangeListener { _, isChecked ->
-//                            if (anyChecked) {
-//                                shopBtn.text = "Delete"
-//                                shopBtn.setBackgroundResource(R.color.red)
-//                                //Toast.makeText(this.context, "anyChecked True", Toast.LENGTH_SHORT).show()
-//                            }
-//                            else {
-//                                shopBtn.text = "Ready to Shop"
-//                                shopBtn.setBackgroundResource(R.color.green_400_dark)
-//                                //Toast.makeText(this.context, "anyChecked False", Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
-//                    }
-
-
                     true
                 } else {
                     false
@@ -132,22 +147,10 @@ class SearchFragment : Fragment() {
             }
         }
 
-        fun deleteItems() {
-            for (i in 1..checkBoxList.size) {
-                val checkBoxtoDelete = view.findViewById<CheckBox>(i)
-                if (checkBoxtoDelete.isChecked) {
-                    groceryList.removeView(checkBoxtoDelete)
-                }
-            }
-        }
-
-
         //when clicking, to do with search bar
         searchbar.setOnClickListener {
             addItemToList(searchbar)
         }
-
-
 
         return view
     }
