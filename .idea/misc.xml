@@ -12,6 +12,10 @@
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_settings.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_store.xml" value="0.271875" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/menu/nav_menu.xml" value="0.2708333333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/fragment_results.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1" />
       </map>
     </option>
   </component>

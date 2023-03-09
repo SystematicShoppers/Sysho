@@ -15,9 +15,27 @@
 
         <TextView
             android:id="@+id/settingsDebugTextView"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is the settings fragment" />
+            android:textSize="30sp"
+            android:text="Settings" />
+
+        <SeekBar
+            android:id="@+id/distance_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:max="100"
+            android:progress="20"
+            android:minWidth="200dp"/>
+
+        <TextView
+            android:id="@+id/distance_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="20 miles" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
