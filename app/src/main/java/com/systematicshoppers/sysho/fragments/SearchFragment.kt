@@ -67,7 +67,7 @@ class SearchFragment : Fragment() {
                 //reset to Ready to shop
                 anyChecked = false
                 shopBtn.text = "Ready to Shop"
-                shopBtn.setBackgroundResource(R.color.green_400_dark)
+                shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
                 deleteList.clear()
                 Toast.makeText(this.context, checkBoxList.size.toString(), Toast.LENGTH_SHORT).show()
             }
@@ -76,7 +76,7 @@ class SearchFragment : Fragment() {
         //stand in "database" for testing autocomplete
         var database: MutableList<String> = mutableListOf("apple", "orange", "banana", "orangutan")
 
-        //create search bar w autofill
+        //create search bar w autocomplete
         val searchbar = view.findViewById<AutoCompleteTextView>(R.id.search_bar)
         val adapter = activity?.let {
             ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, database)
@@ -90,7 +90,7 @@ class SearchFragment : Fragment() {
             // Set the button functionality/appearance based on whether any checkboxes are checked
             if (anyChecked) {
                 shopBtn.text = "Delete"
-                shopBtn.setBackgroundResource(R.color.amber_800)
+                shopBtn.setBackgroundColor(Color.RED)
                 deleteList.clear()
                 for (item in checkBoxList) {
                     if (item.isChecked) {
@@ -100,7 +100,7 @@ class SearchFragment : Fragment() {
             }
             else {
                 shopBtn.text = "Ready to Shop"
-                shopBtn.setBackgroundResource(R.color.green_400_dark)
+                shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
                 deleteList.clear()
             }
         }
@@ -130,7 +130,7 @@ class SearchFragment : Fragment() {
                     if (checkBoxList.size == 0) {
                         anyChecked = false
                         shopBtn.text = "Ready to Shop"
-                        shopBtn.setBackgroundResource(R.color.green_400_dark)
+                        shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
                         deleteList.clear()
                     }
                     else {
