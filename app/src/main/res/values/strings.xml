@@ -5,6 +5,9 @@
     <string name="settings">Settings</string>
     <string name="user">User</string>
     <string name="saved_lists">Saved Lists</string>
+    <string name="add_delete_product">Add/Delete Product</string>
+    <string name="add_delete_store">Add/Delete Store</string>
+    <string name="modify_prices">Modify Prices</string>
 
 
     <string-array name="search_ex_database">

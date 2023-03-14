@@ -8,7 +8,7 @@ import com.google.firebase.ktx.Firebase
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.databinding.ActivityLoginBinding
 
-class LogInActivity: AppCompatActivity() {
+class LogInActivity: FirebaseUIActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: SyshoViewModel by viewModels()

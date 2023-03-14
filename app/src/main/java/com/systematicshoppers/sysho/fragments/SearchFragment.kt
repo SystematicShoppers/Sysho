@@ -2,7 +2,9 @@
 package com.systematicshoppers.sysho.fragments
 
 import android.app.Activity
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,9 @@ import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.activities.MainActivity
+import com.systematicshoppers.sysho.database.FirebaseUtils
+import com.systematicshoppers.sysho.database.Product
+import com.systematicshoppers.sysho.database.Store
 import org.w3c.dom.Text
 
 class SearchFragment : Fragment() {
@@ -34,41 +39,40 @@ class SearchFragment : Fragment() {
             view.findNavController().navigate(R.id.action_searchFragment_to_resultsFragment)
         }
 
-        //stand in "database" for testing
-        var database: MutableList<String> = mutableListOf("apple", "orange", "banana")
-
+        val productData = readProductData()
+        productData
         //autofill for search bar
         val adapter = activity?.let {
-            ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, database)
+         //   ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, productData)
         }
-        val editText = view.findViewById<View>(R.id.search_bar) as AutoCompleteTextView
-        editText.setAdapter(adapter)
+        val editText = view.findViewById<View>(R.id.searchBar) as AutoCompleteTextView
+       // editText.setAdapter(adapter)
 
         //grocery list for selected item
         var groceryList: MutableList<String> = mutableListOf("apple")
         var index = 0
 
         editText.setOnClickListener {
-            fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-                if (event?.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    val item = view.findViewById<TextView>(R.id.item1)
-                    view.findViewById<TextView>(R.id.grocerylist).text = "Hello"
-                    if (editText.text.isNotEmpty()) {
-                        //add item to mutable list
-//                        val entry: String = editText.text.toString()
-//                        groceryList.add(index, entry)
-//                        index++
 
-
-                        //update the items with the input item
-                        item.text = editText.text.toString()
-                        editText.text.clear()
-                    }
-                }
-                return true
-            }
         }
-
         return view
     }
+
+    private fun readProductData() : MutableList<Product>? {
+        val productData = mutableListOf<Product>()
+        FirebaseUtils().fireStoreDatabase.collection("Products")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                querySnapshot.forEach { document ->
+                    Log.d(ContentValues.TAG, "Read document with ID ${document.id}")
+                    productData.add(document.toObject(Product::class.java))
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(ContentValues.TAG, "Error getting documents $exception")
+            }
+        return productData
+    }
+
+
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/api_nav_graph.xml"
+    app:startDestination="@id/apiStoreFragment">
+
+    <fragment
+        android:id="@+id/apiProductFragment"
+        android:name="com.systematicshoppers.sysho.fragments.ApiProductFragment"
+        android:label="ApiProductFragment" >
+        <action
+            android:id="@+id/action_apiProductFragment_to_apiStoreFragment"
+            app:destination="@id/apiStoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/apiStoreFragment"
+        android:name="com.systematicshoppers.sysho.fragments.ApiStoreFragment"
+        android:label="ApiStoreFragment" >
+        <action
+            android:id="@+id/action_apiStoreFragment_to_apiProductFragment"
+            app:destination="@id/apiProductFragment" />
+    </fragment>
+</navigation>

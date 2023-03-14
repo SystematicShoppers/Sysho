@@ -3,15 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_api.xml" value="0.2826086956521739" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_firebase_ui.xml" value="0.2921875" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_prices.xml" value="0.2826086956521739" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_product.xml" value="0.2826086956521739" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_store.xml" value="0.2826086956521739" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_results.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_saved_lists.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_search.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_settings.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_store.xml" value="0.271875" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/product_item.xml" value="0.2826086956521739" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/results_layout.xml" value="0.27239583333333334" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/store_item.xml" value="0.2826086956521739" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/menu/api_nav_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/menu/nav_menu.xml" value="0.2708333333333333" />
       </map>
     </option>
