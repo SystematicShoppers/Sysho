@@ -2,7 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -15,32 +15,39 @@
         app:srcCompat="@drawable/logo" />
 
     <AutoCompleteTextView
-        android:id="@+id/searchBar"
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search for an item..."
-        android:inputType="textAutoComplete"
-        />
+        android:inputType="textAutoComplete" />
 
-    <TextView
-        android:id="@+id/groceryList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        tools:text="List Start" />
+    <!--    <Space-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="250dp"-->
+    <!--        android:layout_weight="1" />-->
 
-    <Space
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_weight="1" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/grocery_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
 
     <Button
         android:id="@+id/shopBtn"
-        android:layout_width="262dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom|center"
         android:text="Ready to Shop" />
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>
