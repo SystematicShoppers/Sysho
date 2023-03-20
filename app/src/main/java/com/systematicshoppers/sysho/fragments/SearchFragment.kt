@@ -23,8 +23,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.activities.MainActivity
 import org.w3c.dom.Text
+import androidx.fragment.app.activityViewModels
+import com.systematicshoppers.sysho.databinding.FragmentSearchBinding
+import com.systematicshoppers.sysho.model.ShoppingListViewModel
 
 class SearchFragment : Fragment() {
+
+    //The following code is to display results in the results page
+    private val sharedViewModel: ShoppingListViewModel by activityViewModels()  //used for tranferring data
+    private var binding: FragmentSearchBinding? = null                          //used for transferring data
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,10 +57,9 @@ class SearchFragment : Fragment() {
                     storedList.add(item.text.toString())
                 }
                 navBar?.isVisible = true
-                val fragmentB = ResultsFragment()
-                val bundle = Bundle()
-                bundle.putStringArrayList("storedList", storedList)
-                fragmentB.arguments = bundle
+
+                //The following code is to display results in the results page
+                sharedViewModel.setListToShop(storedList[0])
 
                 parentFragmentManager.beginTransaction()
                     .addToBackStack(null)
