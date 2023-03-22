@@ -15,6 +15,8 @@
         tools:targetApi="31">
         <activity android:name=".activities.LogInActivity"
             android:exported="false"/>
+        <activity android:name=".activities.ApiActivity"
+            android:exported="false"/>
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">

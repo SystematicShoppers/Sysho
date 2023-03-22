@@ -21,9 +21,6 @@
         <action
             android:id="@+id/action_searchFragment_to_logInActivity"
             app:destination="@id/logInActivity" />
-        <action
-            android:id="@+id/action_searchFragment_to_resultsFragment2"
-            app:destination="@id/resultsFragment" />
     </fragment>
     <fragment
         android:id="@+id/resultsFragment"
@@ -44,7 +41,9 @@
             app:destination="@id/logInActivity" />
         <action
             android:id="@+id/action_resultsFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/searchFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

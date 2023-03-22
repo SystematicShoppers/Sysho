@@ -5,20 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResultListener
-import com.systematicshoppers.sysho.R
+import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.databinding.FragmentResultsBinding
-import com.systematicshoppers.sysho.model.ShoppingListViewModel
 
 class ResultsFragment : Fragment() {
 
     private var binding: FragmentResultsBinding? = null
 
-    private val sharedViewModel: ShoppingListViewModel by activityViewModels()
+    private val sharedViewModel: SyshoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

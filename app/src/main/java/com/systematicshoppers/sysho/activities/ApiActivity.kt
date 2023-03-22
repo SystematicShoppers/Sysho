@@ -2,13 +2,17 @@ package com.systematicshoppers.sysho.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.databinding.ActivityApiBinding
 import com.systematicshoppers.sysho.databinding.ActivityMainBinding
+import com.systematicshoppers.sysho.fragments.ApiProductFragment
+import com.systematicshoppers.sysho.fragments.ApiStoreFragment
 
 class ApiActivity: AppCompatActivity() {
     private lateinit var binding: ActivityApiBinding
@@ -16,7 +20,7 @@ class ApiActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        val binding = ActivityApiBinding.inflate(layoutInflater)
         val viewRoot = binding.root
         setContentView(viewRoot)
 
@@ -24,7 +28,7 @@ class ApiActivity: AppCompatActivity() {
         //The navigation graph has search fragment as home location
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.content) as NavHostFragment
         navController = navHostFragment.navController
-        setupActionBarWithNavController(navController)
+        //setupActionBarWithNavController(navController)
 
         //Bottom navigation
         //Bottom navigation is set to use the navigation graph in nav_menu.xml
