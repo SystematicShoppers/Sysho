@@ -9,14 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Store
 
-class ApiStoresAdapter(private val context: Context, private val data: ArrayList<Store>): RecyclerView.Adapter<ApiStoresAdapter.ApiStoresViewHolder>() {
-    inner class ApiStoresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+class ApiStoresAdapter(private val context: Context, private val data: MutableList<Store>): RecyclerView.Adapter<ApiStoresAdapter.ApiStoresViewHolder>() {
+    inner class ApiStoresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val storeIDTextView: TextView = itemView.findViewById(R.id.storeIDTextView)
         val locationTextView: TextView = itemView.findViewById(R.id.locationTextView)
         val storeNameTextView: TextView = itemView.findViewById(R.id.storeNameTextView)
 
-        override fun onClick(v: View?) {
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiStoresViewHolder {
@@ -24,11 +22,15 @@ class ApiStoresAdapter(private val context: Context, private val data: ArrayList
         return ApiStoresViewHolder(view)
     }
 
+    interface ClickListener {
+        fun gotoStore(position: Int, storeData: Store)
+    }
+
     override fun onBindViewHolder(holder: ApiStoresViewHolder, position: Int) {
         val data = data[position]
         holder.storeIDTextView.text = data.storeId
         holder.storeNameTextView.text = data.store
-        //holder.locationTextView.text = (TODO(Convert long and lat to geocoder location))
+        holder.locationTextView.text = data.address?.getAddressLine(0)
     }
 
     override fun getItemCount(): Int {

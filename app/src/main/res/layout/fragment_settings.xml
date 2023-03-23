@@ -37,5 +37,12 @@
             android:gravity="center_horizontal"
             android:text="20 miles" />
 
+        <Button
+            android:id="@+id/accessApiBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Access API"
+            android:textColor="#4E342E" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

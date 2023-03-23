@@ -1,38 +1,38 @@
 
 package com.systematicshoppers.sysho.fragments
 
-import android.app.Activity
+import android.content.ContentValues
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.systematicshoppers.sysho.R
-import com.systematicshoppers.sysho.activities.MainActivity
-import org.w3c.dom.Text
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.systematicshoppers.sysho.SyshoViewModel
+import com.systematicshoppers.sysho.database.FirebaseUtils
+import com.systematicshoppers.sysho.database.SearchList
 import com.systematicshoppers.sysho.databinding.FragmentSearchBinding
-import com.systematicshoppers.sysho.model.ShoppingListViewModel
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonDisposableHandle.parent
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
     //The following code is to display results in the results page
-    private val sharedViewModel: ShoppingListViewModel by activityViewModels()  //used for tranferring data
+    private val viewModel: SyshoViewModel by activityViewModels()  //used for tranferring data
     private var binding: FragmentSearchBinding? = null                          //used for transferring data
-
+    private var autoCompleteList: List<String> = listOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +40,7 @@ class SearchFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         val shopBtn = view.findViewById<Button>(R.id.shopBtn)
         val navBar: BottomNavigationView? = activity?.findViewById(R.id.bottomNavigationView)
+
         navBar?.isVisible = false
 
         //grocery list for selected item
@@ -59,7 +60,7 @@ class SearchFragment : Fragment() {
                 navBar?.isVisible = true
 
                 //The following code is to display results in the results page
-                sharedViewModel.setListToShop(storedList[0])
+           //     sharedViewModel.setListToShop(storedList[0])
 
                 parentFragmentManager.beginTransaction()
                     .addToBackStack(null)
@@ -80,15 +81,18 @@ class SearchFragment : Fragment() {
             }
         }
 
-        //stand in "database" for testing autocomplete
-        var database: MutableList<String> = mutableListOf("apple", "orange", "banana", "orangutan")
-
-        //create search bar w autocomplete
         val searchbar = view.findViewById<AutoCompleteTextView>(R.id.search_bar)
-        val adapter = activity?.let {
-            ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, database)
+        var adapter = activity?.let {
+            ArrayAdapter(it, android.R.layout.simple_list_item_1, autoCompleteList)
         }
         searchbar.setAdapter(adapter)
+        searchbar.onFocusChangeListener
+
+
+
+
+
+
 
         fun onCheckBoxChecked(isChecked: Boolean, toDelete: CheckBox) {
             // Check if any of the checkboxes are checked
@@ -159,6 +163,15 @@ class SearchFragment : Fragment() {
             addItemToList(searchbar)
         }
 
+        viewModel.autoComplete.observe(viewLifecycleOwner) {
+            autoCompleteList = it
+            adapter = activity?.let {
+                ArrayAdapter(it, android.R.layout.simple_list_item_1, autoCompleteList)
+            }
+            searchbar.setAdapter(adapter)
+        }
+
         return view
     }
+
 }

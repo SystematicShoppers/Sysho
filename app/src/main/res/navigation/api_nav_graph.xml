@@ -15,9 +15,5 @@
     <fragment
         android:id="@+id/apiStoreFragment"
         android:name="com.systematicshoppers.sysho.fragments.ApiStoreFragment"
-        android:label="ApiStoreFragment" >
-        <action
-            android:id="@+id/action_apiStoreFragment_to_apiProductFragment"
-            app:destination="@id/apiProductFragment" />
-    </fragment>
+        android:label="ApiStoreFragment" />
 </navigation>

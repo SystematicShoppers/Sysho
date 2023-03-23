@@ -9,24 +9,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Product
 
-class ApiProductsAdapter(private val context: Context, private val data: ArrayList<Product>): RecyclerView.Adapter<ApiProductsAdapter.ApiProductsViewHolder>() {
-    class ApiProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+class ApiProductsAdapter(private val context: Context, private val data: MutableList<Product>): RecyclerView.Adapter<ApiProductsAdapter.ApiProductsViewHolder>() {
+    class ApiProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val productIDTextView: TextView = itemView.findViewById(R.id.productIDTextView)
         val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)
 
-        override fun onClick(v: View?) {
-        }
+    }
+
+    interface ClickListener {
+        fun gotoProduct(position: Int, productData: Product)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiProductsViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.store_item, parent,false)
+        val view = LayoutInflater.from(context).inflate(R.layout.product_item, parent,false)
         return ApiProductsViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ApiProductsViewHolder, position: Int) {
         val data = data[position]
-        holder.productIDTextView.text = data.id.toString()
-        holder.productNameTextView.text = data.productName
+        holder.productIDTextView.text = "Product ID: ${data.id.toString()}"
+        holder.productNameTextView.text = "Name: ${data.productName}"
     }
 
     override fun getItemCount(): Int {
