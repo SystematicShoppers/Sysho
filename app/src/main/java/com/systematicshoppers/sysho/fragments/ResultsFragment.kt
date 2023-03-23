@@ -1,4 +1,5 @@
 //Source of help with View Binding: https://developer.android.com/codelabs/basic-android-kotlin-training-shared-viewmodel#0
+//Source for setting up the RecyclerView: https://developer.android.com/codelabs/basic-android-kotlin-training-affirmations-app#3
 package com.systematicshoppers.sysho.fragments
 
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.databinding.FragmentResultsBinding
+import com.systematicshoppers.sysho.model.Datasource
 import com.systematicshoppers.sysho.model.ShoppingListViewModel
 
 class ResultsFragment : Fragment() {
