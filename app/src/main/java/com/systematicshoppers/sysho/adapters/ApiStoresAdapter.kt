@@ -6,16 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide.init
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Store
 
-class ApiStoresAdapter(private val context: Context, private val data: MutableList<Store>): RecyclerView.Adapter<ApiStoresAdapter.ApiStoresViewHolder>() {
-    inner class ApiStoresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val storeIDTextView: TextView = itemView.findViewById(R.id.storeIDTextView)
-        val locationTextView: TextView = itemView.findViewById(R.id.locationTextView)
-        val storeNameTextView: TextView = itemView.findViewById(R.id.storeNameTextView)
-
-    }
+class ApiStoresAdapter(private val context: Context, private val data: MutableList<Store>, private val onCLick: ClickListener): RecyclerView.Adapter<ApiStoresAdapter.ApiStoresViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiStoresViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.store_item, parent,false)
@@ -31,10 +26,19 @@ class ApiStoresAdapter(private val context: Context, private val data: MutableLi
         holder.storeIDTextView.text = data.storeId
         holder.storeNameTextView.text = data.store
         holder.locationTextView.text = data.address?.getAddressLine(0)
+        holder.itemView.setOnClickListener{
+            onCLick.gotoStore(position, data)
+        }
     }
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    inner class ApiStoresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val storeIDTextView: TextView = itemView.findViewById(R.id.storeIDTextView)
+        val locationTextView: TextView = itemView.findViewById(R.id.locationTextView)
+        val storeNameTextView: TextView = itemView.findViewById(R.id.storeNameTextView)
     }
 
 }
