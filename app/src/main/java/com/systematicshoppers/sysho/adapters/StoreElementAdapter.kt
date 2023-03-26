@@ -13,28 +13,30 @@ import com.systematicshoppers.sysho.model.Store
 //FIXME should I import the database store and use that instead of the above? Can I just use it like this:
 //import com.systematicshoppers.sysho.database.Store
 
-class StoreElementAdapter(
-    private val context: ResultsFragment,
-    private val dataset: List<Store>
-    ) :  RecyclerView.Adapter<StoreElementAdapter.StoreElementViewHolder>() {
+class StoreElementAdapter(private val context: Context,
+                             private val data: List<MutableMap<String, Any>>?,
+                             private val onCLick: ApiStoresSelectAdapter.ClickListener
+) :  RecyclerView.Adapter<StoreElementAdapter.StoreElementViewHolder>() {
 
-    class StoreElementViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.findViewById(R.id.store_element_title)
+    interface ClickListener {
+
+        fun locationIntent()
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreElementViewHolder {
-        // create a new view
-        val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.store_element, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.result_item, parent,false)
 
-        return StoreElementViewHolder(adapterLayout)
+        return StoreElementViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: StoreElementViewHolder, position: Int) {
-        val item = dataset[position]
-        holder.textView.text = item.stringResource
-
+        val data = data?.get(position)
     }
 
-    override fun getItemCount() = dataset.size
+    override fun getItemCount(): Int {
+        return data?.size ?: 0
+    }
+
+    inner class StoreElementViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        // val textView: TextView = view.findViewById(R.id.result_item)
+    }
 }

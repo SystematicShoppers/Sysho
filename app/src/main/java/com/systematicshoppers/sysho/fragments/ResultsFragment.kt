@@ -1,50 +1,61 @@
-//Source of help with View Binding: https://developer.android.com/codelabs/basic-android-kotlin-training-shared-viewmodel#0
-//Source for help with Recycler View: https://developer.android.com/codelabs/basic-android-kotlin-training-affirmations-app#3
+
 package com.systematicshoppers.sysho.fragments
 
+import android.content.Context
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.LatLng
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.StoreElementAdapter
 import com.systematicshoppers.sysho.databinding.FragmentResultsBinding
 import com.systematicshoppers.sysho.model.Datasource
 
-class ResultsFragment : Fragment() {
+class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
-    private var binding: FragmentResultsBinding? = null
-
-    private val sharedViewModel: SyshoViewModel by activityViewModels()
+    private val viewModel: SyshoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        val view = inflater.inflate(R.layout.fragment_results, container, false)
+        val mapFragment = MapFragment()
+        val supportFragmentManager = parentFragmentManager
+        val list = viewModel.resultsList.value
 
-        // The following code is to display search result in results page:
-        val fragmentBinding = FragmentResultsBinding.inflate(inflater, container, false)
-        binding = fragmentBinding
-        return fragmentBinding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        if (list != null) {
+            viewModel.setTotalPrice(viewModel.getTotalPrice(list))
+            TODO("Currently the total price is based off of the product database." +
+                    "Change to individual store database in the future.")
 
-        //The following is for setting up the recycler view:
-        val myDataset = Datasource().loadStores()
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerView.adapter = StoreElementAdapter(this, myDataset) //called from the adapter package: StoreElementAdapter.kt
-        recyclerView.setHasFixedSize(true) //improves performance
-
-        binding?.apply {
-            //The following code is to display results in the results page
-            viewModel = sharedViewModel
         }
+
+        val mapView = view.findViewById<MapView>(R.id.mapView)
+        mapView.onCreate(savedInstanceState)
+
+        mapView.getMapAsync { googleMap ->
+            val centerLatLng = LatLng(YOUR_LATITUDE, YOUR_LONGITUDE)
+        }
+
+        return view
     }
+
+    override fun locationIntent() {
+        TODO("Not yet implemented")
+    }
+
 }
