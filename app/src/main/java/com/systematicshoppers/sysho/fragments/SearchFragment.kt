@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.core.view.indices
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -39,29 +40,22 @@ class SearchFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         val shopBtn = view.findViewById<Button>(R.id.shopBtn)
+        val groceryList = view.findViewById<LinearLayout>(R.id.grocery_list)
+        val scrollView = view.findViewById<ScrollView>(R.id.scroll_view)
         val navBar: BottomNavigationView? = activity?.findViewById(R.id.bottomNavigationView)
-
-        navBar?.isVisible = false
-
-        //grocery list for selected item
-        var storedList: ArrayList<String> = arrayListOf()
+        val searchbar = view.findViewById<AutoCompleteTextView>(R.id.search_bar)
         var anyChecked = false
         val deleteList = arrayListOf<CheckBox>()
-        var checkBoxList = arrayListOf<CheckBox>()
-        val groceryList = view.findViewById<LinearLayout>(R.id.grocery_list)
-        val scroll_view = view.findViewById<ScrollView>(R.id.scroll_view)
+        val checkBoxList = arrayListOf<CheckBox>()
+        val list = mutableListOf<String>()
+
+        navBar?.isVisible = false
 
         //button to go to results fragment
         shopBtn.setOnClickListener {
             if (!anyChecked) {
-                for (item in checkBoxList) {
-                    storedList.add(item.text.toString())
-                }
                 navBar?.isVisible = true
-
-                //The following code is to display results in the results page
-           //     sharedViewModel.setListToShop(storedList[0])
-
+                viewModel.setResultsList(list)
                 parentFragmentManager.beginTransaction()
                     .addToBackStack(null)
                     .commit()
@@ -69,19 +63,20 @@ class SearchFragment : Fragment() {
             }
             else { //the button is in Delete mode
                 for (del in deleteList) {
+                    if (list.contains(del.text.toString()))
+                        list.remove(del.text.toString())
                     groceryList.removeView(del)
                     checkBoxList.remove(del)
                 }
                 //reset to Ready to shop
                 anyChecked = false
-                shopBtn.text = "Ready to Shop"
+                shopBtn.text = getString(R.string.ready_to_shop)
                 shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
                 deleteList.clear()
                 Toast.makeText(this.context, checkBoxList.size.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 
-        val searchbar = view.findViewById<AutoCompleteTextView>(R.id.search_bar)
         var adapter = activity?.let {
             ArrayAdapter(it, android.R.layout.simple_list_item_1, autoCompleteList)
         }
@@ -110,7 +105,7 @@ class SearchFragment : Fragment() {
                 }
             }
             else {
-                shopBtn.text = "Ready to Shop"
+                shopBtn.text = getString(R.string.ready_to_shop)
                 shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
                 deleteList.clear()
             }
@@ -127,20 +122,20 @@ class SearchFragment : Fragment() {
                         //adds new item onto fragment list
                         val checkBox = CheckBox(this.context)
                         checkBox.text = searchbar.text
-
+                        list.add(checkBox.text.toString())
                         //adds new item to list and to view
                         checkBoxList.add(checkBox)
                         groceryList.addView(checkBox)
                         Toast.makeText(this.context, checkBoxList.size.toString(), Toast.LENGTH_SHORT).show()
 
                         //focuses on item added to bottom of list
-                        scroll_view.fullScroll(View.FOCUS_DOWN)
+                        scrollView.fullScroll(View.FOCUS_DOWN)
                         searchbar.text.clear()
                     }
                     //if anything is checked, change button and change to delete mode
                     if (checkBoxList.size == 0) {
                         anyChecked = false
-                        shopBtn.text = "Ready to Shop"
+                        shopBtn.text = getString(R.string.ready_to_shop)
                         shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
                         deleteList.clear()
                     }
