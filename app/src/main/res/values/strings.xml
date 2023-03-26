@@ -9,6 +9,11 @@
     <string name="add_delete_store">Add/Delete Store</string>
     <string name="modify_prices">Modify Prices</string>
     <string name="results">Results</string>
+    <string name="app_logo">app_logo</string>
+
+    <string name="not_signed_in">Not Signed In</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="user_display">User Logged In: %1$s</string>
 
 
     <string-array name="search_ex_database">
