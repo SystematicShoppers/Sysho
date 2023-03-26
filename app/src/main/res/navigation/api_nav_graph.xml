@@ -15,5 +15,21 @@
     <fragment
         android:id="@+id/apiStoreFragment"
         android:name="com.systematicshoppers.sysho.fragments.ApiStoreFragment"
-        android:label="ApiStoreFragment" />
+        android:label="ApiStoreFragment" >
+        <action
+            android:id="@+id/action_apiStoreFragment_to_apiStoreSelectFragment"
+            app:destination="@id/apiStoreSelectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/apiStoreSelectFragment"
+        android:name="com.systematicshoppers.sysho.fragments.ApiStoreSelectFragment"
+        android:label="ApiStoreSelectFragment" >
+        <action
+            android:id="@+id/action_apiStoreSelectFragment_to_apiStoreSelectDialogFragment"
+            app:destination="@id/apiStoreSelectDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/apiStoreSelectDialogFragment"
+        android:name="com.systematicshoppers.sysho.fragments.ApiStoreSelectDialogFragment"
+        android:label="ApiStoreSelectDialogFragment" />
 </navigation>

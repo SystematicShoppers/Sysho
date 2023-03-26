@@ -11,6 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
@@ -42,7 +46,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
                     stores.add(storeDocument.toObject(Store::class.java))
                 }
                 getAddresses(stores, geocoder)
-                apiStoresAdapter = ApiStoresAdapter(requireContext(), stores)
+                apiStoresAdapter = ApiStoresAdapter(requireContext(), stores, this)
                 val apiStoresLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
                 apiStoresRecyclerView = view.findViewById((R.id.api_stores_recycler_view))
                 apiStoresRecyclerView.adapter = apiStoresAdapter
@@ -78,7 +82,8 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
     }
 
     override fun gotoStore(position: Int, storeData: Store) {
-        TODO("Not yet implemented")
+        viewModel.setStoreData(storeData)
+        view?.findNavController()?.navigate(R.id.action_apiStoreFragment_to_apiStoreSelectFragment)
     }
 
 

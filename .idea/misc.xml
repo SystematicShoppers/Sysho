@@ -7,31 +7,31 @@
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_firebase_ui.xml" value="0.2921875" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/api_product_item.xml" value="0.33" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/api_store_item.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_prices.xml" value="0.2826086956521739" />
-        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_product.xml" value="0.2826086956521739" />
-        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_store.xml" value="0.2826086956521739" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_product.xml" value="0.25" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_store.xml" value="0.25" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_store_interface.xml" value="0.28125" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_store_select.xml" value="0.33" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_results.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_saved_lists.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_search.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_settings.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_store.xml" value="0.271875" />
-        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/product_item.xml" value="0.2826086956521739" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/product_item.xml" value="0.1" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/results_layout.xml" value="0.27239583333333334" />
-        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/store_item.xml" value="0.2826086956521739" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/store_item.xml" value="0.1" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/menu/api_nav_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/menu/nav_menu.xml" value="0.2708333333333333" />
-        <entry key="app/src/main/res/layout/activity_firebase_ui.xml" value="0.19293478260869565" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/fragment_api_store.xml" value="0.19293478260869565" />
         <entry key="app/src/main/res/layout/fragment_results.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_store.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/single_results_store.xml" value="0.16666666666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="jbr-11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
