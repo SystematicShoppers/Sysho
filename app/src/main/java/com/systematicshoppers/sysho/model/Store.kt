@@ -1,5 +1,4 @@
 package com.systematicshoppers.sysho.model
 
-class Store(val storeName: String) {
-
-}
+//This is used to call/categorize stores
+data class Store(val stringResource: String)

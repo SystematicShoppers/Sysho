@@ -8,8 +8,8 @@
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_prices.xml" value="0.2826086956521739" />
-        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_product.xml" value="0.25" />
-        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_store.xml" value="0.25" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_product.xml" value="0.2826086956521739" />
+        <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_api_store.xml" value="0.2826086956521739" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_results.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_saved_lists.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/coale/AndroidStudioProjects/Sysho/app/src/main/res/layout/fragment_search.xml" value="0.2708333333333333" />
@@ -26,6 +26,8 @@
         <entry key="app/src/main/res/layout/fragment_results.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_store.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/single_results_store.xml" value="0.16666666666666666" />
       </map>
     </option>
   </component>

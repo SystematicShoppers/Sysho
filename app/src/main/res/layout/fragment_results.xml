@@ -2,6 +2,7 @@
 <!-- had to change below <androidx.constraintlayout.widget.ConstraintLayout to <layout to use the viewmodel-->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,31 +12,14 @@
             type="com.systematicshoppers.sysho.SyshoViewModel" />
     </data>
 
-    <!-- FIXME do I need to constrain linearLayout in any way? -->
-    <LinearLayout
-        android:id="@+id/lin_layout"
-        android:orientation="vertical">
+    <FrameLayout
+        tools:context=".ResultsFragment">
 
-        <TextView
-            android:id="@+id/resultsDebugTextView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
-
-        <ScrollView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fillViewport="true">
-
-            <LinearLayout
-                android:id="@+id/repeatList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
-
-    </LinearLayout>
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            android:scrollbars="vertical" />
+    </FrameLayout>
 </layout>
