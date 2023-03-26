@@ -13,6 +13,11 @@
     <string name="update_price">Update Price</string>
     <string name="current_price">Current Price: </string>
     <string name="sale_price">Sale Price: </string>
+    <string name="app_logo">app_logo</string>
+
+    <string name="not_signed_in">Not Signed In</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="user_display">User Logged In: %1$s</string>
 
 
     <string-array name="search_ex_database">
