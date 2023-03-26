@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.StoreElementAdapter
+import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.databinding.FragmentResultsBinding
 import com.systematicshoppers.sysho.model.Datasource
 
@@ -48,7 +49,14 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
         mapView.onCreate(savedInstanceState)
 
         mapView.getMapAsync { googleMap ->
-            val centerLatLng = LatLng(YOUR_LATITUDE, YOUR_LONGITUDE)
+            var lat = viewModel.currentLat.value ?: 0.0
+            var long = viewModel.currentLong.value ?: 0.0
+            val centerLatLng = LatLng(lat, long)
+            FirebaseUtils().fireStoreDatabase.collection("stores")
+                .get()
+                .addOnSuccessListener {
+                    TODO("Get a list of all lat and long pairs for all stores")
+                }
         }
 
         return view
