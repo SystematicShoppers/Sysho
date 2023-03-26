@@ -40,8 +40,8 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
         if (list != null) {
             viewModel.setTotalPrice(viewModel.getTotalPrice(list))
-            TODO("Currently the total price is based off of the product database." +
-                    "Change to individual store database in the future.")
+            // Currently the total price is based off of the product database.
+            // Change to individual store database in the future.
 
         }
 
@@ -55,7 +55,7 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
             FirebaseUtils().fireStoreDatabase.collection("stores")
                 .get()
                 .addOnSuccessListener {
-                    TODO("Get a list of all lat and long pairs for all stores")
+                    //TODO("Get a list of all lat and long pairs for all stores")
                 }
         }
 
@@ -63,7 +63,7 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
     }
 
     override fun locationIntent() {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
 }
