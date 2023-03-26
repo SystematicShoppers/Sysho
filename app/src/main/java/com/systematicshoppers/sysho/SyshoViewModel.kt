@@ -20,6 +20,12 @@ class SyshoViewModel : ViewModel() {
         _store.value = passStore
     }
 
+    private var _product = MutableLiveData<Product>()
+    val product: LiveData<Product> = _product
+    fun setProductData(passProduct: Product) {
+        _product.value = passProduct
+    }
+
     private var _products = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>> = _products
     fun setProductListData(passProducts: List<Product>) {
@@ -36,6 +42,12 @@ class SyshoViewModel : ViewModel() {
     val autoComplete: LiveData<List<String>> = _autoComplete
     fun setAutoComplete(passAutoComplete: List<String>) {
         _autoComplete.value = passAutoComplete
+    }
+
+    private val _dialogEditText = MutableLiveData<String>()
+    val dialogEditText: LiveData<String> = _dialogEditText
+    fun setDialogEditText(passEditText: String) {
+        _dialogEditText.value = passEditText
     }
 
 

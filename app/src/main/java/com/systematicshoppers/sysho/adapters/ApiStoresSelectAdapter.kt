@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
+import com.systematicshoppers.sysho.fragments.ApiStoreSelectDialogFragment
 
 class ApiStoresSelectAdapter(private val context: Context,
                              private val data: List<MutableMap<String, Any>>?,
@@ -18,6 +20,7 @@ class ApiStoresSelectAdapter(private val context: Context,
 
     interface ClickListener {
         fun modifyProduct(position: Int, productData: MutableMap<String, Any>?)
+        fun updatePrice(position: Int, productData: MutableMap<String, Any>?)
     }
 
     override fun onBindViewHolder(holder: ApiStoresSelectViewHolder, position: Int) {
@@ -28,6 +31,9 @@ class ApiStoresSelectAdapter(private val context: Context,
         holder.itemView.setOnClickListener{
             onCLick.modifyProduct(position, data)
         }
+        holder.updateBtn.setOnClickListener {
+            onCLick.updatePrice(position, data)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -35,6 +41,7 @@ class ApiStoresSelectAdapter(private val context: Context,
     }
 
     inner class ApiStoresSelectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val updateBtn: Button = itemView.findViewById(R.id.changePriceBtn)
         val priceTextView: TextView = itemView.findViewById(R.id.priceTextView)
         val productIDTextView: TextView = itemView.findViewById(R.id.productIDTextView)
         val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)

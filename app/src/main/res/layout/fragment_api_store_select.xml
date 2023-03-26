@@ -37,7 +37,7 @@
             android:id="@+id/store_interface_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/product_item">
+            tools:listitem="@layout/api_product_item">
 
         </androidx.recyclerview.widget.RecyclerView>
     </FrameLayout>
