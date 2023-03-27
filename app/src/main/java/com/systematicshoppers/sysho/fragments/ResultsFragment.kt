@@ -1,27 +1,19 @@
 
 package com.systematicshoppers.sysho.fragments
 
-import android.content.Context
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.StoreElementAdapter
-import com.systematicshoppers.sysho.database.FirebaseUtils
-import com.systematicshoppers.sysho.databinding.FragmentResultsBinding
-import com.systematicshoppers.sysho.model.Datasource
 
 class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
@@ -49,14 +41,21 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
         mapView.onCreate(savedInstanceState)
 
         mapView.getMapAsync { googleMap ->
-            var lat = viewModel.currentLat.value ?: 0.0
-            var long = viewModel.currentLong.value ?: 0.0
-            val centerLatLng = LatLng(lat, long)
-            FirebaseUtils().fireStoreDatabase.collection("stores")
-                .get()
-                .addOnSuccessListener {
-                    //TODO("Get a list of all lat and long pairs for all stores")
-                }
+            val gainesville = LatLng(29.6516, -82.3248)
+            googleMap.addMarker(MarkerOptions().position(gainesville).title("Gainesville, Florida"))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gainesville, 10f))
+            // var lat = viewModel.currentLat.value ?: 23.0
+            // var long = viewModel.currentLong.value ?: -83.0
+            // val markerOptions = MarkerOptions()
+            // val centerLatLng = LatLng(lat, long)
+            // markerOptions.title("My Location")
+            // markerOptions.position(centerLatLng)
+            // googleMap.addMarker(markerOptions)
+            //FirebaseUtils().fireStoreDatabase.collection("stores")
+            //    .get()
+            //    .addOnSuccessListener {
+            //       //TODO("Get a list of all lat and long pairs for all stores")
+            //    }
         }
 
         return view
