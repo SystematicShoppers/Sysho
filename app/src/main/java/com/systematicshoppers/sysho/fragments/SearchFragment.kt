@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,7 @@ class SearchFragment : Fragment() {
         var anyChecked = false
         val deleteList = arrayListOf<CheckBox>()
         val checkBoxList = arrayListOf<CheckBox>()
+        val quantityList = arrayListOf<TextView>()
         val list = mutableListOf<String>()
 
         navBar?.isVisible = false
@@ -73,7 +75,7 @@ class SearchFragment : Fragment() {
                 shopBtn.text = getString(R.string.ready_to_shop)
                 shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
                 deleteList.clear()
-                Toast.makeText(this.context, checkBoxList.size.toString(), Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, checkBoxList.size.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -115,18 +117,93 @@ class SearchFragment : Fragment() {
             autoCompleteTextView.setOnEditorActionListener { grocery_item, actionId, keyEvent ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (searchbar.text.isNotEmpty()) {
-                        //need a smaller row layout to have checkbox next to text
+                        //need a smaller row layout to have checkbox + text + quantity
                         val rowLayout = LinearLayout(this.context)
                         rowLayout.orientation = LinearLayout.HORIZONTAL
+                        rowLayout.layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            120
+                        )
 
-                        //adds new item onto fragment list
+                        //adds new item onto row
                         val checkBox = CheckBox(this.context)
                         checkBox.text = searchbar.text
                         list.add(checkBox.text.toString())
-                        //adds new item to list and to view
+                        //adds new item to row and to view
                         checkBoxList.add(checkBox)
-                        groceryList.addView(checkBox)
-                        Toast.makeText(this.context, checkBoxList.size.toString(), Toast.LENGTH_SHORT).show()
+                        rowLayout.addView(checkBox)
+
+                        //add buttons and quantity to the a relative view
+                        val relativeLayout = RelativeLayout(this.context)
+                        val quantityLayout = LinearLayout(this.context)
+
+                        val params = RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+
+                        relativeLayout.addView(quantityLayout, params)
+                        //decrease button
+                        val decrease = Button(this.context)
+                        decrease.text = "-"
+                        decrease.textSize = 16.0f
+                        decrease.setTextColor(Color.parseColor("#FFFFFFFF"))
+                        decrease.setBackgroundColor(Color.parseColor("#338a3e"))
+                        quantityLayout.addView(decrease)
+
+                        //quantity
+                        var quantity = TextView(this.context)
+                        quantity.text = "1"
+                        //add quantity to list of quantities
+                        quantityList.add(quantity)
+                        quantityLayout.addView(quantity)
+
+                        //increase button
+                        val increase = Button(this.context)
+                        increase.text = "+"
+                        increase.setTextColor(Color.parseColor("#FFFFFFFF"))
+                        increase.setBackgroundColor(Color.parseColor("#338a3e"))
+                        quantityLayout.addView(increase)
+
+                        //smaller buttons, larger area for number
+                        decrease.layoutParams = LinearLayout.LayoutParams(
+                            100, // set the width to 100px or any other value you need
+                            100,
+                            0.0f
+                        )
+                        quantity.layoutParams = LinearLayout.LayoutParams(
+                            100, // set the width to 100px or any other value you need
+                            100,
+                            0.0f
+                        )
+                        increase.layoutParams = LinearLayout.LayoutParams(
+                            100, // set the width to 100px or any other value you need
+                            100,
+                            0.0f
+                        )
+                        decrease.gravity = Gravity.CENTER
+                        quantity.gravity = Gravity.CENTER
+                        increase.gravity = Gravity.CENTER
+
+
+                        //add quantity to rowLayout
+                        rowLayout.addView(relativeLayout)
+
+                        //add row to the grocery list
+                        groceryList.addView(rowLayout)
+
+
+                        decrease.setOnClickListener {
+                            val quantInt = quantity.text.toString().toInt()
+                            if (quantInt > 1) {
+                                quantity.text = (quantInt - 1).toString()
+                            }
+                        }
+                        increase.setOnClickListener {
+                            val quantInt = quantity.text.toString().toInt()
+                            quantity.text = (quantInt + 1).toString()
+                        }
 
                         //focuses on item added to bottom of list
                         scrollView.fullScroll(View.FOCUS_DOWN)
