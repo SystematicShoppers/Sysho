@@ -28,13 +28,11 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
         val view = inflater.inflate(R.layout.fragment_results, container, false)
         val list = viewModel.resultsList.value
+        var totalPrice: Double
         val mapView = view.findViewById<MapView>(R.id.mapView)
         mapView.onCreate(savedInstanceState)
-        if (list != null) {
-            viewModel.setTotalPrice(viewModel.getTotalPrice(list))
-            // Currently the total price is based off of the product database.
-            // Change to individual store database in the future.
-        }
+        totalPrice = list?.let { viewModel.getTotalPrice(list) } ?: 0.0
+
 
         mapView.getMapAsync { googleMap ->
             val gainesville = LatLng(29.6516, -82.3248)
@@ -44,6 +42,11 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
             viewModel.loadCoordinatesCallback.observe(viewLifecycleOwner) {
                 // TODO: Add all map logic code here. This code will run after the map and firebase data. have been loaded
                 println("Coordinates have been loaded!")
+                viewModel.totalPriceCallback.observe(viewLifecycleOwner) {
+                    // Currently the total price is based off of the product database.
+                    // Change to individual store database in the future.
+                    // TODO: add adapters for recyclerView here, in the totalPriceCallback observer, after all firebase data is present.
+                }
             }
         }
         return view

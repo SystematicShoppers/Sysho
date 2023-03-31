@@ -71,8 +71,10 @@ class SyshoViewModel : ViewModel() {
                         if (itemPrice != null)
                             total += itemPrice
                     }
+                totalPriceCallback(true)
             } catch(e: Exception) {
                 Log.v(TAG, "Could not retrieve item on list from Firebase. Price of ${items[i]} was not included in total.")
+                totalPriceCallback(false)
             }
         }
         return total
@@ -100,6 +102,12 @@ class SyshoViewModel : ViewModel() {
     val loadCoordinatesCallback: LiveData<Boolean> = _loadCoordinatesCallback
     fun loadCoordinatesCallback(result: Boolean) {
         _loadCoordinatesCallback.value = result
+    }
+
+    private val _totalPriceCallback = MutableLiveData<Boolean>()
+    val totalPriceCallback: LiveData<Boolean> = _totalPriceCallback
+    fun totalPriceCallback(result: Boolean) {
+        _totalPriceCallback.value = result
     }
 
 }
