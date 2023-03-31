@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.systematicshoppers.sysho.database.FirebaseUtils
-import com.systematicshoppers.sysho.database.Product
-import com.systematicshoppers.sysho.database.Store
-import com.systematicshoppers.sysho.database.TAG
+import com.systematicshoppers.sysho.database.*
 
 class SyshoViewModel : ViewModel() {
 
@@ -39,6 +36,12 @@ class SyshoViewModel : ViewModel() {
     val listToShop: LiveData<List<String>> = _listToShop
     fun setListToShop(passListToShop: List<String>) {
         _listToShop.value = passListToShop
+    }
+
+    private val _queryList = MutableLiveData<MutableList<QueryItem>>()
+    val queryList: LiveData<MutableList<QueryItem>> = _queryList
+    fun updateQueryList(passQueryList: MutableList<QueryItem>) {
+        _queryList.value = passQueryList
     }
 
     private val _autoComplete = MutableLiveData<List<String>>()

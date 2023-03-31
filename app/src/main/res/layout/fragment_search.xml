@@ -1,53 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Space
+        android:id="@+id/topSpacerOfSearchFragment"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/searchFragmentLogo"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="top|center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topSpacerOfSearchFragment"
         app:srcCompat="@drawable/logo" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchFragmentRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        tools:listitem="@layout/query_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Space
+        android:id="@+id/bottomSpacerOfSearchFragment"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchFragmentRecyclerView">
+
+    </Space>
+
 
     <AutoCompleteTextView
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="bottom"
         android:hint="Search for an item..."
-        android:inputType="textAutoComplete" />
-
-    <!--    <Space-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="250dp"-->
-    <!--        android:layout_weight="1" />-->
-
-
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:id="@+id/grocery_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-    </ScrollView>
+        android:inputType="textAutoComplete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchFragmentLogo" />
 
     <Button
         android:id="@+id/shopBtn"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom|center"
-        android:text="Ready to Shop" />
+        android:text="Ready to Shop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomSpacerOfSearchFragment" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
