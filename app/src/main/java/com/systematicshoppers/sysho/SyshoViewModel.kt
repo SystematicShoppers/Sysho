@@ -59,27 +59,6 @@ class SyshoViewModel : ViewModel() {
         _totalPrice.value = passTotalPrice
     }
 
-    fun getTotalPrice(items: List<String>): Double {
-        var total: Double = 0.0
-        for(i in items.indices) {
-            try {
-                FirebaseUtils().fireStoreDatabase.collection("products").document(items[i])
-                    .get()
-                    .addOnSuccessListener { document ->
-                        val product = document.toObject(Product::class.java)
-                        val itemPrice = product?.price?.toDouble()
-                        if (itemPrice != null)
-                            total += itemPrice
-                    }
-                totalPriceCallback(true)
-            } catch(e: Exception) {
-                Log.v(TAG, "Could not retrieve item on list from Firebase. Price of ${items[i]} was not included in total.")
-                totalPriceCallback(false)
-            }
-        }
-        return total
-    }
-
     private val _resultsList = MutableLiveData<List<String>>()
     val resultsList: LiveData<List<String>> = _resultsList
     fun setResultsList(passResultsList: List<String>) {
@@ -106,7 +85,8 @@ class SyshoViewModel : ViewModel() {
 
     private val _totalPriceCallback = MutableLiveData<Boolean>()
     val totalPriceCallback: LiveData<Boolean> = _totalPriceCallback
-    fun totalPriceCallback(result: Boolean) {
+    fun totalPriceCallback(result: Boolean, total: Double) {
+        setTotalPrice(total)
         _totalPriceCallback.value = result
     }
 

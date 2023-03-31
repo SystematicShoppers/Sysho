@@ -2,6 +2,7 @@
 package com.systematicshoppers.sysho.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.StoreElementAdapter
 import com.systematicshoppers.sysho.database.Coordinates
 import com.systematicshoppers.sysho.database.FirebaseUtils
+import com.systematicshoppers.sysho.database.Product
+import com.systematicshoppers.sysho.database.TAG
 
 class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
@@ -28,17 +31,17 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
         val view = inflater.inflate(R.layout.fragment_results, container, false)
         val list = viewModel.resultsList.value
-        var totalPrice: Double
         val mapView = view.findViewById<MapView>(R.id.mapView)
         mapView.onCreate(savedInstanceState)
-        totalPrice = list?.let { viewModel.getTotalPrice(list) } ?: 0.0
-
 
         mapView.getMapAsync { googleMap ->
             val gainesville = LatLng(29.6516, -82.3248)
             googleMap.addMarker(MarkerOptions().position(gainesville).title("Gainesville, Florida"))
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gainesville, 10f))
             loadCoordinates()
+            if (list != null) {
+                getTotalPrice(list)
+            }
             viewModel.loadCoordinatesCallback.observe(viewLifecycleOwner) {
                 // TODO: Add all map logic code here. This code will run after the map and firebase data. have been loaded
                 println("Coordinates have been loaded!")
@@ -46,6 +49,9 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
                     // Currently the total price is based off of the product database.
                     // Change to individual store database in the future.
                     // TODO: add adapters for recyclerView here, in the totalPriceCallback observer, after all firebase data is present.
+                    if(viewModel.totalPriceCallback.value == true)
+                        println("List total price has been calculated from firebase prices!")
+                    println("List total = $${viewModel.totalPrice.value}")
                 }
             }
         }
@@ -54,6 +60,28 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
     override fun locationIntent() {
         //TODO("Not yet implemented")
+    }
+
+
+    private fun getTotalPrice(items: List<String>) {
+        var total = 0.0
+        for(i in items.indices) {
+            try {
+                FirebaseUtils().fireStoreDatabase.collection("products").document(items[i])
+                    .get()
+                    .addOnSuccessListener { document ->
+                        val product = document.toObject(Product::class.java)
+                        val itemPrice = product?.price?.toDouble()
+                        if (itemPrice != null)
+                            total += itemPrice
+                    }
+                //TODO: bug! At the last document run the callback
+                totalPriceLoaded(true, total)
+            } catch(e: Exception) {
+                Log.v(TAG, "Could not retrieve item on list from Firebase. Price of ${items[i]} was not included in total.")
+                totalPriceLoaded(false, 0.0)
+            }
+        }
     }
 
     private fun loadCoordinates() {
@@ -78,6 +106,11 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
     private fun coordinatesLoaded() {
         viewModel.loadCoordinatesCallback(true)
+    }
+
+    private fun totalPriceLoaded(result: Boolean, total: Double) {
+        viewModel.setTotalPrice(total)
+        viewModel.totalPriceCallback(result, total)
     }
 
 }
