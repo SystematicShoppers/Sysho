@@ -28,15 +28,13 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
         val view = inflater.inflate(R.layout.fragment_results, container, false)
         val list = viewModel.resultsList.value
-
+        val mapView = view.findViewById<MapView>(R.id.mapView)
+        mapView.onCreate(savedInstanceState)
         if (list != null) {
             viewModel.setTotalPrice(viewModel.getTotalPrice(list))
             // Currently the total price is based off of the product database.
             // Change to individual store database in the future.
         }
-
-        val mapView = view.findViewById<MapView>(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
 
         mapView.getMapAsync { googleMap ->
             val gainesville = LatLng(29.6516, -82.3248)
