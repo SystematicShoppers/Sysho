@@ -27,16 +27,12 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_results, container, false)
-        val mapFragment = MapFragment()
-        val supportFragmentManager = parentFragmentManager
         val list = viewModel.resultsList.value
-
 
         if (list != null) {
             viewModel.setTotalPrice(viewModel.getTotalPrice(list))
             // Currently the total price is based off of the product database.
             // Change to individual store database in the future.
-
         }
 
         val mapView = view.findViewById<MapView>(R.id.mapView)
@@ -51,16 +47,7 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
                 // TODO: Add all map logic code here. This code will run after the map and firebase data. have been loaded
                 println("Coordinates have been loaded!")
             }
-            // var lat = viewModel.currentLat.value ?: 23.0
-            // var long = viewModel.currentLong.value ?: -83.0
-            // val markerOptions = MarkerOptions()
-            // val centerLatLng = LatLng(lat, long)
-            // markerOptions.title("My Location")
-            // markerOptions.position(centerLatLng)
-            // googleMap.addMarker(markerOptions)
-
         }
-
         return view
     }
 
