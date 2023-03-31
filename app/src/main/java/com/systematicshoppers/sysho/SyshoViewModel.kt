@@ -95,4 +95,11 @@ class SyshoViewModel : ViewModel() {
         _currentLat.value = passLat
     }
 
+    /**ResultsFragment callbacks **/
+    private val _loadCoordinatesCallback = MutableLiveData<Boolean>()
+    val loadCoordinatesCallback: LiveData<Boolean> = _loadCoordinatesCallback
+    fun loadCoordinatesCallback(result: Boolean) {
+        _loadCoordinatesCallback.value = result
+    }
+
 }

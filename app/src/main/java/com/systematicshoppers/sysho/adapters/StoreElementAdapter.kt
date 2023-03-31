@@ -21,6 +21,7 @@ class StoreElementAdapter(private val context: Context,
     interface ClickListener {
 
         fun locationIntent()
+
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreElementViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.result_item, parent,false)

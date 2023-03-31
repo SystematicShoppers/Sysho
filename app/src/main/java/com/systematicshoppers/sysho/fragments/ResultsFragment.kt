@@ -14,11 +14,13 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.StoreElementAdapter
+import com.systematicshoppers.sysho.database.Coordinates
+import com.systematicshoppers.sysho.database.FirebaseUtils
 
 class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
     private val viewModel: SyshoViewModel by activityViewModels()
-
+    private lateinit var firebaseCoordinates: MutableList<Coordinates>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +46,11 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
             val gainesville = LatLng(29.6516, -82.3248)
             googleMap.addMarker(MarkerOptions().position(gainesville).title("Gainesville, Florida"))
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gainesville, 10f))
+            loadCoordinates()
+            viewModel.loadCoordinatesCallback.observe(viewLifecycleOwner) {
+                // TODO: Add all map logic code here. This code will run after the map and firebase data. have been loaded
+                println("Coordinates have been loaded!")
+            }
             // var lat = viewModel.currentLat.value ?: 23.0
             // var long = viewModel.currentLong.value ?: -83.0
             // val markerOptions = MarkerOptions()
@@ -51,11 +58,7 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
             // markerOptions.title("My Location")
             // markerOptions.position(centerLatLng)
             // googleMap.addMarker(markerOptions)
-            //FirebaseUtils().fireStoreDatabase.collection("stores")
-            //    .get()
-            //    .addOnSuccessListener {
-            //       //TODO("Get a list of all lat and long pairs for all stores")
-            //    }
+
         }
 
         return view
@@ -63,6 +66,30 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
 
     override fun locationIntent() {
         //TODO("Not yet implemented")
+    }
+
+    private fun loadCoordinates() {
+        firebaseCoordinates = mutableListOf()
+        FirebaseUtils().fireStoreDatabase.collection("stores")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                var lat: String
+                var long: String
+                var coordinate: Coordinates
+                querySnapshot.forEach { document ->
+                    lat = document.get("Latitude").toString()
+                    long = document.get("Longitude").toString()
+                    if(lat != "null" && long != "null") {
+                        coordinate = Coordinates(lat.toDouble(), long.toDouble())
+                        firebaseCoordinates.add(coordinate)
+                    }
+                }
+                coordinatesLoaded()
+            }
+    }
+
+    private fun coordinatesLoaded() {
+        viewModel.loadCoordinatesCallback(true)
     }
 
 }
