@@ -74,9 +74,9 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
                         val itemPrice = product?.price?.toDouble()
                         if (itemPrice != null)
                             total += itemPrice
+                        if (i == items.lastIndex)
+                            totalPriceLoaded(true, total)
                     }
-                //TODO: bug! At the last document run the callback
-                totalPriceLoaded(true, total)
             } catch(e: Exception) {
                 Log.v(TAG, "Could not retrieve item on list from Firebase. Price of ${items[i]} was not included in total.")
                 totalPriceLoaded(false, 0.0)
