@@ -4,7 +4,6 @@ package com.systematicshoppers.sysho.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -20,17 +19,16 @@ import com.systematicshoppers.sysho.database.QueryItem
 
 class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
 
-    private val viewModel: SyshoViewModel by activityViewModels()
-    private val checkBoxList: MutableList<CheckBox> = mutableListOf()
     private val deleteList: MutableList<QueryItem> = mutableListOf()
     private val queryList: MutableList<QueryItem> = mutableListOf()
-    private var anyChecked = false
+    private val viewModel: SyshoViewModel by activityViewModels()
     private var autoCompleteList: List<String> = listOf()
+    private lateinit var searchFragmentRecyclerViewAdapter: QueryListAdapter
     private lateinit var searchbar: AutoCompleteTextView
-    private lateinit var list: MutableList<String>
-    private lateinit var groceryList: LinearLayout
     private lateinit var navBar: BottomNavigationView
+    private lateinit var list: MutableList<String>
     private lateinit var shopBtn: Button
+
 
 
     override fun onCreateView(
@@ -38,18 +36,35 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.searchFragmentRecyclerView)
+        list = mutableListOf()
         navBar = activity?.findViewById(R.id.bottomNavigationView)!!
         shopBtn = view.findViewById(R.id.shopBtn)
         searchbar = view.findViewById(R.id.search_bar)
-        list = mutableListOf()
         navBar.isVisible = false
-        val searchFragmentRecyclerViewAdapter = QueryListAdapter(queryList, this)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.searchFragmentRecyclerView)
+        searchFragmentRecyclerViewAdapter = QueryListAdapter(queryList, this)
+
+        /**
+         * This is the setup for the recyclerview display. This replaced the old ScrollView
+         * because there was no cap on the amount of items a list can contain.
+         *
+         * **/
+
         recyclerView.adapter = searchFragmentRecyclerViewAdapter
         val recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
         recyclerView.layoutManager = recyclerViewLayoutManager
-        shopBtnSetOnClick()
 
+
+        /**
+         *
+         * This key listener takes in either hardware key 13 (ENTER) or ENTER on the Android soft keyboard
+         * and builds QueryItems based on the text field. QueryItem is a custom object in the database package
+         * with two fields: a name (String) and isChecked (Boolean). isChecked is used in the recyclerview adapter
+         * and shopbtn to control states of the fragments UI. The listener will also handle logic, throwing any
+         * entry that is not an auto complete entry or is already listed. Anytime ENTER is triggered, focus is
+         * brought back to the searchbar.
+         *
+         * **/
 
         searchbar.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
@@ -76,8 +91,53 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
             }
         }
 
+        /**
+         * The shop button can be manipulated in two ways: one from this click listener,
+         * and another from the QueryListAdapter.ClickListener. If the QLA listener is triggered,
+         * the call goes through a wrapper onCheckBoxList() to hand over logic to the fragment at
+         * onCheckBoxChecked(). Here the button will change state between ready/delete if any
+         * box is checked. The shopBtn listener has the following logic:
+         *
+         * 1. check to see if any boxes are checked.
+         * 2. if nothing is checked, clear 'list' then update 'list' and send it to the viewmodel. This will search firebase
+         *    based on name and retrieve those products in the ResultsFragment. Then transition.
+         * 3. if something is checked it will call the adapter to remove any checked items, change
+         *    back to a ready state.
+         *
+         * **/
+
+        shopBtn.setOnClickListener {
+            var somethingIsChecked = false
+            for(i in queryList.indices) {
+                if (queryList[i].isChecked)
+                    somethingIsChecked = true
+            }
+            if (!somethingIsChecked) {
+                navBar.isVisible = true
+                list = getProductList(queryList, list)
+                viewModel.setResultsList(list)
+                parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .commit()
+                view?.findNavController()?.navigate(R.id.action_searchFragment_to_resultsFragment)
+            }
+            else { //the button is in Delete mode
+                searchFragmentRecyclerViewAdapter.removeItems(deleteList)
+                shopBtn.text = getString(R.string.ready_to_shop)
+                shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
+                deleteList.clear()
+            }
+        }
 
 
+        /**
+         *
+         * The viewmodel here is taking all data from firebase's product database and creating an
+         * autocomplete list from it. Because firebase is async (see documentation for Firebase Promises),
+         * this list may not appear if the user opens the app and tries to enter information quickly. It
+         * needs 1 - 2 seconds to load.
+         *
+         * **/
 
         viewModel.autoComplete.observe(viewLifecycleOwner) { it ->
             autoCompleteList = it
@@ -87,35 +147,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
              searchbar.setAdapter(adapter)
         }
 
-        viewModel.queryList.observe(viewLifecycleOwner) { it ->
-            println("Observing checked box")
-        }
         return view
-    }
-
-    private fun shopBtnSetOnClick() {
-        shopBtn.setOnClickListener {
-            if (!anyChecked) {
-                navBar.isVisible = true
-                viewModel.setResultsList(list)
-                //TODO: update list for viewModel after deletion
-                parentFragmentManager.beginTransaction()
-                    .addToBackStack(null)
-                    .commit()
-                view?.findNavController()?.navigate(R.id.action_searchFragment_to_resultsFragment)
-            }
-            else { //the button is in Delete mode
-                for (queryToDelete in deleteList) {
-                    if(queryList.contains(queryToDelete))
-                        queryList.remove(queryToDelete)
-                }
-                //reset to Ready to shop
-                anyChecked = false
-                shopBtn.text = getString(R.string.ready_to_shop)
-                shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
-                deleteList.clear()
-            }
-        }
     }
 
 
@@ -127,12 +159,12 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         return true
     }
 
+    //wrapper
     override fun onCheckBoxClick() {
         onCheckBoxChecked()
     }
 
     private fun onCheckBoxChecked() {
-        // Check if any of the checkboxes are checked
         var somethingIsChecked = false
         for(i in queryList.indices) {
             if(queryList[i].isChecked) {
@@ -142,15 +174,29 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
             if(!queryList[i].isChecked && deleteList.contains(queryList[i]))
                 deleteList.remove(queryList[i])
             if(somethingIsChecked) {
-                shopBtn.text = "Delete"
+                shopBtn.text = getString(R.string.delete_btn)
                 shopBtn.setBackgroundColor(Color.RED)
             }
             else {
                 shopBtn.text = getString(R.string.ready_to_shop)
                 shopBtn.setBackgroundColor(Color.parseColor("#66bb6a"))
-                deleteList.clear()
             }
         }
+    }
+
+    private fun getProductList(queryList: MutableList<QueryItem>, list: MutableList<String>): MutableList<String> {
+        if(list.isEmpty()) {
+            for (i in queryList.indices) {
+                list.add(queryList[i].name)
+            }
+        }
+        else {
+            list.clear()
+            for (i in queryList.indices) {
+                list.add(queryList[i].name)
+            }
+        }
+        return list
     }
 
 }

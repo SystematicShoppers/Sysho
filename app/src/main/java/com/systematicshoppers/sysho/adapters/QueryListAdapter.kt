@@ -38,6 +38,16 @@ class QueryListAdapter(private val queryList: MutableList<QueryItem>, private va
     override fun getItemCount(): Int {
         return queryList.size
     }
+    fun removeItems(deleteList: MutableList<QueryItem>) {
+        for (deleteItem in deleteList) {
+            for (i in queryList.indices.reversed()) {
+                if (queryList[i].name == deleteItem.name) {
+                    queryList.removeAt(i)
+                    notifyItemRemoved(i)
+                }
+            }
+        }
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameTextView: TextView = view.findViewById(R.id.queryItemTextView)
