@@ -25,7 +25,6 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
     private var autoCompleteList: List<String> = listOf()
     private lateinit var searchFragmentRecyclerViewAdapter: QueryListAdapter
     private lateinit var searchbar: AutoCompleteTextView
-    private lateinit var navBar: BottomNavigationView
     private lateinit var list: MutableList<String>
     private lateinit var shopBtn: Button
 
@@ -38,10 +37,8 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.searchFragmentRecyclerView)
         list = mutableListOf()
-        navBar = activity?.findViewById(R.id.bottomNavigationView)!!
         shopBtn = view.findViewById(R.id.shopBtn)
         searchbar = view.findViewById(R.id.search_bar)
-        navBar.isVisible = false
         searchFragmentRecyclerViewAdapter = QueryListAdapter(queryList, this)
 
         /**
@@ -113,7 +110,6 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
                     somethingIsChecked = true
             }
             if (!somethingIsChecked) {
-                navBar.isVisible = true
                 list = getProductList(queryList, list)
                 viewModel.setResultsList(list)
                 parentFragmentManager.beginTransaction()

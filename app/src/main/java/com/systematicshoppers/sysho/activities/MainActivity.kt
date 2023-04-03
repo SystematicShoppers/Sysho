@@ -2,36 +2,31 @@ package com.systematicshoppers.sysho.activities
 
 import android.Manifest
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.*
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.database.FirebaseUtils
-import com.systematicshoppers.sysho.database.Product
 import com.systematicshoppers.sysho.database.SearchList
 import com.systematicshoppers.sysho.database.Store
 import com.systematicshoppers.sysho.databinding.ActivityMainBinding
-import kotlinx.coroutines.async
-import java.util.*
-import kotlin.collections.HashMap
+import com.systematicshoppers.sysho.fragments.ResultsFragment
+import com.systematicshoppers.sysho.fragments.SavedListsFragment
+import com.systematicshoppers.sysho.fragments.SearchFragment
+import com.systematicshoppers.sysho.fragments.SettingsFragment
+
 
 class MainActivity : AppCompatActivity(), LocationListener {
 
@@ -39,9 +34,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private lateinit var navController: NavController
     private lateinit var geocoder: Geocoder
     private lateinit var locationManager: LocationManager
+    private lateinit var currentFragmentName: String
     private val viewModel: SyshoViewModel by viewModels()
     init {
-
         getAutoCompleteList()
     }
 
@@ -51,6 +46,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
         val viewRoot = binding.root
         setContentView(viewRoot)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         viewModel.autoComplete.observe(this,{
             val autoCompleteList = it
         })
@@ -58,11 +56,68 @@ class MainActivity : AppCompatActivity(), LocationListener {
         //The navigation graph has search fragment as home location
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.content) as NavHostFragment
         navController = navHostFragment.navController
+        currentFragmentName = navController.currentDestination.toString()
 
-        //Bottom navigation
-        //Bottom navigation is set to use the navigation graph in nav_menu.xml
-        val nav = binding.bottomNavigationView
-        nav.setupWithNavController(navController)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.nav_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val frame = R.id.content
+        if (currentFragmentName.isEmpty()) {
+            val currentDestination = navController.currentDestination
+            currentFragmentName = currentDestination?.label.toString()
+        }
+        val fragmentManager = supportFragmentManager
+        return when (item.itemId) {
+            R.id.searchFragment -> {
+                if(currentFragmentName != "SearchFragment") {
+                    val newFragment = SearchFragment()
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(frame, newFragment).commit()
+                    currentFragmentName = "SearchFragment"
+                    true
+                } else true
+            }
+            R.id.resultsFragment -> {
+                if(currentFragmentName != "ResultsFragment") {
+                    val newFragment = ResultsFragment()
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(frame, newFragment).commit()
+                    currentFragmentName = "ResultsFragment"
+                    true
+                } else true
+            }
+            R.id.settingsFragment -> {
+                if(currentFragmentName != "SettingsFragment") {
+                    val newFragment = SettingsFragment()
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(frame, newFragment).commit()
+                    currentFragmentName = "SettingsFragment"
+                    true
+                } else true
+            }
+            R.id.logInActivity -> {
+                val intent = Intent(this, LogInActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.savedListsFragment -> {
+                if(currentFragmentName != "SavedListsFragment") {
+                    val newFragment = SavedListsFragment()
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(frame, newFragment).commit()
+                    currentFragmentName = "SavedListsFragment"
+                    true
+                } else true
+            }
+            // add more cases for each menu item
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onStart() {
