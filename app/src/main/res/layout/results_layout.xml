@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="?attr/materialCardViewElevatedStyle"
-    android:id="@+id/allMarketsRVLayout"
+    android:id="@+id/resultsRVLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="4dp"
@@ -23,11 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="Store Name"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Store Name"/>
 
         <TextView
             android:id="@+id/address"
@@ -35,21 +35,30 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/storeName"
             android:layout_alignParentStart="true"
-            android:text="store address"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/storeName" />
+            app:layout_constraintTop_toBottomOf="@+id/storeName"
+            tools:text="store address"/>
 
         <TextView
             android:id="@+id/distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/address"
-            android:text="distance"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/address"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/storeName" />
+            app:layout_constraintTop_toBottomOf="@+id/storeName"
+            tools:text="distance" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/address"
+            app:layout_constraintStart_toStartOf="@+id/distance"
+            app:layout_constraintTop_toTopOf="@+id/storeName"
+            tools:text="total" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

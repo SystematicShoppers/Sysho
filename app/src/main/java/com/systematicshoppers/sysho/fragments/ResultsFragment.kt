@@ -8,32 +8,36 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
-import com.systematicshoppers.sysho.adapters.StoreElementAdapter
+import com.systematicshoppers.sysho.adapters.ResultsAdapter
 import com.systematicshoppers.sysho.database.Coordinates
 import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.Product
 import com.systematicshoppers.sysho.database.TAG
 
-class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
+class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
 
     private val viewModel: SyshoViewModel by activityViewModels()
     private lateinit var firebaseCoordinates: MutableList<Coordinates>
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var resultsAdapter: ResultsAdapter
+    private lateinit var recyclerViewLayoutManager: LinearLayoutManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.fragment_results, container, false)
         val list = viewModel.resultsList.value
+
         val mapView = view.findViewById<MapView>(R.id.mapView)
         mapView.onCreate(savedInstanceState)
-
         mapView.getMapAsync { googleMap ->
             val gainesville = LatLng(29.6516, -82.3248)
             googleMap.addMarker(MarkerOptions().position(gainesville).title("Gainesville, Florida"))
@@ -49,6 +53,11 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
                     // Currently the total price is based off of the product database.
                     // Change to individual store database in the future.
                     // TODO: add adapters for recyclerView here, in the totalPriceCallback observer, after all firebase data is present.
+                    resultsAdapter = ResultsAdapter(requireContext(), requireActivity(), firebaseCoordinates, this)
+                    recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
+                    recyclerView = view.findViewById(R.id.resultsRecyclerView)
+                    recyclerView.adapter = resultsAdapter
+                    recyclerView.layoutManager = recyclerViewLayoutManager
                     if(viewModel.totalPriceCallback.value == true)
                         println("List total price has been calculated from firebase prices!")
                     println("List total = $${viewModel.totalPrice.value}")
@@ -57,11 +66,6 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
         }
         return view
     }
-
-    override fun locationIntent() {
-        //TODO("Not yet implemented")
-    }
-
 
     private fun getTotalPrice(items: List<String>) {
         var total = 0.0
@@ -111,6 +115,10 @@ class ResultsFragment : Fragment(), StoreElementAdapter.ClickListener {
     private fun totalPriceLoaded(result: Boolean, total: Double) {
         viewModel.setTotalPrice(total)
         viewModel.totalPriceCallback(result, total)
+    }
+
+    override fun gotoMap(position: Int, coordinates: Coordinates) {
+        TODO("Not yet implemented")
     }
 
 }

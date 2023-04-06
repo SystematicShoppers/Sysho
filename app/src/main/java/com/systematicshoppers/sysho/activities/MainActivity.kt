@@ -16,6 +16,7 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.systematicshoppers.sysho.LocationViewModel
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.database.FirebaseUtils
@@ -28,41 +29,40 @@ import com.systematicshoppers.sysho.fragments.SearchFragment
 import com.systematicshoppers.sysho.fragments.SettingsFragment
 
 
-class MainActivity : AppCompatActivity(), LocationListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var geocoder: Geocoder
-    private lateinit var locationManager: LocationManager
     private lateinit var currentFragmentName: String
     private val viewModel: SyshoViewModel by viewModels()
+    private val locationViewModel: LocationViewModel by viewModels()
     init {
         getAutoCompleteList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         val viewRoot = binding.root
-        setContentView(viewRoot)
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val toolbar = binding.toolbar
+        setContentView(viewRoot)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        viewModel.autoComplete.observe(this,{
-            val autoCompleteList = it
-        })
-        //Navigation graph (jetpack)
-        //The navigation graph has search fragment as home location
+       // viewModel.autoComplete.observe(this,{
+       //     val autoCompleteList = it
+       // })
+        locationViewModel.startLocationUpdates(this)
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.content) as NavHostFragment
         navController = navHostFragment.navController
         currentFragmentName = navController.currentDestination.toString()
 
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
-
         return true
     }
 
@@ -120,36 +120,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        locationManager.removeUpdates(this)
-    }
-
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-    }
-
-    override fun onProviderEnabled(provider: String) {
-    }
-
-    override fun onProviderDisabled(provider: String) {
-    }
-
-
     private fun getAddresses(geocoder: Geocoder) {
         var addressList: MutableList<Address>?
         var address: Address
@@ -203,10 +173,4 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 }
     }
 
-    override fun onLocationChanged(myLocation: Location) {
-        val latitude = myLocation.latitude
-        val longitude = myLocation.longitude
-        viewModel.setCurrentLat(latitude)
-        viewModel.setCurrentLong(longitude)
-    }
 }
