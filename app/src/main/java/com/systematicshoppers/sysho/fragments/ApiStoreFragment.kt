@@ -66,16 +66,11 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
             try {
                 lat = stores[item].latitude?.toDouble()!!
                 long = stores[item].longitude?.toDouble()!!
-                if (Build.VERSION.SDK_INT >= 33) {
-                    val geocodeListener = Geocoder.GeocodeListener { locations ->
-                        addressList = locations
-                        stores[item].address = addressList!![0]
-                    }
-                    geocoder.getFromLocation(lat, long, 1, geocodeListener)
-                } else {
-                    val addressList = geocoder.getFromLocation(lat, long, 1)
+                val geocodeListener = Geocoder.GeocodeListener { locations ->
+                    addressList = locations
                     stores[item].address = addressList!![0]
                 }
+                geocoder.getFromLocation(lat, long, 1, geocodeListener)
             } catch (e: Exception) {
             }
         }

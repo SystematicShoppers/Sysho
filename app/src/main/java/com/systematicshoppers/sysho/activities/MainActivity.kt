@@ -40,7 +40,12 @@ class MainActivity : AppCompatActivity() {
     init {
         getAutoCompleteList()
     }
-
+/**
+ *
+ * Location updates will begin here once the app is started.
+ * The user should be prompted for permission.
+ *
+ * **/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,9 +54,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewRoot)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-       // viewModel.autoComplete.observe(this,{
-       //     val autoCompleteList = it
-       // })
         locationViewModel.startLocationUpdates(this)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.content) as NavHostFragment

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -117,8 +118,9 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         viewModel.totalPriceCallback(result, total)
     }
 
-    override fun gotoMap(position: Int, coordinates: Coordinates) {
-        TODO("Not yet implemented")
+    override fun gotoMap(address: String, coordinates: Coordinates) {
+        val action = ResultsFragmentDirections.actionResultsFragmentToMapFragment(address, coordinates)
+        findNavController().navigate(action)
     }
 
 }

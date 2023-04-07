@@ -38,7 +38,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/storeName"
-            tools:text="store address"/>
+            tools:text="store address" />
 
         <TextView
             android:id="@+id/distance"
@@ -46,9 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/address"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/address"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/storeName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address"
             tools:text="distance" />
 
         <TextView
@@ -56,8 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/address"
-            app:layout_constraintStart_toStartOf="@+id/distance"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/storeName"
+            app:layout_constraintVertical_bias="1.0"
             tools:text="total" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

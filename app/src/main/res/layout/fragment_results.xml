@@ -17,7 +17,7 @@
             android:id="@+id/resultsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/result_layout"/>
+            tools:listitem="@layout/results_layout"/>
     </FrameLayout>
 
     <Space

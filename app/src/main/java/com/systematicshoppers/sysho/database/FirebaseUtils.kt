@@ -1,15 +1,15 @@
 package com.systematicshoppers.sysho.database
 
-import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.systematicshoppers.sysho.LocationViewModel
-import kotlinx.coroutines.tasks.await
-import java.util.concurrent.CompletableFuture
+
 
 /**
  *
@@ -42,26 +42,26 @@ class FirebaseUtils  {
             }
     }
 
-    fun getAddress(coordinates: Coordinates, geocoder: Geocoder): String {
-        var addressString = ""
+    fun getAddress(coordinates: Coordinates, geocoder: Geocoder, callback: (String) -> Unit) {
         val lat = coordinates.latitude
         val long = coordinates.longitude
-        var address: Address? = null
 
-        try {
+        if (lat != null && long != null) {
             val geocodeListener = Geocoder.GeocodeListener { locations ->
-                address = locations[0]
+                if (locations.isNotEmpty()) {
+                    val address = locations[0]
+                    val addressString = address.getAddressLine(0)
+                    callback(addressString)
+                } else {
+                    Log.e(TAG, "No address found for coordinates: $coordinates")
+                    callback("") // or pass null to indicate that no address was found
+                }
             }
-            if (lat != null && long != null) {
-                geocoder.getFromLocation(lat, long, 1, geocodeListener)
-                addressString = address?.getAddressLine(0).toString()
-            }
-            else
-                Log.e(TAG, "Latitude or longitude were missing from Coordinates. Could not find address.")
-        } catch (e: Exception) {
-            Log.e(TAG, "Geocoder failed to call getLocation. Requires SDK 33 or higher")
+            geocoder.getFromLocation(lat, long, 1, geocodeListener)
+        } else {
+            Log.e(TAG, "Latitude or longitude were missing from Coordinates. Could not find address.")
+            callback("") // or pass null to indicate that no address was found
         }
-        return addressString
     }
 
 }
@@ -81,12 +81,12 @@ class FirebaseLocationUtils(private val activity: FragmentActivity) {
                 coordinates.latitude!!, coordinates.longitude!!,
                 distance
             )
+            return distance[0] / 1609.344 //distance in miles
         }
         else {
             Log.e(TAG, "Distance could not be calculated. Either current location was not provided, or Firebase failed to retrieve coordinates")
             return 0.0
         }
-        return distance[0].toDouble()
     }
 }
 
