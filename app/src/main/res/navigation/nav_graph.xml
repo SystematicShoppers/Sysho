@@ -44,18 +44,6 @@
             app:destination="@id/searchFragment"
             app:popUpTo="@id/searchFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_resultsFragment_to_mapFragment"
-            app:destination="@id/mapFragment"
-            app:popUpTo="@+id/resultsFragment"
-            app:popUpToInclusive="true">
-            <argument
-                android:name="address"
-                app:argType="string" />
-            <argument
-                android:name="coordinates"
-                app:argType=".database.Coordinates" />
-        </action>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -90,13 +78,4 @@
         android:name="com.systematicshoppers.sysho.activities.LogInActivity"
         android:label="LogInActivity"
         tools:layout="@layout/activity_login"/>
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.systematicshoppers.sysho.fragments.MapFragment"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" >
-        <action
-            android:id="@+id/action_mapFragment_to_resultsFragment"
-            app:destination="@id/resultsFragment" />
-    </fragment>
 </navigation>

@@ -1,6 +1,8 @@
 
 package com.systematicshoppers.sysho.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,13 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.systematicshoppers.sysho.LocationViewModel
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ResultsAdapter
@@ -26,6 +24,7 @@ import com.systematicshoppers.sysho.database.TAG
 class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
 
     private val viewModel: SyshoViewModel by activityViewModels()
+    private val locationViewModel: LocationViewModel by activityViewModels()
     private lateinit var firebaseCoordinates: MutableList<Coordinates>
     private lateinit var recyclerView: RecyclerView
     private lateinit var resultsAdapter: ResultsAdapter
@@ -37,23 +36,15 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         val view = inflater.inflate(R.layout.fragment_results, container, false)
         val list = viewModel.resultsList.value
 
-        val mapView = view.findViewById<MapView>(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync { googleMap ->
-            val gainesville = LatLng(29.6516, -82.3248)
-            googleMap.addMarker(MarkerOptions().position(gainesville).title("Gainesville, Florida"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gainesville, 10f))
-            loadCoordinates()
-            if (list != null) {
-                getTotalPrice(list)
-            }
+        loadCoordinates()
+        if (list != null) {
+            getTotalPrice(list)
+        }
             viewModel.loadCoordinatesCallback.observe(viewLifecycleOwner) {
-                // TODO: Add all map logic code here. This code will run after the map and firebase data. have been loaded
                 println("Coordinates have been loaded!")
                 viewModel.totalPriceCallback.observe(viewLifecycleOwner) {
                     // Currently the total price is based off of the product database.
                     // Change to individual store database in the future.
-                    // TODO: add adapters for recyclerView here, in the totalPriceCallback observer, after all firebase data is present.
                     resultsAdapter = ResultsAdapter(requireContext(), requireActivity(), firebaseCoordinates, this)
                     recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
                     recyclerView = view.findViewById(R.id.resultsRecyclerView)
@@ -64,7 +55,6 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                     println("List total = $${viewModel.totalPrice.value}")
                 }
             }
-        }
         return view
     }
 
@@ -119,8 +109,12 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
     }
 
     override fun gotoMap(address: String, coordinates: Coordinates) {
-        val action = ResultsFragmentDirections.actionResultsFragmentToMapFragment(address, coordinates)
-        findNavController().navigate(action)
+        val origin = locationViewModel.currentLocation.value
+        val geoUri = "google.navigation:q=$address&dirflg=d&origin=${origin?.latitude},${origin?.longitude}"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(geoUri))
+        intent.setPackage("com.google.android.apps.maps")
+        startActivity(intent)
     }
+
 
 }
