@@ -2,14 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/apiProductFragment"
-        android:title="@string/add_delete_product"
+        android:title="@string/product_database"
         android:icon="@drawable/ic_baseline_add_24" />
     <item
-        android:id="@+id/resultsFragment"
-        android:title="@string/add_delete_store"
+        android:id="@+id/apiStoreFragment"
+        android:title="@string/store_database"
         android:icon="@drawable/ic_baseline_add_store_24"/>
-    <item
-        android:id="@+id/settingsFragment"
-        android:title="@string/modify_prices"
-        android:icon="@drawable/ic_baseline_attach_money_24"/>
 </menu>

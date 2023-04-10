@@ -2,12 +2,14 @@ package com.systematicshoppers.sysho.fragments
 
 import android.location.Address
 import android.location.Geocoder
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -36,6 +38,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
         val storeID = view.findViewById<TextView>(R.id.storeID_at_interface)
         val address = view.findViewById<TextView>(R.id.address_at_interface)
         val storeName = view.findViewById<TextView>(R.id.storeName_at_interface)
+        val imageLogo = view.findViewById<ImageView>(R.id.apiStoreLogo)
         val recyclerView = view.findViewById<RecyclerView>(R.id.store_interface_recycler_view)
         val geocoder: Geocoder = Geocoder(requireContext(), Locale.getDefault())
         supportFragmentManager = parentFragmentManager
@@ -50,6 +53,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
             }
             storeName.text = store?.store
             storeID.text = store?.storeId
+            setLogoImage(storeName.text as String?, imageLogo)
             apiStoresSelectAdapter = ApiStoresSelectAdapter(requireContext(), store?.stock, this)
             val recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
             recyclerView.adapter = apiStoresSelectAdapter
@@ -59,6 +63,18 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
             return view
     }
 
+    private fun setLogoImage(store: String?, imageView: ImageView) {
+        when (store) {
+            "WalMart", "Wal Mart", "Wal-Mart", "Wal - Mart", "Walmart" ->
+                imageView.setImageResource(R.drawable.walmart_logo_vector)
+            "Aldi", "aldi" ->
+                imageView.setImageResource(R.drawable.aldi_logo_vector)
+            "Target", "target" ->
+                imageView.setImageResource(R.drawable.target_logo_vector)
+            else ->
+                imageView.setImageResource(android.R.color.transparent)
+        }
+    }
     private fun getAddress(store: Store?, geocoder: Geocoder) {
         var addressList: MutableList<Address>?
         val lat: Double?

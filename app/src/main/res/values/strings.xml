@@ -32,4 +32,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ready_to_shop">Ready to Shop</string>
     <string name="delete_btn">Delete</string>
+    <string name="store_database">Store Database</string>
+    <string name="product_database">Product Database</string>
 </resources>

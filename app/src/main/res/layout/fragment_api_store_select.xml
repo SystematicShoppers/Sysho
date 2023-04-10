@@ -1,29 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
 
-        <TextView
+    <TextView
         android:id="@+id/storeID_at_interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_gravity="center"
         tools:text="100" />
 
     <TextView
         android:id="@+id/storeName_at_interface"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Wal-Mart" />
 
-    <TextView
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars"
+            android:id="@+id/apiStoreLogo" />
+
+        <TextView
         android:id="@+id/address_at_interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

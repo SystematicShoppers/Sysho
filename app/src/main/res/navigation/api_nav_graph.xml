@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_apiStoreFragment_to_apiStoreSelectFragment"
             app:destination="@id/apiStoreSelectFragment" />
+        <action
+            android:id="@+id/action_apiStoreFragment_to_apiProductFragment"
+            app:destination="@id/apiProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/apiStoreSelectFragment"

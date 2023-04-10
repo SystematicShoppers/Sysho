@@ -24,15 +24,27 @@ class ApiActivity: AppCompatActivity() {
         val viewRoot = binding.root
         setContentView(viewRoot)
 
-        //Navigation graph (jetpack)
-        //The navigation graph has search fragment as home location
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.content) as NavHostFragment
         navController = navHostFragment.navController
-        //setupActionBarWithNavController(navController)
 
-        //Bottom navigation
-        //Bottom navigation is set to use the navigation graph in nav_menu.xml
         val nav = binding.bottomNavigationView
         nav.setupWithNavController(navController)
+
+        nav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.apiStoreFragment -> {
+                    navController.popBackStack()
+                    navController.navigate(R.id.apiStoreFragment)
+                    true
+                }
+                R.id.apiProductFragment -> {
+                    navController.popBackStack()
+                    navController.navigate(R.id.apiProductFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 }

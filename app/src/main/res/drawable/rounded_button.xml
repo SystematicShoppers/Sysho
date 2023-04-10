@@ -1,0 +1,14 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Define the background shape -->
+    <item>
+        <shape android:shape="rectangle" >
+            <corners android:radius="240dp" />
+            <solid android:color="@color/green_400" />
+        </shape>
+    </item>
+
+    <!-- Define the click state selector -->
+    <item android:drawable="@drawable/click_selector" />
+
+</layer-list>
