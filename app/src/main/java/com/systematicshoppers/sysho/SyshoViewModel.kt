@@ -93,4 +93,11 @@ class SyshoViewModel : ViewModel() {
         _totalPriceCallback.value = result
     }
 
+    /** Settings **/
+    private val _distanceFilter = MutableLiveData<Double>()
+    val distanceFilter: LiveData<Double> = _distanceFilter
+    fun setDistanceFilter(passDistanceFilter: Double) {
+        _distanceFilter.value = passDistanceFilter
+    }
+
 }

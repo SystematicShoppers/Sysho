@@ -34,4 +34,8 @@
     <string name="delete_btn">Delete</string>
     <string name="store_database">Store Database</string>
     <string name="product_database">Product Database</string>
+    <string name="update_price_dialog">Update Price</string>
+    <string name="activate_sale_dialog">Activate Sale</string>
+    <string name="price_sweep_dialog">Price Sweep</string>
+    <string name="randomize_pricing_dialog">Randomize Pricing</string>
 </resources>

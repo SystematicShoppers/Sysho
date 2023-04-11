@@ -37,10 +37,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var currentFragmentName: String
     private val viewModel: SyshoViewModel by viewModels()
     private val locationViewModel: LocationViewModel by viewModels()
+
+    /**TODO: Load settings in onCreate currently loads default 20 mile distance filter.
+     * TODO: Change to: If logged on... load user preference... else... set to 20
+     *
+     **/
+
     init {
         getAutoCompleteList()
     }
-/**
+
+    /**
  *
  * Location updates will begin here once the app is started.
  * The user should be prompted for permission.
@@ -59,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.content) as NavHostFragment
         navController = navHostFragment.navController
         currentFragmentName = navController.currentDestination.toString()
-
+        loadSettings()
     }
 
 
@@ -173,6 +180,10 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                 }
+    }
+
+    private fun loadSettings() {
+        viewModel.setDistanceFilter(20.0)
     }
 
 }

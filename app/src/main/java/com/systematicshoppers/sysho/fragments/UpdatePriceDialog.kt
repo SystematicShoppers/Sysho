@@ -13,7 +13,7 @@ import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 
 
-class ApiStoreSelectDialogFragment: DialogFragment() {
+class UpdatePriceDialog: DialogFragment() {
 
     val viewModel: SyshoViewModel by activityViewModels()
 

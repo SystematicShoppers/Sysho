@@ -4,12 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
-import com.systematicshoppers.sysho.fragments.ApiStoreSelectDialogFragment
 
 class ApiStoresSelectAdapter(private val context: Context,
                              private val data: List<MutableMap<String, Any>>?,

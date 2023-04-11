@@ -2,19 +2,15 @@ package com.systematicshoppers.sysho.fragments
 
 import android.location.Address
 import android.location.Geocoder
-import android.media.Image
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
@@ -96,10 +92,10 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
     }
 
     override fun updatePrice(position: Int, productData: MutableMap<String, Any>?) {
-        val dialog = ApiStoreSelectDialogFragment()
+        val dialog = ApiStoreDialog()
         val product = Product().mapToProduct(productData)
         viewModel.setProductData(product)
-        dialog.show(supportFragmentManager, "Price Update")
+        dialog.show(supportFragmentManager, "Operation Calls")
     }
 
 }

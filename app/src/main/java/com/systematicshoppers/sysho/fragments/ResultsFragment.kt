@@ -2,6 +2,7 @@
 package com.systematicshoppers.sysho.fragments
 
 import android.content.Intent
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +18,8 @@ import com.systematicshoppers.sysho.LocationViewModel
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ResultsAdapter
-import com.systematicshoppers.sysho.database.Coordinates
-import com.systematicshoppers.sysho.database.FirebaseUtils
-import com.systematicshoppers.sysho.database.Product
-import com.systematicshoppers.sysho.database.TAG
+import com.systematicshoppers.sysho.database.*
+import java.util.*
 
 class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
 
@@ -79,6 +79,12 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         }
     }
 
+    /**
+     *
+     * Firebase loads coordinates data here and then filters out any results
+     * outside of the settings distance filter
+     *
+     * */
     private fun loadCoordinates() {
         firebaseCoordinates = mutableListOf()
         FirebaseUtils().fireStoreDatabase.collection("stores")
@@ -86,13 +92,14 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
             .addOnSuccessListener { querySnapshot ->
                 var lat: String
                 var long: String
-                var coordinate: Coordinates
+                var coordinates: Coordinates
                 querySnapshot.forEach { document ->
                     lat = document.get("Latitude").toString()
                     long = document.get("Longitude").toString()
                     if(lat != "null" && long != "null") {
-                        coordinate = Coordinates(lat.toDouble(), long.toDouble())
-                        firebaseCoordinates.add(coordinate)
+                        coordinates = Coordinates(lat.toDouble(), long.toDouble())
+                        if(filterDistance(coordinates))
+                            firebaseCoordinates.add(coordinates)
                     }
                 }
                 coordinatesLoaded()
@@ -108,6 +115,11 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         viewModel.totalPriceCallback(result, total)
     }
 
+    private fun filterDistance(coordinates: Coordinates): Boolean {
+        val distance = FirebaseLocationUtils(this.requireActivity()).getDistance(coordinates, geocoder = Geocoder(requireContext(), Locale.getDefault()))
+        val maxDistance = viewModel.distanceFilter.value
+        return distance < maxDistance!!
+    }
     override fun gotoMap(address: String, coordinates: Coordinates) {
         val origin = locationViewModel.currentLocation.value
         val geoUri = "google.navigation:q=$address&dirflg=d&origin=${origin?.latitude},${origin?.longitude}"
