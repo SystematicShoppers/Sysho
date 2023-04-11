@@ -46,7 +46,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
                     stores.add(storeDocument.toObject(Store::class.java))
                 }
                 getAddresses(stores, geocoder)
-                apiStoresAdapter = ApiStoresAdapter(requireContext(), stores, this)
+                apiStoresAdapter = context?.let { ApiStoresAdapter(it, stores, this) }!!
                 val apiStoresLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
                 apiStoresRecyclerView = view.findViewById((R.id.api_stores_recycler_view))
                 apiStoresRecyclerView.adapter = apiStoresAdapter
