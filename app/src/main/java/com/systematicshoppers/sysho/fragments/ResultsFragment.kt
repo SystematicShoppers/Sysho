@@ -62,9 +62,12 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                 toggleDistance.setBackgroundResource(R.drawable.toggle_left)
                 togglePrice.setBackgroundResource(R.drawable.toggle_off_right)
                 togglePrice.isChecked = false
-
+                data.sortBy { it.distance }
+                resultsAdapter.notifyDataSetChanged()
             } else {
-                // State 2 is selected
+                toggleDistance.setBackgroundResource(R.drawable.toggle_off_left)
+                toggleDistance.isChecked = false
+                resultsAdapter.notifyDataSetChanged()
             }
         }
 
@@ -73,10 +76,11 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                 togglePrice.setBackgroundResource(R.drawable.toggle_right)
                 toggleDistance.setBackgroundResource(R.drawable.toggle_off_left)
                 toggleDistance.isChecked = false
-
-
+                data.sortBy { it.totalPrice }
             } else {
-                // State 2 is selected
+                togglePrice.setBackgroundResource(R.drawable.toggle_off_right)
+                togglePrice.isChecked = false
+                resultsAdapter.notifyDataSetChanged()
             }
         }
         
