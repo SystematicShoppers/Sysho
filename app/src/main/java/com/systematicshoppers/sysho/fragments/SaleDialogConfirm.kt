@@ -94,7 +94,7 @@ class SaleDialogConfirm: DialogFragment() {
             val price = item["Price"]
             try {
                 var priceAsDouble = price?.toDouble()
-                priceAsDouble = priceAsDouble?.plus((priceAsDouble * (percent / 100)))
+                priceAsDouble = priceAsDouble?.minus((priceAsDouble * (percent / 100)))
                 val df = DecimalFormat("#.00")
                 item["Price"] = df.format(priceAsDouble)
             } catch (e: Exception) {
