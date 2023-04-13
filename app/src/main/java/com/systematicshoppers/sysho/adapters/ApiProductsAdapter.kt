@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Product
 
-class ApiProductsAdapter(private val context: Context, private val data: MutableList<Product>): RecyclerView.Adapter<ApiProductsAdapter.ApiProductsViewHolder>() {
+class ApiProductsAdapter(private val context: Context, private val data: MutableList<Product>, private val onClick: ClickListener): RecyclerView.Adapter<ApiProductsAdapter.ApiProductsViewHolder>() {
     class ApiProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val productIDTextView: TextView = itemView.findViewById(R.id.productIDTextView)
         val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)
@@ -29,6 +29,9 @@ class ApiProductsAdapter(private val context: Context, private val data: Mutable
         val data = data[position]
         holder.productIDTextView.text = "Product ID: ${data.id.toString()}"
         holder.productNameTextView.text = "${data.productName}"
+        holder.itemView.setOnClickListener {
+            onClick.gotoProduct(position, data)
+        }
     }
 
     override fun getItemCount(): Int {

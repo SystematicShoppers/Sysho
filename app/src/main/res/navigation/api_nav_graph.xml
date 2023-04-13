@@ -33,6 +33,6 @@
     </fragment>
     <dialog
         android:id="@+id/apiStoreSelectDialogFragment"
-        android:name="com.systematicshoppers.sysho.fragments.ApiStoreSelectDialogFragment"
+        android:name="com.systematicshoppers.sysho.fragments.UpdatePriceDialog"
         android:label="ApiStoreSelectDialogFragment" />
 </navigation>

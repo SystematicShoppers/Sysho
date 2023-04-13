@@ -11,11 +11,16 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
 import com.systematicshoppers.sysho.R
+import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.activities.ApiActivity
 
 
 class SettingsFragment : Fragment() {
+
+    private val viewModel: SyshoViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,14 +39,15 @@ class SettingsFragment : Fragment() {
         distanceSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val distanceInMiles = progress /1.0
+                viewModel.setDistanceFilter(distanceInMiles)
                 val distanceText = String.format("%.1f miles", distanceInMiles)
                 distanceTextView.text = distanceText
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
-        })
 
+        })
 
         return view
     }

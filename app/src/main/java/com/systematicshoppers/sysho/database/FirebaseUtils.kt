@@ -64,6 +64,27 @@ class FirebaseUtils  {
         }
     }
 
+    fun updateStoreWithStockField(documentId: String) {
+        FirebaseUtils().fireStoreDatabase.collection("stores").document("base")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val stockArray = querySnapshot.get("Stock")
+                if(stockArray != null) {
+                    FirebaseUtils().fireStoreDatabase.collection("stores").document(documentId)
+                        .get()
+                        .addOnSuccessListener { querySnapshot ->
+                            // If "Stock" field is not present or not an ArrayList, set it as an empty ArrayList
+                            querySnapshot.reference.update("Stock", stockArray)
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Stock field added to document ${querySnapshot.id}")
+                                }
+                                .addOnFailureListener { exception ->
+                                    Log.e(TAG, "Failed to update Stock field for document ${querySnapshot.id}: ${exception.message}")
+                                }
+                        }
+                }
+            }
+    }
 }
 
 class FirebaseLocationUtils(private val activity: FragmentActivity) {

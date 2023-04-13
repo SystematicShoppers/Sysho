@@ -40,7 +40,7 @@ class ApiProductFragment : Fragment(), ApiProductsAdapter.ClickListener {
                     products.add(productDocument.toObject(Product::class.java))
                 }
 
-                apiProductsAdapter = ApiProductsAdapter(requireContext(), products)
+                apiProductsAdapter = ApiProductsAdapter(requireContext(), products, this)
                 val apiProductsLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
                 apiProductsRecyclerView = view.findViewById((R.id.api_products_recycler_view))
                 apiProductsRecyclerView.adapter = apiProductsAdapter
@@ -51,6 +51,10 @@ class ApiProductFragment : Fragment(), ApiProductsAdapter.ClickListener {
     }
 
     override fun gotoProduct(position: Int, productData: Product) {
-        TODO("Not yet implemented")
+        viewModel.setProductData(productData)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.content, ApiProductSelectFragment())
+            .addToBackStack(null)
+            .commit()
     }
 }

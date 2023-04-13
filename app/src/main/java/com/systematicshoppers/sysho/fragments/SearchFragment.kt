@@ -113,9 +113,10 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
                 list = getProductList(queryList, list)
                 viewModel.setResultsList(list)
                 parentFragmentManager.beginTransaction()
+                    .replace(R.id.content, ResultsFragment())
                     .addToBackStack(null)
                     .commit()
-                view?.findNavController()?.navigate(R.id.action_searchFragment_to_resultsFragment)
+
             }
             else { //the button is in Delete mode
                 searchFragmentRecyclerViewAdapter.removeItems(deleteList)
