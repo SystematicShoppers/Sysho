@@ -100,4 +100,10 @@ class SyshoViewModel : ViewModel() {
         _distanceFilter.value = passDistanceFilter
     }
 
+    /** Api Dialogs **/
+    private val _salePercent = MutableLiveData<Double>()
+    val salePercent: LiveData<Double> = _salePercent
+    fun setSalePercent(passSalePercent: Double) {
+        _salePercent.value = passSalePercent
+    }
 }

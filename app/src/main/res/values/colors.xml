@@ -8,6 +8,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="toggle_blue">#70C4CF</color>
+    <color name="toggle_grey">#9FA2A0</color>
     <!-- Primary colors -->
     <color name="green_400">#66bb6a</color>
     <color name="green_400_light">#98ee99</color>

@@ -42,7 +42,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
             val store = viewModel.store.value
             getAddress(store, geocoder)
             if(address != null)
-                address.text = store?.address?.getAddressLine(0)
+                address.text = store?.address
             else {
                 val latlongstr = store?.latitude.toString() + " " + store?.longitude.toString()
                 address?.text = latlongstr
@@ -54,6 +54,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
             val recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
             recyclerView.adapter = apiStoresSelectAdapter
             recyclerView.layoutManager = recyclerViewLayoutManager
+
         }
 
             return view
@@ -80,7 +81,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
             long = store.longitude?.toDouble()!!
             val geocodeListener = Geocoder.GeocodeListener { locations ->
                 addressList = locations
-                store.address = addressList!![0]
+                store.address = addressList!![0].toString()
             }
             geocoder.getFromLocation(lat, long, 1, geocodeListener)
         } catch (e: Exception) {

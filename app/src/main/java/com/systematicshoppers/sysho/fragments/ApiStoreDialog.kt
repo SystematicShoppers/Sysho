@@ -48,7 +48,8 @@ class ApiStoreDialog : DialogFragment() {
         }
 
         saleBtn.setOnClickListener {
-
+            val saleDialog = SaleDialog()
+            saleDialog.show(childFragmentManager,"sale_dialog_tag")
         }
 
         priceSweepBtn.setOnClickListener {
