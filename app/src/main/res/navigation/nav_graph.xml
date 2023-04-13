@@ -78,4 +78,5 @@
         android:name="com.systematicshoppers.sysho.activities.LogInActivity"
         android:label="LogInActivity"
         tools:layout="@layout/activity_login"/>
+
 </navigation>

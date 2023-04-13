@@ -30,16 +30,11 @@ class LogInActivity: AppCompatActivity() {
     private val viewModel: SyshoViewModel by viewModels()
     private lateinit var userEmailTextView: TextView //variable to hold a reference to the email text view
 
-
-
-    // [START auth_fui_create_launcher]
-    // See: https://developer.android.com/training/basics/intents/result
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
         this.onSignInResult(res)
     }
-    // [END auth_fui_create_launcher]
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -158,6 +153,11 @@ class LogInActivity: AppCompatActivity() {
                 // Handle the completion of the account deletion process
             }
     }
+
+    //Navigation
+
+
+
 
 //    private fun themeAndLogo() {
 //        val providers = emptyList<AuthUI.IdpConfig>()
