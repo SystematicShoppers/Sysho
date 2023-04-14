@@ -1,27 +1,20 @@
 package com.systematicshoppers.sysho.activities
 
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.systematicshoppers.sysho.R
-import com.systematicshoppers.sysho.SyshoViewModel
-import com.systematicshoppers.sysho.databinding.ActivityLoginBinding
-
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.firebase.ui.auth.AuthUI.IdpConfig
-import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
-import com.firebase.ui.auth.util.ExtraConstants
-import com.google.firebase.auth.ActionCodeSettings
-import com.google.firebase.auth.FirebaseAuth
-
 import android.widget.Toast
-import com.google.android.gms.common.api.ApiException
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
-
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.systematicshoppers.sysho.R
+import com.systematicshoppers.sysho.SyshoViewModel
+import com.systematicshoppers.sysho.databinding.ActivityLoginBinding
 
 
 class LogInActivity: AppCompatActivity() {

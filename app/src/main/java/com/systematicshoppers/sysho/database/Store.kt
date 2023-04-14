@@ -1,9 +1,8 @@
 package com.systematicshoppers.sysho.database
 
-import android.location.Address
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.PropertyName
-import java.lang.reflect.Type
+
 /**
  * get/set properties are coming from Firebase.
  * Address, Distance, and Total Price are all part of the Store

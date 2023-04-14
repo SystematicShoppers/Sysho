@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
-import com.systematicshoppers.sysho.adapters.ApiStoresAdapter
 import com.systematicshoppers.sysho.adapters.ApiStoresSelectAdapter
 import com.systematicshoppers.sysho.database.Product
 import com.systematicshoppers.sysho.database.Store

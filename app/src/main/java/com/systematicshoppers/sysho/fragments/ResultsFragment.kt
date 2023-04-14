@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ToggleButton
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,10 @@ import com.systematicshoppers.sysho.LocationViewModel
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ResultsAdapter
-import com.systematicshoppers.sysho.database.*
+import com.systematicshoppers.sysho.database.Coordinates
+import com.systematicshoppers.sysho.database.FirebaseLocationUtils
+import com.systematicshoppers.sysho.database.FirebaseUtils
+import com.systematicshoppers.sysho.database.Store
 import java.util.*
 
 class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {

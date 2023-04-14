@@ -1,19 +1,14 @@
 package com.systematicshoppers.sysho.adapters
 
 import android.content.Context
-import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Coordinates
-import com.systematicshoppers.sysho.database.FirebaseLocationUtils
-import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.Store
-import java.util.*
 
 class ResultsAdapter(private val context: Context,
                      private val data: MutableList<Store>,

@@ -1,7 +1,5 @@
 package com.systematicshoppers.sysho.fragments
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +9,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
-import com.systematicshoppers.sysho.databinding.DialogActivateSaleBinding
 
 class SaleDialog: DialogFragment() {
 
