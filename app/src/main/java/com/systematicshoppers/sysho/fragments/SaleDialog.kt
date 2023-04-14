@@ -47,6 +47,8 @@ class SaleDialog: DialogFragment() {
                 percent = inputText.toDoubleOrNull() ?: 0.0
                 viewModel.setSalePercent(percent)
                 SaleDialogConfirm().show(parentFragmentManager, "confirm sale price")
+                activateSaleEditTextNumber.text.clear()
+                dismiss()
             } else {
                 activateSaleEditTextNumber.text.clear()
                 Toast.makeText(requireContext(), "Please enter a valid number", Toast.LENGTH_SHORT)

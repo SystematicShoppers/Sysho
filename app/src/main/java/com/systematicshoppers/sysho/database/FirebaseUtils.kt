@@ -65,7 +65,7 @@ class FirebaseUtils  {
     }
 
     fun updateStoreWithStockField(documentId: String) {
-        FirebaseUtils().fireStoreDatabase.collection("stores").document("base")
+        FirebaseUtils().fireStoreDatabase.collection("metadata").document("basePrices")
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val stockArray = querySnapshot.get("Stock")

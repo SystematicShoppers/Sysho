@@ -47,6 +47,74 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/results_layout"/>
 
+        <LinearLayout
+            android:id="@+id/resultsEmptyListErrorDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:elevation="-1dp"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/grey_clipboard"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/resultsEmptyListTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:text="Uh oh. It looks like you are searching with an empty list! Why not go back and pick some items?" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/resultsNoLocationErrorDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/noLocationErrorImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/baseline_search_off_24"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/noLocationErrorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:text="It looks like your Location is not enabled! Please enable Location Settings in your app." />
+
+
+        </LinearLayout>
     </FrameLayout>
 
     <TextView

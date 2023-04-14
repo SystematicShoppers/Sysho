@@ -16,7 +16,7 @@ import com.systematicshoppers.sysho.database.Store
 class ApiStoresAdapter(private val context: Context, private val data: MutableList<Store>, private val onCLick: ClickListener): RecyclerView.Adapter<ApiStoresAdapter.ApiStoresViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiStoresViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.store_item, parent,false)
+        val view = LayoutInflater.from(context).inflate(R.layout.api_store_item, parent,false)
         return ApiStoresViewHolder(view)
     }
 
@@ -26,12 +26,13 @@ class ApiStoresAdapter(private val context: Context, private val data: MutableLi
 
     override fun onBindViewHolder(holder: ApiStoresViewHolder, position: Int) {
         val data = data[position]
-        holder.storeIDTextView.text = data.storeId
-        holder.storeNameTextView.text = data.store
-        holder.locationTextView.text = data.address
-        holder.itemView.setOnClickListener{
-            onCLick.gotoStore(position, data)
-        }
+            holder.storeIDTextView.text = data.storeId
+            holder.storeNameTextView.text = data.store
+            holder.locationTextView.text = data.address
+            holder.itemView.setOnClickListener {
+                onCLick.gotoStore(position, data)
+            }
+
     }
 
     override fun getItemCount(): Int {

@@ -45,6 +45,8 @@ class SweepDialog: DialogFragment() {
                 percent = inputText.toDoubleOrNull() ?: 0.0
                 viewModel.setSalePercent(percent)
                 SweepDialogConfirm().show(parentFragmentManager, "confirm sale price")
+                activateSweepEditTextNumber.text.clear()
+                dismiss()
             } else {
                 activateSweepEditTextNumber.text.clear()
                 Toast.makeText(requireContext(), "Please enter a valid number", Toast.LENGTH_SHORT)

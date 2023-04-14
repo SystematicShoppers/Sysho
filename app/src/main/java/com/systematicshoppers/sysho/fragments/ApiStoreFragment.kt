@@ -28,6 +28,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
 
     private lateinit var apiStoresRecyclerView: RecyclerView
     private lateinit var apiStoresAdapter: ApiStoresAdapter
+    private val stores = mutableListOf<Store>()
     private lateinit var geocoder: Geocoder
     private val viewModel: SyshoViewModel by activityViewModels()
 
@@ -36,7 +37,6 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_api_store, container, false)
-        val stores = mutableListOf<Store>()
         geocoder = Geocoder(requireContext(), Locale.getDefault())
         FirebaseUtils().fireStoreDatabase.collection("stores")
             .get()
@@ -51,6 +51,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
                 apiStoresRecyclerView = view.findViewById((R.id.api_stores_recycler_view))
                 apiStoresRecyclerView.adapter = apiStoresAdapter
                 apiStoresRecyclerView.layoutManager = apiStoresLayoutManager
+
 
             }
 
@@ -68,7 +69,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
                 long = stores[item].longitude?.toDouble()!!
                 val geocodeListener = Geocoder.GeocodeListener { locations ->
                     addressList = locations
-                    stores[item].address = addressList!![0].toString()
+                    stores[item].address = addressList!![0].getAddressLine(0).toString()
                 }
                 geocoder.getFromLocation(lat, long, 1, geocodeListener)
             } catch (e: Exception) {

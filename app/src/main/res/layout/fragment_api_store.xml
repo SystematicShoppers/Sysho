@@ -14,5 +14,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_gravity="start"
-        tools:listitem="@layout/store_item"/>
+        tools:listitem="@layout/api_store_item"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

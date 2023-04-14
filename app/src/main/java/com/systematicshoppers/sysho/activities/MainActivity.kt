@@ -19,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.systematicshoppers.sysho.LocationViewModel
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
+import com.systematicshoppers.sysho.database.FirebaseLocationUtils
 import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.SearchList
 import com.systematicshoppers.sysho.database.Store
@@ -62,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         locationViewModel.startLocationUpdates(this)
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.content) as NavHostFragment
         navController = navHostFragment.navController
         currentFragmentName = navController.currentDestination.toString()

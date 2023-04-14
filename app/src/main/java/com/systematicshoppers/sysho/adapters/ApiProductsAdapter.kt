@@ -27,11 +27,21 @@ class ApiProductsAdapter(private val context: Context, private val data: Mutable
 
     override fun onBindViewHolder(holder: ApiProductsViewHolder, position: Int) {
         val data = data[position]
-        holder.productIDTextView.text = "Product ID: ${data.id.toString()}"
-        holder.productNameTextView.text = "${data.productName}"
-        holder.itemView.setOnClickListener {
-            onClick.gotoProduct(position, data)
+        if(data.id == null) {
+            holder.itemView.visibility = View.GONE
+            holder.productNameTextView.text = "Unknown Item"
         }
+        else {
+            holder.productIDTextView.text = "Product ID: ${data.id.toString()}"
+            holder.productNameTextView.text = "${data.productName}"
+            holder.itemView.setOnClickListener {
+                onClick.gotoProduct(position, data)
+            }
+        }
+    }
+
+    private fun removeData(data: Product) {
+
     }
 
     override fun getItemCount(): Int {

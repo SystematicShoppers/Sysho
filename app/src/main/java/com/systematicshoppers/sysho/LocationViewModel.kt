@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModel
 class LocationViewModel : ViewModel(), LocationListener {
     private lateinit var locationManager: LocationManager
     val currentLocation = MutableLiveData<Location>()
+    val isLocationEnabled = MutableLiveData<Boolean>()
+    val isLocationPermissionGranted = MutableLiveData<Boolean>()
 
     fun startLocationUpdates(context: Context) {
         locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -32,6 +34,7 @@ class LocationViewModel : ViewModel(), LocationListener {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSION
             )
+            isLocationPermissionGranted.value = false
         } else {
             // Permission granted, start requesting location updates
             locationManager.requestLocationUpdates(
@@ -40,7 +43,9 @@ class LocationViewModel : ViewModel(), LocationListener {
                 0f,
                 this
             )
+            isLocationPermissionGranted.value = true
         }
+        isLocationEnabled.value = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     override fun onLocationChanged(location: Location) {

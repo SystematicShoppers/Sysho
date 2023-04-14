@@ -33,6 +33,7 @@ class ApiStoresSelectAdapter(private val context: Context,
         holder.updateBtn.setOnClickListener {
             onCLick.updatePrice(position, data)
         }
+
     }
 
     override fun getItemCount(): Int {

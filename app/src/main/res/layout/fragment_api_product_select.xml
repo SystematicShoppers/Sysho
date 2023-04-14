@@ -9,25 +9,29 @@
         android:id="@+id/apiProductSelectId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Debug"
+        android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Product ID: 100"/>
+        tools:text="Product ID: 100" />
 
     <TextView
         android:id="@+id/apiProductSelectName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/apiProductSelectId"
         app:layout_constraintStart_toStartOf="@+id/apiProductSelectId"
         app:layout_constraintTop_toBottomOf="@+id/apiProductSelectId"
-        tools:text="Chicken Fingers"/>
+        tools:text="Chicken Fingers" />
 
     <FrameLayout
         android:id="@+id/apiProductSelectPriceGraph"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
