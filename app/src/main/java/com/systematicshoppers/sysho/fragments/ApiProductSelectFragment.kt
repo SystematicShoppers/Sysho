@@ -65,13 +65,13 @@ class ApiProductSelectFragment: Fragment() {
             }
 
             // Create a LineDataSet from the Entry objects
-            val dataSet = LineDataSet(entries, "Price")
+            val dataSet = LineDataSet(entries, "Price Point for all Stores")
 
             // Customize the appearance of the LineDataSet
-            dataSet.color = ColorTemplate.VORDIPLOM_COLORS[0]
-            dataSet.setCircleColor(ColorTemplate.VORDIPLOM_COLORS[0])
+            dataSet.color = Color.BLUE // Set the line color to blue
+            dataSet.setCircleColor(Color.TRANSPARENT) // Set the circle color to transparent
             dataSet.lineWidth = 1.5f
-            dataSet.circleRadius = 4f
+            dataSet.circleRadius = 0f // Set circle radius to 0 to disable points
             dataSet.setDrawCircleHole(false)
             dataSet.valueTextSize = 9f
             dataSet.setDrawValues(false)
@@ -120,7 +120,7 @@ class ApiProductSelectFragment: Fragment() {
                         }
                     }
                 }
-                for (price in priceData.indices) {
+                for (price in priceData) {
                     try {
                         priceDataToDouble.add(price.toDouble())
                     }
