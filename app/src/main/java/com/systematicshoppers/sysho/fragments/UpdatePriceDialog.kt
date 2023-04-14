@@ -39,8 +39,10 @@ class UpdatePriceDialog: DialogFragment() {
         updateBtn.setOnClickListener{
             salePrice.text = "" //resets string value to prevent duplicate entries displaying
             viewModel.setDialogEditText(editText.text.toString())
-            if (viewModel.dialogEditText.value != null)
+            if (viewModel.dialogEditText.value != null) {
                 updatePrice() {}
+                viewModel.notifyApiStoreAdapter(true)
+            }
         }
         closeBtn.setOnClickListener {
             dismiss()

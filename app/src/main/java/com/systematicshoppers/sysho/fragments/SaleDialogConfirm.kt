@@ -42,6 +42,7 @@ class SaleDialogConfirm: DialogFragment() {
         activateSaleYesBtn.setOnClickListener{
             val percent = viewModel.salePercent.value ?: 0.0
             setSale(percent) {
+                viewModel.notifyApiStoreAdapter(true)
                 dismiss()
             }
         }

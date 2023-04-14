@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.SetOptions
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
+import com.systematicshoppers.sysho.adapters.ApiStoresAdapter
 import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.TAG
 import java.text.DecimalFormat
@@ -42,6 +43,7 @@ class SweepDialogConfirm: DialogFragment() {
         activateSweepYesBtn.setOnClickListener{
             val percent = viewModel.salePercent.value ?: 0.0
             setSweep(percent) {
+                viewModel.notifyApiStoreAdapter(true)
                 dismiss()
             }
         }

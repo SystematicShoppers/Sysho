@@ -106,4 +106,13 @@ class SyshoViewModel : ViewModel() {
     fun setSalePercent(passSalePercent: Double) {
         _salePercent.value = passSalePercent
     }
+
+    /** Api Updates **/
+    /** Boolean toggles to trigger observer. Simple function to reset adapter. **/
+    private val _apiStoreAdapterNotice = MutableLiveData<Boolean>()
+    val apiStoreAdapterNotice: LiveData<Boolean> = _apiStoreAdapterNotice
+    @Suppress("RedundantIf")
+    fun notifyApiStoreAdapter(passNotice: Boolean) {
+        _apiStoreAdapterNotice.value = passNotice
+    }
 }

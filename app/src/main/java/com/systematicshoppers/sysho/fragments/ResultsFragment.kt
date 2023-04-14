@@ -10,7 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.ToggleButton
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,18 +46,39 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         list = viewModel.resultsList.value
         toggleDistance = view.findViewById(R.id.filterDistance)
         togglePrice = view.findViewById(R.id.filterPrice)
-        if (list != null) {
-            loadStores { storesLoaded ->
-                getTotalPrice { pricesLockedIn, total ->
-                    getAddresses()
-                    getDistances()
-                    resultsAdapter = ResultsAdapter(requireContext(), data, this)
-                    recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
-                    recyclerView = view.findViewById(R.id.resultsRecyclerView)
-                    recyclerView.adapter = resultsAdapter
-                    recyclerView.layoutManager = recyclerViewLayoutManager
+        if (locationViewModel.isLocationEnabled.value == true &&
+            locationViewModel.isLocationPermissionGranted.value == true)  {
+            if (list?.isNotEmpty()!!) {
+                loadStores { storesLoaded ->
+                    getTotalPrice { pricesLockedIn, total ->
+                        getAddresses()
+                        getDistances()
+                        resultsAdapter = ResultsAdapter(requireContext(), data, this)
+                        recyclerViewLayoutManager =
+                            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                        recyclerView = view.findViewById(R.id.resultsRecyclerView)
+                        recyclerView.adapter = resultsAdapter
+                        recyclerView.layoutManager = recyclerViewLayoutManager
+                    }
                 }
             }
+            //If list is sent as empty
+            else {
+                val errorEmptyListLayout: LinearLayout = view.findViewById(R.id.resultsEmptyListErrorDisplay)
+                errorEmptyListLayout.visibility = View.VISIBLE
+                toggleDistance.visibility = View.INVISIBLE
+                togglePrice.visibility = View.INVISIBLE
+                view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
+            }
+
+        }
+        //If location permissions are not active
+        else {
+            val errorNoLocationLayout: LinearLayout = view.findViewById(R.id.resultsNoLocationErrorDisplay)
+            errorNoLocationLayout.visibility = View.VISIBLE
+            toggleDistance.visibility = View.INVISIBLE
+            togglePrice.visibility = View.INVISIBLE
+            view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
         }
 
         toggleDistance.setOnCheckedChangeListener { _, isChecked ->

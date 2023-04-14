@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
+import com.systematicshoppers.sysho.adapters.ApiStoresAdapter
 import com.systematicshoppers.sysho.adapters.ApiStoresSelectAdapter
 import com.systematicshoppers.sysho.database.Product
 import com.systematicshoppers.sysho.database.Store
@@ -23,8 +24,10 @@ import java.util.*
 class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
 
     private val viewModel: SyshoViewModel by activityViewModels()
+    private lateinit var recyclerView: RecyclerView
     private lateinit var apiStoresSelectAdapter: ApiStoresSelectAdapter
     private lateinit var supportFragmentManager: FragmentManager
+    private lateinit var store: Store
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,29 +38,30 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
         val address = view.findViewById<TextView>(R.id.address_at_interface)
         val storeName = view.findViewById<TextView>(R.id.storeName_at_interface)
         val imageLogo = view.findViewById<ImageView>(R.id.apiStoreLogo)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.store_interface_recycler_view)
         val geocoder: Geocoder = Geocoder(requireContext(), Locale.getDefault())
+        recyclerView = view.findViewById(R.id.store_interface_recycler_view)
         supportFragmentManager = parentFragmentManager
         viewModel.store.observe(viewLifecycleOwner) {
-            val store = viewModel.store.value
+            store = viewModel.store.value!!
             getAddress(store, geocoder)
             if(address != null)
-                address.text = store?.address
+                address.text = store.address
             else {
-                val latlongstr = store?.latitude.toString() + " " + store?.longitude.toString()
+                val latlongstr = store.latitude.toString() + " " + store.longitude.toString()
                 address?.text = latlongstr
             }
-            storeName.text = store?.store
-            storeID.text = store?.storeId
+            storeName.text = store.store
+            storeID.text = store.storeId
             setLogoImage(storeName.text as String?, imageLogo)
-            apiStoresSelectAdapter = ApiStoresSelectAdapter(requireContext(), store?.stock, this)
+            apiStoresSelectAdapter = ApiStoresSelectAdapter(requireContext(), store.stock, this)
             val recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
             recyclerView.adapter = apiStoresSelectAdapter
             recyclerView.layoutManager = recyclerViewLayoutManager
-
+            viewModel.apiStoreAdapterNotice.observe(viewLifecycleOwner) {
+                apiStoresSelectAdapter.notifyDataSetChanged()
+            }
         }
-
-            return view
+        return view
     }
 
     private fun setLogoImage(store: String?, imageView: ImageView) {
@@ -81,7 +85,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
             long = store.longitude?.toDouble()!!
             val geocodeListener = Geocoder.GeocodeListener { locations ->
                 addressList = locations
-                store.address = addressList!![0].toString()
+                store.address = addressList!![0].getAddressLine(0).toString()
             }
             geocoder.getFromLocation(lat, long, 1, geocodeListener)
         } catch (e: Exception) {
@@ -97,6 +101,14 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
         val product = Product().mapToProduct(productData)
         viewModel.setProductData(product)
         dialog.show(supportFragmentManager, "Operation Calls")
+    }
+
+    private fun reloadAdapter(view: View) {
+        apiStoresSelectAdapter = ApiStoresSelectAdapter(requireContext(), store.stock, this)
+        val recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
+        recyclerView.adapter = apiStoresSelectAdapter
+        recyclerView.layoutManager = recyclerViewLayoutManager
+
     }
 
 }
