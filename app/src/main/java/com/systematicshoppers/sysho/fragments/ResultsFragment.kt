@@ -80,16 +80,6 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                 view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
             }
         }
-        //If list is sent as empty
-        else {
-            val errorEmptyListLayout: LinearLayout =
-                view.findViewById(R.id.resultsEmptyListErrorDisplay)
-            errorEmptyListLayout.visibility = View.VISIBLE
-            toggleDistance.visibility = View.INVISIBLE
-            togglePrice.visibility = View.INVISIBLE
-            view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
-        }
-
 
         //If location permissions are not active
         if(locationViewModel.isLocationEnabled.value != true ||
