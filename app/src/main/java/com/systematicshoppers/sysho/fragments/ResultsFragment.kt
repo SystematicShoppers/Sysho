@@ -63,6 +63,14 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                         }
                     }
                 }
+                else {
+                    val errorEmptyListLayout: LinearLayout =
+                        view.findViewById(R.id.resultsEmptyListErrorDisplay)
+                    errorEmptyListLayout.visibility = View.VISIBLE
+                    toggleDistance.visibility = View.INVISIBLE
+                    togglePrice.visibility = View.INVISIBLE
+                    view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
+                }
             } catch (e: Exception) {
                 val errorEmptyListLayout: LinearLayout =
                     view.findViewById(R.id.resultsEmptyListErrorDisplay)
