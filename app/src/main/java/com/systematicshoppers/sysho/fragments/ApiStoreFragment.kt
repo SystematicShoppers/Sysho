@@ -69,7 +69,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
                 long = stores[item].longitude?.toDouble()!!
                 val geocodeListener = Geocoder.GeocodeListener { locations ->
                     addressList = locations
-                    stores[item].address = addressList!![0].toString()
+                    stores[item].address = addressList!![0].getAddressLine(0).toString()
                 }
                 geocoder.getFromLocation(lat, long, 1, geocodeListener)
             } catch (e: Exception) {
