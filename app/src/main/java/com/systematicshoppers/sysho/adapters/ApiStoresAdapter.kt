@@ -26,15 +26,13 @@ class ApiStoresAdapter(private val context: Context, private val data: MutableLi
 
     override fun onBindViewHolder(holder: ApiStoresViewHolder, position: Int) {
         val data = data[position]
-        if (data.storeId != null) {
             holder.storeIDTextView.text = data.storeId
             holder.storeNameTextView.text = data.store
             holder.locationTextView.text = data.address
-
             holder.itemView.setOnClickListener {
                 onCLick.gotoStore(position, data)
             }
-        }
+
     }
 
     override fun getItemCount(): Int {

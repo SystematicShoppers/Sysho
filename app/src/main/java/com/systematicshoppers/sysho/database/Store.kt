@@ -14,7 +14,6 @@ data class Store(
     @get:PropertyName("Longitude") @set:PropertyName("Longitude") var longitude : String ? = null,
     @get:PropertyName("Store") @set:PropertyName("Store") var store : String ? = null,
     @get:PropertyName("StoreID") @set:PropertyName("StoreID") var storeId : String ? = null,
-   // @get:PropertyName("Products") @set:PropertyName("Products") var products : List<Int> ? = null,
     @get:PropertyName("Stock") @set:PropertyName("Stock") var stock : List<MutableMap<String,Any>> ? = null,
     var address: String? = null,
     var distance: Double? = null,
