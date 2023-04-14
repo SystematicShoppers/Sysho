@@ -33,7 +33,6 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
     private lateinit var data: MutableList<Store>
     private lateinit var toggleDistance: ToggleButton
     private lateinit var togglePrice: ToggleButton
-    private lateinit var firebaseCoordinates: MutableList<Coordinates>
     private lateinit var recyclerView: RecyclerView
     private lateinit var resultsAdapter: ResultsAdapter
     private lateinit var recyclerViewLayoutManager: LinearLayoutManager
@@ -47,34 +46,48 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         toggleDistance = view.findViewById(R.id.filterDistance)
         togglePrice = view.findViewById(R.id.filterPrice)
         if (locationViewModel.isLocationEnabled.value == true &&
-            locationViewModel.isLocationPermissionGranted.value == true)  {
-            if (list?.isNotEmpty()!!) {
-                loadStores { storesLoaded ->
-                    getTotalPrice { pricesLockedIn, total ->
-                        getAddresses()
-                        getDistances()
-                        resultsAdapter = ResultsAdapter(requireContext(), data, this)
-                        recyclerViewLayoutManager =
-                            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                        recyclerView = view.findViewById(R.id.resultsRecyclerView)
-                        recyclerView.adapter = resultsAdapter
-                        recyclerView.layoutManager = recyclerViewLayoutManager
+            locationViewModel.isLocationPermissionGranted.value == true
+        ) {
+            try {
+                if (list?.isNotEmpty()!!) {
+                    loadStores { storesLoaded ->
+                        getTotalPrice { pricesLockedIn, total ->
+                            getAddresses()
+                            getDistances()
+                            resultsAdapter = ResultsAdapter(requireContext(), data, this)
+                            recyclerViewLayoutManager =
+                                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                            recyclerView = view.findViewById(R.id.resultsRecyclerView)
+                            recyclerView.adapter = resultsAdapter
+                            recyclerView.layoutManager = recyclerViewLayoutManager
+                        }
                     }
                 }
-            }
-            //If list is sent as empty
-            else {
-                val errorEmptyListLayout: LinearLayout = view.findViewById(R.id.resultsEmptyListErrorDisplay)
+            } catch (e: Exception) {
+                val errorEmptyListLayout: LinearLayout =
+                    view.findViewById(R.id.resultsEmptyListErrorDisplay)
                 errorEmptyListLayout.visibility = View.VISIBLE
                 toggleDistance.visibility = View.INVISIBLE
                 togglePrice.visibility = View.INVISIBLE
                 view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
             }
-
         }
-        //If location permissions are not active
+        //If list is sent as empty
         else {
-            val errorNoLocationLayout: LinearLayout = view.findViewById(R.id.resultsNoLocationErrorDisplay)
+            val errorEmptyListLayout: LinearLayout =
+                view.findViewById(R.id.resultsEmptyListErrorDisplay)
+            errorEmptyListLayout.visibility = View.VISIBLE
+            toggleDistance.visibility = View.INVISIBLE
+            togglePrice.visibility = View.INVISIBLE
+            view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
+        }
+
+
+        //If location permissions are not active
+        if(locationViewModel.isLocationEnabled.value != true ||
+            locationViewModel.isLocationPermissionGranted.value != true) {
+            val errorNoLocationLayout: LinearLayout =
+                view.findViewById(R.id.resultsNoLocationErrorDisplay)
             errorNoLocationLayout.visibility = View.VISIBLE
             toggleDistance.visibility = View.INVISIBLE
             togglePrice.visibility = View.INVISIBLE
