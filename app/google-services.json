@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "661496367251",
+    "project_id": "sysho-118be",
+    "storage_bucket": "sysho-118be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661496367251:android:d6666f8a5cbc318e78a566",
+        "android_client_info": {
+          "package_name": "com.systematicshoppers.sysho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661496367251-a5mbua5hg68at6kcvt6e4hns302fgln3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.systematicshoppers.sysho",
+            "certificate_hash": "dd66b7a006ac17351edb8dfe8cd47ba337f6789f"
+          }
+        },
+        {
+          "client_id": "661496367251-ilpm9avf660h5thbdbc5odvmgrcpvhjm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.systematicshoppers.sysho",
+            "certificate_hash": "ca1c4d07c5774da18eb502a342f820b57a300d70"
+          }
+        },
+        {
+          "client_id": "661496367251-ok0tti6budedjmcrb04sqhn9362sk0qn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.systematicshoppers.sysho",
+            "certificate_hash": "cf5e3cd4951a75142b67b405ab5c3b8b130840fb"
+          }
+        },
+        {
+          "client_id": "661496367251-kv2dj6lm09dogk9queue1c13usf7rnjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwyN7oTbsPlB8nH4FPfGODEcELCZyNW3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "661496367251-kv2dj6lm09dogk9queue1c13usf7rnjj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
