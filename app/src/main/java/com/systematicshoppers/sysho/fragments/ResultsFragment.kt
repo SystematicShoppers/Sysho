@@ -22,17 +22,14 @@ import com.systematicshoppers.sysho.LocationViewModel
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ResultsAdapter
-import com.systematicshoppers.sysho.database.Coordinates
-import com.systematicshoppers.sysho.database.FirebaseLocationUtils
-import com.systematicshoppers.sysho.database.FirebaseUtils
-import com.systematicshoppers.sysho.database.Store
+import com.systematicshoppers.sysho.database.*
 import java.util.*
 
 class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
 
     private val viewModel: SyshoViewModel by activityViewModels()
     private val locationViewModel: LocationViewModel by activityViewModels()
-    private var list: List<String>? = listOf()
+    private var list: List<ListItem>? = listOf()
     private lateinit var data: MutableList<Store>
     private lateinit var toggleDistance: ToggleButton
     private lateinit var togglePrice: ToggleButton
@@ -149,11 +146,14 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         var total = 0.0
         for(store in data) {
             for(stock in store.stock!!) {
-                val productName = stock["ProductName"] as? String
-                if(list?.contains(productName)!!) {
-                    val priceString = stock["Price"].toString()
-                    val price = priceString.toDouble()
-                    total += price
+                for(listItem in list?.indices!!) {
+                    val productName = stock["ProductName"] as? String
+                    if (list!![listItem].entry == productName) {
+                        val priceString = stock["Price"].toString()
+                        var price = priceString.toDouble()
+                        price *= list!![listItem].quantity
+                        total += price
+                    }
                 }
             }
             store.totalPrice = total

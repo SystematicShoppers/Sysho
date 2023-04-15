@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.QueryListAdapter
+import com.systematicshoppers.sysho.database.ListItem
 import com.systematicshoppers.sysho.database.QueryItem
 
 class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
@@ -28,7 +29,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
     private var autoCompleteList: List<String> = listOf()
     private lateinit var searchFragmentRecyclerViewAdapter: QueryListAdapter
     private lateinit var searchbar: AutoCompleteTextView
-    private lateinit var list: MutableList<String>
+    private lateinit var list: MutableList<ListItem>
     private lateinit var shopBtn: Button
 
 
@@ -71,7 +72,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
                 val query = searchbar.text.toString()
                 if(autoCompleteList.contains(query)) {
                     if(queryIsNotListed(query)) {
-                        queryList.add(QueryItem(query, false))
+                        queryList.add(QueryItem(query, false, 1))
                         searchFragmentRecyclerViewAdapter.notifyItemInserted(queryList.size - 1)
                         searchbar.setText("")
                         searchbar.requestFocus()
@@ -164,6 +165,30 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         onCheckBoxChecked()
     }
 
+    override fun onMinusClick(quantity: Int, product: String): String {
+        var newQuantity = quantity
+        if(quantity > 0) {
+            newQuantity -= 1
+            for(item in queryList) {
+                if(product == item.name)
+                    item.quantity = newQuantity
+            }
+        }
+        return newQuantity.toString()
+    }
+
+    override fun onPlusClick(quantity: Int, product: String): String {
+        var newQuantity = quantity
+        if(quantity < 99) {
+            newQuantity += 1
+            for(item in queryList) {
+                if(product == item.name)
+                    item.quantity = newQuantity
+            }
+        }
+        return newQuantity.toString()
+    }
+
     private fun onCheckBoxChecked() {
         var somethingIsChecked = false
         for(i in queryList.indices) {
@@ -184,16 +209,21 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         }
     }
 
-    private fun getProductList(queryList: MutableList<QueryItem>, list: MutableList<String>): MutableList<String> {
-        if(list.isEmpty()) {
+    private fun getProductList(queryList: MutableList<QueryItem>, list: MutableList<ListItem>): MutableList<ListItem> {
+        if (list.isEmpty()) {
+            // Resize list to match the size of queryList
+            list.addAll(List(queryList.size) { ListItem() })
             for (i in queryList.indices) {
-                list.add(queryList[i].name)
+                list[i].entry = queryList[i].name
+                list[i].quantity = queryList[i].quantity
             }
-        }
-        else {
+        } else {
+            // Clear list and resize it
             list.clear()
+            list.addAll(List(queryList.size) { ListItem() })
             for (i in queryList.indices) {
-                list.add(queryList[i].name)
+                list[i].entry = queryList[i].name
+                list[i].quantity = queryList[i].quantity
             }
         }
         return list

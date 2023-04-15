@@ -61,9 +61,9 @@ class SyshoViewModel : ViewModel() {
         _totalPrice.value = passTotalPrice
     }
 
-    private val _resultsList = MutableLiveData<List<String>>()
-    val resultsList: LiveData<List<String>> = _resultsList
-    fun setResultsList(passResultsList: List<String>) {
+    private val _resultsList = MutableLiveData<List<ListItem>>()
+    val resultsList: LiveData<List<ListItem>> = _resultsList
+    fun setResultsList(passResultsList: List<ListItem>) {
         _resultsList.value = passResultsList
     }
 

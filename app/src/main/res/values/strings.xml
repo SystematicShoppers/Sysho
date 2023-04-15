@@ -47,4 +47,6 @@
     <string name="Unkown_Item">Unknown Item</string>
     <string name="this_will_increase_all_prices_in_the_database_by_the_amount_set_proceed">This will increase all prices in the database by the amount set. Proceed?</string>
     <string name="store_image">store image</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
 </resources>
