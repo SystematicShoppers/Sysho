@@ -65,15 +65,15 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
     private fun setLogoImage(store: String?, imageView: ImageView) {
         when (store) {
             "WalMart", "Wal Mart", "Wal-Mart", "Wal - Mart", "Walmart" ->
-                imageView.setImageResource(R.drawable.walmart)
+                imageView.setImageResource(R.drawable.walmart_logo)
             "Aldi", "aldi" ->
-                imageView.setImageResource(R.drawable.aldi_logo_vector)
+                imageView.setImageResource(R.drawable.aldi_logo)
             "Target", "target" ->
-                imageView.setImageResource(R.drawable.target_logo_vector)
+                imageView.setImageResource(R.drawable.target_logo)
             "Winn Dixie", "winn dixie", "Winn-Dixie", "winn-dixie" ->
-                imageView.setImageResource(R.drawable.winndixie)
+                imageView.setImageResource(R.drawable.winn_dixie_logo)
             "Publix", "publix" ->
-                imageView.setImageResource(R.drawable.publix)
+                imageView.setImageResource(R.drawable.publix_logo)
             else ->
                 imageView.setImageResource(android.R.color.transparent)
         }

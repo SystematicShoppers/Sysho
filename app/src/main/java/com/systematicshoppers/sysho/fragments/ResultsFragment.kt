@@ -162,7 +162,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         callback(true, total)
     }
 
-    private fun filterDistance(coordinates: Coordinates): Boolean {
+    fun filterDistance(coordinates: Coordinates): Boolean {
         val distance = FirebaseLocationUtils(this.requireActivity()).getDistance(coordinates, geocoder = Geocoder(requireContext(), Locale.getDefault()))
         val maxDistance = viewModel.distanceFilter.value
         return distance < maxDistance!!
