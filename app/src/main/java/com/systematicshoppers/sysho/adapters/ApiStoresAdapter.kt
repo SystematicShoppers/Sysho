@@ -1,15 +1,11 @@
 package com.systematicshoppers.sysho.adapters
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.init
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Store
 
@@ -22,6 +18,7 @@ class ApiStoresAdapter(private val context: Context, private val data: MutableLi
 
     interface ClickListener {
         fun gotoStore(position: Int, storeData: Store)
+
     }
 
     override fun onBindViewHolder(holder: ApiStoresViewHolder, position: Int) {

@@ -28,23 +28,16 @@ class ApiProductFragment : Fragment(), ApiProductsAdapter.ClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_api_product, container, false)
 
-
-        FirebaseUtils().fireStoreDatabase.collection("products")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                val products = mutableListOf<Product>()
-                querySnapshot.forEach { productDocument ->
-                    Log.d(TAG, "Read document with ID ${productDocument.id}")
-                    products.add(productDocument.toObject(Product::class.java))
-                }
-
+        getProducts { products ->
+            if(isAdded) {
                 apiProductsAdapter = ApiProductsAdapter(requireContext(), products, this)
-                val apiProductsLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
+                val apiProductsLayoutManager =
+                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 apiProductsRecyclerView = view.findViewById((R.id.api_products_recycler_view))
                 apiProductsRecyclerView.adapter = apiProductsAdapter
                 apiProductsRecyclerView.layoutManager = apiProductsLayoutManager
             }
-
+        }
         return view
     }
 
@@ -54,5 +47,18 @@ class ApiProductFragment : Fragment(), ApiProductsAdapter.ClickListener {
             .replace(R.id.content, ApiProductSelectFragment())
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun getProducts(callback: (MutableList<Product>) -> Unit) {
+        FirebaseUtils().fireStoreDatabase.collection("products")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val products = mutableListOf<Product>()
+                querySnapshot.forEach { productDocument ->
+                    Log.d(TAG, "Read document with ID ${productDocument.id}")
+                    products.add(productDocument.toObject(Product::class.java))
+                }
+                callback(products)
+            }
     }
 }

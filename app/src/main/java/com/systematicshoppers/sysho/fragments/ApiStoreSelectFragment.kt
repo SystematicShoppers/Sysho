@@ -3,6 +3,7 @@ package com.systematicshoppers.sysho.fragments
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ApiStoresSelectAdapter
 import com.systematicshoppers.sysho.database.Product
 import com.systematicshoppers.sysho.database.Store
+import com.systematicshoppers.sysho.database.TAG
 import java.util.*
 
 class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
@@ -37,18 +39,15 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
         val address = view.findViewById<TextView>(R.id.address_at_interface)
         val storeName = view.findViewById<TextView>(R.id.storeName_at_interface)
         val imageLogo = view.findViewById<ImageView>(R.id.apiStoreLogo)
-        val geocoder: Geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
         recyclerView = view.findViewById(R.id.store_interface_recycler_view)
         supportFragmentManager = parentFragmentManager
         viewModel.store.observe(viewLifecycleOwner) {
             store = viewModel.store.value!!
             getAddress(store, geocoder)
-            if(address != null)
-                address.text = store.address
-            else {
-                val latlongstr = store.latitude.toString() + " " + store.longitude.toString()
-                address?.text = latlongstr
-            }
+            val latlongstr = store.latitude.toString() + " " + store.longitude.toString()
+            address?.text = latlongstr
+
             storeName.text = store.store
             storeID.text = store.storeId
             setLogoImage(storeName.text as String?, imageLogo)
@@ -92,6 +91,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
             }
             geocoder.getFromLocation(lat, long, 1, geocodeListener)
         } catch (e: Exception) {
+            Log.e(TAG, "Address not found.")
         }
     }
 
@@ -104,14 +104,6 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
         val product = Product().mapToProduct(productData)
         viewModel.setProductData(product)
         dialog.show(supportFragmentManager, "Operation Calls")
-    }
-
-    private fun reloadAdapter(view: View) {
-        apiStoresSelectAdapter = ApiStoresSelectAdapter(requireContext(), store.stock, this)
-        val recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
-        recyclerView.adapter = apiStoresSelectAdapter
-        recyclerView.layoutManager = recyclerViewLayoutManager
-
     }
 
 }
