@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.QueryListAdapter
@@ -116,6 +118,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
             if (!somethingIsChecked) {
                 list = getProductList(queryList, list)
                 viewModel.setResultsList(list)
+                saveUserList() // Save the user's list to Firebase
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.content, ResultsFragment())
                     .addToBackStack(null)
@@ -227,6 +230,22 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
             }
         }
         return list
+    }
+
+    private fun saveUserList() {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            val userId = user.uid
+            val database = FirebaseDatabase.getInstance()
+            val userListsRef = database.getReference("users").child(userId).child("lists")
+
+            // Generate a unique key for the new list
+            val newListKey = userListsRef.push().key
+            if (newListKey != null) {
+                // Save the new list under the generated key
+                userListsRef.child(newListKey).setValue(list)
+            }
+        }
     }
 
 }

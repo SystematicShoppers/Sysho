@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sysho"
         tools:targetApi="33"
+        android:enableOnBackInvokedCallback="true"
         >
         <activity android:name=".activities.LogInActivity"
             android:exported="false"/>
