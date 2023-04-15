@@ -115,6 +115,39 @@
 
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/distanceErrorDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/distanceErrorImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/baseline_search_off_24"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/distanceErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textAlignment="center"
+            android:text="No results Found! Try extending your distance filter" />
+
+
+    </LinearLayout>
     </FrameLayout>
 
     <TextView

@@ -56,6 +56,14 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                         getTotalPrice { pricesLockedIn, total ->
                             getAddresses()
                             getDistances()
+                            if(data.size < 1) {
+                                val errorDistanceLayout: LinearLayout =
+                                    view.findViewById(R.id.distanceErrorDisplay)
+                                errorDistanceLayout.visibility = View.VISIBLE
+                                toggleDistance.visibility = View.INVISIBLE
+                                togglePrice.visibility = View.INVISIBLE
+                                view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
+                            }
                             resultsAdapter = ResultsAdapter(requireContext(), data, this)
                             recyclerViewLayoutManager =
                                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -120,7 +128,6 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                 resultsAdapter.notifyDataSetChanged()
             }
         }
-        
         return view
     }
 
