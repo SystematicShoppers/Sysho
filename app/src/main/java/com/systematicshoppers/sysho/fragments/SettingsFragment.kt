@@ -37,7 +37,7 @@ class SettingsFragment : Fragment() {
 
         distanceSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                val distanceInMiles = progress /1.0
+                val distanceInMiles = progress / 1.0
                 viewModel.setDistanceFilter(distanceInMiles)
                 val distanceText = String.format("%.1f miles", distanceInMiles)
                 distanceTextView.text = distanceText
@@ -47,6 +47,9 @@ class SettingsFragment : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
 
         })
+
+        distanceSeekBar.progress = viewModel.distanceFilter.value!!.toInt() // Set initial progress to viewModel.distanceFilter.value
+
 
         return view
     }
