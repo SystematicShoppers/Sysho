@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -33,7 +34,31 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_api_store, container, false)
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         geocoder = Geocoder(requireContext(), Locale.getDefault())
+        getStores() {stores ->
+            getAddresses(stores, geocoder) { done -> try {
+                if(isAdded) {
+                    apiStoresAdapter = ApiStoresAdapter(requireContext(), stores, this)
+                    val apiStoresLayoutManager =
+                        LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                    apiStoresRecyclerView = view.findViewById((R.id.api_stores_recycler_view))
+                    apiStoresRecyclerView.adapter = apiStoresAdapter
+                    apiStoresRecyclerView.layoutManager = apiStoresLayoutManager
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Screen is loading", Toast.LENGTH_SHORT).show()
+            }}
+        }
+
+
+    }
+
+    private fun getStores(callback: (MutableList<Store>) -> Unit) {
         FirebaseUtils().fireStoreDatabase.collection("stores")
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -41,21 +66,11 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
                     Log.d(ContentValues.TAG, "Read document with ID ${storeDocument.id}")
                     stores.add(storeDocument.toObject(Store::class.java))
                 }
-                getAddresses(stores, geocoder)
-                apiStoresAdapter = context?.let { ApiStoresAdapter(it, stores, this) }!!
-                val apiStoresLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
-                apiStoresRecyclerView = view.findViewById((R.id.api_stores_recycler_view))
-                apiStoresRecyclerView.adapter = apiStoresAdapter
-                apiStoresRecyclerView.layoutManager = apiStoresLayoutManager
-
-
+                callback(stores)
             }
-
-
-        return view
     }
 
-    private fun getAddresses(stores: MutableList<Store>, geocoder: Geocoder) {
+    private fun getAddresses(stores: MutableList<Store>, geocoder: Geocoder, callback: (Boolean) -> Unit) {
         var addressList: MutableList<Address>?
         var lat: Double?
         var long: Double?
@@ -71,7 +86,10 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
             } catch (e: Exception) {
             }
         }
+        callback.invoke(true)
     }
+
+
 
     override fun gotoStore(position: Int, storeData: Store) {
         viewModel.setStoreData(storeData)

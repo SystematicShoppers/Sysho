@@ -64,8 +64,8 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                                 view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
                             }
                             resultsAdapter = ResultsAdapter(requireContext(), data, this)
-                            recyclerViewLayoutManager =
-                                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                            if(isAdded)
+                                recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                             recyclerView = view.findViewById(R.id.resultsRecyclerView)
                             recyclerView.adapter = resultsAdapter
                             recyclerView.layoutManager = recyclerViewLayoutManager

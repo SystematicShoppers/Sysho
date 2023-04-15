@@ -66,7 +66,8 @@ class LogInActivity: AppCompatActivity() {
     private fun createSignInIntent() {
         // Choose authentication providers
         val providers = arrayListOf(
-            AuthUI.IdpConfig.GoogleBuilder().build())
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
 
         // Create and launch sign-in intent
         val signInIntent = AuthUI.getInstance()
@@ -98,30 +99,56 @@ class LogInActivity: AppCompatActivity() {
                         Toast.makeText(this, "Unknown error occurred", Toast.LENGTH_SHORT).show()
                     }
                     ErrorCodes.PROVIDER_ERROR -> {
-                        Toast.makeText(this, "Error with the selected provider", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Error with the selected provider", Toast.LENGTH_SHORT)
+                            .show()
                     }
                     ErrorCodes.ANONYMOUS_UPGRADE_MERGE_CONFLICT -> {
-                        Toast.makeText(this, "Anonymous account upgrade failed due to merge conflict", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "Anonymous account upgrade failed due to merge conflict",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     ErrorCodes.DEVELOPER_ERROR -> {
-                        Toast.makeText(this, "A sign-in operation couldn't be completed due to a developer error.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "A sign-in operation couldn't be completed due to a developer error.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     ErrorCodes.EMAIL_MISMATCH_ERROR -> {
-                        Toast.makeText(this, "The email address of the account being linked already exists in the user's account.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "The email address of the account being linked already exists in the user's account.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     ErrorCodes.ERROR_USER_DISABLED -> {
-                        Toast.makeText(this, "The user's account has been disabled.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "The user's account has been disabled.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED -> {
-                        Toast.makeText(this, "A required update to Play Services was cancelled by the user.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "A required update to Play Services was cancelled by the user.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     else -> {
                         // Handle other errors, including ApiException, here
                         val error = response.getError()
                         if (error is ApiException) {
-                            Toast.makeText(this, "An API Exception occurred: ${error.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                this,
+                                "An API Exception occurred: ${error.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
                         } else {
-                            Toast.makeText(this, "Unhandled error occurred", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Unhandled error occurred", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }
@@ -146,7 +173,7 @@ class LogInActivity: AppCompatActivity() {
                 // Handle the completion of the account deletion process
             }
     }
-
+}
     //Navigation
 
 
@@ -223,5 +250,3 @@ class LogInActivity: AppCompatActivity() {
 //        }
 //        // [END auth_fui_email_link_catch]
 //    }
-
-}

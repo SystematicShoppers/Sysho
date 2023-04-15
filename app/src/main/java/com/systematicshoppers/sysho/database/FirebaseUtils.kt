@@ -18,27 +18,6 @@ import com.systematicshoppers.sysho.LocationViewModel
  * **/
 class FirebaseUtils  {
     val fireStoreDatabase = FirebaseFirestore.getInstance()
-    fun getStoreName(coordinates: Coordinates, callback: (String) -> Unit) {
-        val latitude: String = coordinates.latitude.toString()
-        val longitude: String = coordinates.longitude.toString()
-        val collectionRef = fireStoreDatabase.collection("stores")
-        collectionRef
-            .whereEqualTo("Latitude", latitude)
-            .whereEqualTo("Longitude", longitude)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val storeName = document.getString("Store").toString()
-                    if (storeName.isNotEmpty()) {
-                        callback(storeName)
-                        return@addOnSuccessListener // exit the function after the first match
-                    }
-                }
-            }
-            .addOnFailureListener { exception ->
-                //TODO: Add error handling
-            }
-    }
 
     fun getAddress(coordinates: Coordinates, geocoder: Geocoder, callback: (String) -> Unit) {
         val lat = coordinates.latitude
@@ -70,14 +49,14 @@ class FirebaseUtils  {
                 if(stockArray != null) {
                     FirebaseUtils().fireStoreDatabase.collection("stores").document(documentId)
                         .get()
-                        .addOnSuccessListener { querySnapshot ->
+                        .addOnSuccessListener { documentSnapshot ->
                             // If "Stock" field is not present or not an ArrayList, set it as an empty ArrayList
-                            querySnapshot.reference.update("Stock", stockArray)
+                            documentSnapshot.reference.update("Stock", stockArray)
                                 .addOnSuccessListener {
-                                    Log.d(TAG, "Stock field added to document ${querySnapshot.id}")
+                                    Log.d(TAG, "Stock field added to document ${documentSnapshot.id}")
                                 }
                                 .addOnFailureListener { exception ->
-                                    Log.e(TAG, "Failed to update Stock field for document ${querySnapshot.id}: ${exception.message}")
+                                    Log.e(TAG, "Failed to update Stock field for document ${documentSnapshot.id}: ${exception.message}")
                                 }
                         }
                 }
@@ -86,7 +65,6 @@ class FirebaseUtils  {
 }
 
 class FirebaseLocationUtils(private val activity: FragmentActivity) {
-    val fireStoreDatabase = FirebaseFirestore.getInstance()
     private val locationViewModel: LocationViewModel by lazy {
         ViewModelProvider(activity)[LocationViewModel::class.java]
     }
