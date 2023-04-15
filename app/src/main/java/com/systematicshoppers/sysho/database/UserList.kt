@@ -2,5 +2,5 @@ package com.systematicshoppers.sysho.database
 
 data class UserList(
     var id: String = "",
-    var items: List<ListItem> = mutableListOf()
+    val items: List<ListItem> = emptyList()
 ) : java.io.Serializable

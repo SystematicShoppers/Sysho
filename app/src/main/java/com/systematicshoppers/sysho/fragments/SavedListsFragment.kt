@@ -24,7 +24,10 @@ private const val TAG = "SavedListsFragment"
 class SavedListsFragment : Fragment() {
 
     private var savedLists = mutableListOf<UserList>()
-    val adapter = ListItemAdapter(savedLists)
+    private lateinit var recyclerView: RecyclerView
+    val adapter = ListItemAdapter(savedLists) { position ->
+        deleteList(position)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,10 +40,8 @@ class SavedListsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.saved_lists_recycler_view)
+        recyclerView = view.findViewById<RecyclerView>(R.id.saved_lists_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        val adapter = ListItemAdapter(savedLists)
 
         loadUserLists { userLists ->
             savedLists.clear()
@@ -59,8 +60,9 @@ class SavedListsFragment : Fragment() {
 
             userListsRef.get().addOnSuccessListener { querySnapshot ->
                 val userLists = querySnapshot.documents.mapNotNull { documentSnapshot ->
-                    val items = documentSnapshot.toObject(UserList::class.java)?.items ?: listOf()
-                    UserList(documentSnapshot.id, items)
+                    val userList = documentSnapshot.toObject(UserList::class.java)
+                    userList?.id = documentSnapshot.id
+                    userList
                 }
                 callback(userLists)
             }.addOnFailureListener { exception ->
@@ -70,28 +72,26 @@ class SavedListsFragment : Fragment() {
     }
 
 
-//    private fun loadUserLists(callback: (List<ListItem>) -> Unit) {
-//        val user = FirebaseAuth.getInstance().currentUser
-//        if (user != null) {
-//            val userId = user.uid
-//            val database = FirebaseFirestore.getInstance()
-//            val userListsRef = database.collection("Users").document(userId).collection("lists")
-//
-//            userListsRef.get().addOnSuccessListener { querySnapshot ->
-//                val userLists = querySnapshot.documents.flatMap { documentSnapshot ->
-//                    Log.d(TAG, "Document data: ${documentSnapshot.data}") // Log the document data
-//                    val items = documentSnapshot.get("items") as? List<Map<String, Any>>
-//                    items?.mapNotNull { itemMap ->
-//                        Log.d(TAG, "Item map: $itemMap") // Log the item map
-//                        val entry = itemMap["entry"] as? String ?: ""
-//                        val quantity = (itemMap["quantity"] as? Long)?.toInt() ?: 0
-//                        ListItem(entry, quantity)
-//                    } ?: emptyList()
-//                }
-//                callback(userLists)
-//            }.addOnFailureListener { exception ->
-//                Toast.makeText(requireContext(), "Failed to load lists: ${exception.message}", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
+    private fun deleteList(position: Int) {
+        val userList = savedLists[position]
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            val userId = user.uid
+            val database = FirebaseFirestore.getInstance()
+            val userListsRef = database.collection("Users").document(userId).collection("lists")
+
+            userListsRef.document(userList.id).delete().addOnSuccessListener {
+                savedLists.removeAt(position)
+                recyclerView.adapter?.notifyDataSetChanged()
+                Toast.makeText(requireContext(), "List deleted successfully", Toast.LENGTH_SHORT)
+                    .show()
+            }.addOnFailureListener { exception ->
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to delete list: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
 }

@@ -3,19 +3,22 @@ package com.systematicshoppers.sysho.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.UserList
 
-class ListItemAdapter(private val items: List<UserList>) :
+class ListItemAdapter(private val items: List<UserList>, private val onDelete: (Int) -> Unit) :
     RecyclerView.Adapter<ListItemAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val listNumber: TextView = view.findViewById(R.id.list_number)
         val itemContainer: LinearLayout = view.findViewById(R.id.item_container)
+        val deleteListButton: ImageButton = view.findViewById(R.id.delete_list_button)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -38,6 +41,10 @@ class ListItemAdapter(private val items: List<UserList>) :
             itemQuantity.text = item.quantity.toString()
 
             holder.itemContainer.addView(itemRow)
+        }
+
+        holder.deleteListButton.setOnClickListener {
+            onDelete(position)
         }
     }
 
