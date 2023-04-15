@@ -25,31 +25,17 @@ class ListItemAdapter(private val items: List<UserList>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userList = items[position]
-
-        holder.listNumber.text = "List #${position + 1}"
+        holder.listNumber.text = "List ${position + 1}"
 
         holder.itemContainer.removeAllViews()
+        userList.items.forEach { item ->
+            val itemRow = LayoutInflater.from(holder.itemView.context).inflate(R.layout.item_row, holder.itemContainer, false)
 
-        for (item in userList.items) {
-            val itemNameView = TextView(holder.itemContainer.context).apply {
-                text = item.entry
-                textSize = 16f
-            }
-            val itemQuantityView = TextView(holder.itemContainer.context).apply {
-                text = item.quantity.toString()
-                textSize = 16f
-            }
+            val itemName: TextView = itemRow.findViewById(R.id.item_name)
+            val itemQuantity: TextView = itemRow.findViewById(R.id.item_quantity)
 
-            val itemRow = LinearLayout(holder.itemContainer.context).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                orientation = LinearLayout.HORIZONTAL
-                weightSum = 2f
-                addView(itemNameView, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
-                addView(itemQuantityView, LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
-            }
+            itemName.text = item.entry
+            itemQuantity.text = item.quantity.toString()
 
             holder.itemContainer.addView(itemRow)
         }
