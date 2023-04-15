@@ -27,7 +27,7 @@ import com.systematicshoppers.sysho.database.QueryItem
 class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
 
     private val deleteList: MutableList<QueryItem> = mutableListOf()
-    private val queryList: MutableList<QueryItem> = mutableListOf()
+    val queryList: MutableList<QueryItem> = mutableListOf()
     private val viewModel: SyshoViewModel by activityViewModels()
     private var autoCompleteList: List<String> = listOf()
     private lateinit var searchFragmentRecyclerViewAdapter: QueryListAdapter
@@ -156,7 +156,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
     }
 
 
-    private fun queryIsNotListed(query: String): Boolean {
+    fun queryIsNotListed(query: String): Boolean {
         for(i in queryList.indices) {
             if(query == queryList[i].name)
                 return false
@@ -213,7 +213,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         }
     }
 
-    private fun getProductList(queryList: MutableList<QueryItem>, list: MutableList<ListItem>): MutableList<ListItem> {
+    fun getProductList(queryList: MutableList<QueryItem>, list: MutableList<ListItem>): MutableList<ListItem> {
         if (list.isEmpty()) {
             // Resize list to match the size of queryList
             list.addAll(List(queryList.size) { ListItem() })
