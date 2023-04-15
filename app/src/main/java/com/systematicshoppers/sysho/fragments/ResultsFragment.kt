@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ToggleButton
@@ -43,6 +44,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_results, container, false)
+        val resultsEmptyListButton = view.findViewById<Button>(R.id.resultsEmptyListButton)
         data = mutableListOf()
         list = viewModel.resultsList.value
         toggleDistance = view.findViewById(R.id.filterDistance)
@@ -77,17 +79,29 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                     val errorEmptyListLayout: LinearLayout =
                         view.findViewById(R.id.resultsEmptyListErrorDisplay)
                     errorEmptyListLayout.visibility = View.VISIBLE
+                    resultsEmptyListButton.visibility = View.VISIBLE
                     toggleDistance.visibility = View.INVISIBLE
                     togglePrice.visibility = View.INVISIBLE
                     view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
+                    resultsEmptyListButton.setOnClickListener{
+                        val newFragment = SearchFragment()
+                        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                        transaction.replace(R.id.content, newFragment).commit()
+                    }
                 }
             } catch (e: Exception) {
                 val errorEmptyListLayout: LinearLayout =
                     view.findViewById(R.id.resultsEmptyListErrorDisplay)
                 errorEmptyListLayout.visibility = View.VISIBLE
+                resultsEmptyListButton.visibility = View.VISIBLE
                 toggleDistance.visibility = View.INVISIBLE
                 togglePrice.visibility = View.INVISIBLE
                 view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
+                resultsEmptyListButton.setOnClickListener{
+                    val newFragment = SearchFragment()
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.content, newFragment).commit()
+                }
             }
         }
 
@@ -220,5 +234,6 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
             }
         }
     }
+
 
 }

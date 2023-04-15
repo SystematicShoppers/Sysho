@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,15 +11,16 @@
         android:id="@+id/storeID_at_interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="40dp"
         android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         tools:text="100" />
 
     <TextView
         android:id="@+id/storeName_at_interface"
         android:textStyle="bold"
-        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
         android:textColor="@color/black"
         android:layout_gravity="center"
         android:textSize="24sp"
@@ -32,6 +32,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/store_image"
             tools:srcCompat="@tools:sample/avatars"
             android:id="@+id/apiStoreLogo" />
 
@@ -39,7 +40,8 @@
         android:id="@+id/address_at_interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"

@@ -90,6 +90,12 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.resultsFragment -> {
                 if(currentFragmentName != "ResultsFragment") {
+                    val searchFragment = fragmentManager.findFragmentByTag("SearchFragment")
+                    if (searchFragment == null) {
+                        // SearchFragment not found in back stack, add it to the back stack
+                        val addNewSearchFragment = SearchFragment()
+                        fragmentManager.beginTransaction().addToBackStack("SearchFragment").commit()
+                    }
                     val newFragment = ResultsFragment()
                     val transaction = fragmentManager.beginTransaction()
                     transaction.replace(frame, newFragment).commit()
