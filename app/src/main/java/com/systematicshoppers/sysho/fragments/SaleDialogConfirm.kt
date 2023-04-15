@@ -10,8 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.SetOptions
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.database.FirebaseUtils

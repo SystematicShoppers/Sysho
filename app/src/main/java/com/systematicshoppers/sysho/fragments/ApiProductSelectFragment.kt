@@ -1,6 +1,5 @@
 package com.systematicshoppers.sysho.fragments
 
-import android.content.ContentValues
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -10,19 +9,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.systematicshoppers.sysho.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
+import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.database.FirebaseUtils
-import com.systematicshoppers.sysho.database.Store
 import com.systematicshoppers.sysho.database.TAG
 
 

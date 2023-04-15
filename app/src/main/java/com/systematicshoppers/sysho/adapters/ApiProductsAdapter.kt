@@ -29,7 +29,7 @@ class ApiProductsAdapter(private val context: Context, private val data: Mutable
         val data = data[position]
         if(data.id == null) {
             holder.itemView.visibility = View.GONE
-            holder.productNameTextView.text = "Unknown Item"
+            holder.productNameTextView.text = context.getString(R.string.Unkown_Item)
         }
         else {
             holder.productIDTextView.text = "Product ID: ${data.id.toString()}"
@@ -38,10 +38,6 @@ class ApiProductsAdapter(private val context: Context, private val data: Mutable
                 onClick.gotoProduct(position, data)
             }
         }
-    }
-
-    private fun removeData(data: Product) {
-
     }
 
     override fun getItemCount(): Int {
