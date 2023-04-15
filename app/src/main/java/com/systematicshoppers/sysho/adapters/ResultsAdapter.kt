@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Coordinates
 import com.systematicshoppers.sysho.database.Store
+import java.text.NumberFormat
+import java.util.*
 
 class ResultsAdapter(private val context: Context,
                      private val data: MutableList<Store>,
@@ -28,7 +30,12 @@ class ResultsAdapter(private val context: Context,
         holder.storeName.text = data[position].store
         holder.address.text = data[position].address
         holder.distance.text = String.format("%.2f", data[position].distance)
-        holder.total.text = data[position].totalPrice.toString()
+        val locale = Locale.US // Specify the desired locale for dollar format
+        val currencyFormatter = NumberFormat.getCurrencyInstance(locale)
+        currencyFormatter.minimumFractionDigits = 2
+        currencyFormatter.maximumFractionDigits = 2
+        val formattedPrice = currencyFormatter.format(data[position].totalPrice)
+        holder.total.text = formattedPrice
         holder.itemView.setOnClickListener{
             val coordinates = getCoordinates(data[position])
             onCLick.gotoMap(holder.address.text.toString(), coordinates)

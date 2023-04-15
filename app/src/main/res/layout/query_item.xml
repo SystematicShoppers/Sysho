@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -8,15 +10,56 @@
     <CheckBox
         android:id="@+id/queryItemCheckBox"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/queryItemTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:textStyle="italic"
+        android:textSize="16sp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/minusBtn"
+        app:layout_constraintStart_toEndOf="@+id/queryItemCheckBox"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/minusBtn"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:text="@string/minus_sign"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/queryQuantityTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/queryQuantityTextView"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:maxEms="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/addBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="15"/>
+
+    <Button
+        android:id="@+id/addBtn"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:text="@string/plus_sign"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
