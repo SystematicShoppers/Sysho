@@ -34,22 +34,12 @@
         android:layout_height="42dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="44dp"
+        android:layout_marginBottom="25dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialogCurrentPriceTextView" />
-
-    <TextView
-        android:id="@+id/dialogPriceUpdateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceEditText"
-        tools:text="New Price: 4.29" />
+        app:layout_constraintTop_toBottomOf="@+id/dialogCurrentPriceTextView" />
 
     <Space
         android:layout_width="7dp"
