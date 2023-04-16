@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ToggleButton
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -139,6 +140,21 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                 resultsAdapter.notifyDataSetChanged()
             }
         }
+
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val newFragment = SearchFragment()
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.content, newFragment).commit()
+                // Handle back button press here
+                // You can implement your custom logic for back button behavior
+                // For example, show a confirmation dialog or navigate to a different fragment
+            }
+        }
+
+        // Add the callback to the onBackPressedDispatcher
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         return view
     }
 

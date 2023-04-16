@@ -15,7 +15,6 @@ class ApiStoreDialog : DialogFragment() {
     private lateinit var updatePriceBtn : Button
     private lateinit var saleBtn : Button
     private lateinit var priceSweepBtn : Button
-    private lateinit var randomizeBtn : Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +38,6 @@ class ApiStoreDialog : DialogFragment() {
         updatePriceBtn = view.findViewById(R.id.updatePriceBtn)
         saleBtn = view.findViewById(R.id.saleBtn)
         priceSweepBtn = view.findViewById(R.id.offSaleBtn)
-        randomizeBtn = view.findViewById(R.id.randFifteenBtn)
 
         updatePriceBtn.setOnClickListener {
             val updatePriceDialog = UpdatePriceDialog()
@@ -55,11 +53,6 @@ class ApiStoreDialog : DialogFragment() {
         priceSweepBtn.setOnClickListener {
             val sweepDialog = SweepDialog()
             sweepDialog.show(childFragmentManager, "sweep_dialog_tag")
-        }
-
-        randomizeBtn.setOnClickListener {
-
-            dismiss()
         }
 
     }

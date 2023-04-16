@@ -27,21 +27,19 @@ class UpdatePriceDialog: DialogFragment() {
         val view = inflater.inflate(R.layout.fragment_api_store_select_dialog, container)
         val editText = view.findViewById<EditText>(R.id.priceEditText)
         val currentPrice = view.findViewById<TextView>(R.id.dialogCurrentPriceTextView)
-        val salePrice = view.findViewById<TextView>(R.id.dialogPriceUpdateTextView)
         val updateBtn = view.findViewById<Button>(R.id.dialogUpdateNewPriceBtn)
         val closeBtn = view.findViewById<ImageView>(R.id.closeUpdatePriceDialog)
         currentPrice.text = getString(R.string.current_price)
-        salePrice.text = getString(R.string.sale_price)
         dialog?.setTitle("Update Price")
         editText.requestFocus()
 
 
         updateBtn.setOnClickListener{
-            salePrice.text = "" //resets string value to prevent duplicate entries displaying
             viewModel.setDialogEditText(editText.text.toString())
             if (viewModel.dialogEditText.value != null) {
                 updatePrice() {}
                 viewModel.notifyApiStoreAdapter(true)
+                Toast.makeText(requireContext(), "Price has been updated!", Toast.LENGTH_SHORT).show()
             }
         }
         closeBtn.setOnClickListener {
@@ -52,13 +50,6 @@ class UpdatePriceDialog: DialogFragment() {
                 append(getString(R.string.current_price))
                 append(" ")
                 append(viewModel.product.value?.price)
-            })
-        }
-        viewModel.dialogEditText.observe(viewLifecycleOwner) {
-            salePrice.text = (buildString {
-                append(getString(R.string.sale_price))
-                append(" ")
-                append(viewModel.dialogEditText.value)
             })
         }
         return view

@@ -29,12 +29,6 @@
             android:layout_height="wrap_content"
             android:text="@string/price_sweep_dialog" />
 
-        <Button
-            android:id="@+id/randFifteenBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/randomize_pricing_dialog" />
-
     </LinearLayout>
 
 </RelativeLayout>

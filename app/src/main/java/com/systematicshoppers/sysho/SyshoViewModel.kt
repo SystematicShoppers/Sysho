@@ -18,6 +18,18 @@ class SyshoViewModel : ViewModel() {
     fun setStoreData(passStore: Store) {
         _store.value = passStore
     }
+    fun reloadStoreData(documentId: String?) {
+        if (documentId != null) {
+            FirebaseUtils().fireStoreDatabase.collection("stores").document(documentId)
+                .get()
+                .addOnSuccessListener { document ->
+                    val store = document.toObject(Store::class.java)
+                    if (store != null) {
+                        setStoreData(store)
+                    }
+                }
+        }
+    }
 
     private var _product = MutableLiveData<Product>()
     val product: LiveData<Product> = _product
@@ -113,5 +125,13 @@ class SyshoViewModel : ViewModel() {
     @Suppress("RedundantIf")
     fun notifyApiStoreAdapter(passNotice: Boolean) {
         _apiStoreAdapterNotice.value = passNotice
+    }
+
+    /** Navigation **/
+    private val _currentFragment = MutableLiveData<String>()
+    val currentFragment: LiveData<String> = _currentFragment
+    fun setCurrentFragment(passCurrentFragment: String) {
+        _currentFragment.value = passCurrentFragment
+        println(_currentFragment.value)
     }
 }

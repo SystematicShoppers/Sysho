@@ -11,15 +11,16 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.QueryListAdapter
+import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.ListItem
 import com.systematicshoppers.sysho.database.QueryItem
 
@@ -151,6 +152,15 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
              searchbar.setAdapter(adapter)
         }
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().moveTaskToBack(true)
+            }
+        }
+
+        // Add the callback to the onBackPressedDispatcher
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
         return view
     }
 
@@ -236,15 +246,13 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             val userId = user.uid
-            val database = FirebaseDatabase.getInstance()
-            val userListsRef = database.getReference("users").child(userId).child("lists")
+            val userListsRef = FirebaseUtils().fireStoreDatabase.collection("Users").document(userId).collection("lists")
 
-            // Generate a unique key for the new list
-            val newListKey = userListsRef.push().key
-            if (newListKey != null) {
-                // Save the new list under the generated key
-                userListsRef.child(newListKey).setValue(list)
-            }
+            // Generate a unique document ID for the new list
+            val newListRef = userListsRef.document()
+
+            // Save the new list under the generated document ID
+            newListRef.set(mapOf("items" to list))
         }
     }
 
