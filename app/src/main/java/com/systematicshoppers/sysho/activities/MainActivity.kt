@@ -73,44 +73,42 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val frame = R.id.content
-        if (currentFragmentName.isEmpty()) {
-            val currentDestination = navController.currentDestination
-            currentFragmentName = currentDestination?.label.toString()
-        }
+        currentFragmentName = viewModel.currentFragment.value.toString()
         val fragmentManager = supportFragmentManager
         return when (item.itemId) {
             R.id.searchFragment -> {
-                if(currentFragmentName != "SearchFragment") {
+                if (currentFragmentName != "SearchFragment") {
                     val newFragment = SearchFragment()
                     val transaction = fragmentManager.beginTransaction()
-                    transaction.replace(frame, newFragment).commit()
-                    currentFragmentName = "SearchFragment"
+                    if (fragmentManager.findFragmentByTag("search_fragment") == null) {
+                        transaction.addToBackStack("search_fragment")
+                    }
+                    transaction.replace(frame, newFragment)
+                        .commit()
+
+                    currentFragmentName = viewModel.setCurrentFragment("SearchFragment").toString()
                     true
                 } else true
             }
             R.id.resultsFragment -> {
-                if(currentFragmentName != "ResultsFragment") {
-                    val searchFragment = fragmentManager.findFragmentByTag("SearchFragment")
-                    if (searchFragment == null) {
-                        // SearchFragment not found in back stack, add it to the back stack
-                        val addNewSearchFragment = SearchFragment()
-                        fragmentManager.beginTransaction().addToBackStack("SearchFragment").commit()
-                    }
+                if (currentFragmentName != "ResultsFragment") {
                     val newFragment = ResultsFragment()
                     val transaction = fragmentManager.beginTransaction()
-                    transaction.replace(frame, newFragment).commit()
-                    currentFragmentName = "ResultsFragment"
+                    if (fragmentManager.findFragmentByTag("results_fragment") == null) {
+                        transaction.addToBackStack("results_fragment")
+                    }
+                    transaction.replace(frame, newFragment)
+                        .commit()
+                    currentFragmentName = viewModel.setCurrentFragment("ResultsFragment").toString()
                     true
                 } else true
             }
             R.id.settingsFragment -> {
-                if(currentFragmentName != "SettingsFragment") {
                     val newFragment = SettingsFragment()
                     val transaction = fragmentManager.beginTransaction()
                     transaction.replace(frame, newFragment).commit()
-                    currentFragmentName = "SettingsFragment"
+                    currentFragmentName = viewModel.setCurrentFragment("SettingsFragment").toString()
                     true
-                } else true
             }
             R.id.logInActivity -> {
                 val intent = Intent(this, LogInActivity::class.java)
@@ -118,11 +116,15 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.savedListsFragment -> {
-                if(currentFragmentName != "SavedListsFragment") {
+                if (currentFragmentName != "SavedListsFragment") {
                     val newFragment = SavedListsFragment()
                     val transaction = fragmentManager.beginTransaction()
-                    transaction.replace(frame, newFragment).commit()
-                    currentFragmentName = "SavedListsFragment"
+                    if (fragmentManager.findFragmentByTag("saved_lists_fragment") == null) {
+                        transaction.addToBackStack("saved_lists_fragment")
+                    }
+                    transaction.replace(frame, newFragment)
+                        .commit()
+                    currentFragmentName = viewModel.setCurrentFragment("SavedListsFragment").toString()
                     true
                 } else true
             }
@@ -130,6 +132,7 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     private fun getAddresses(geocoder: Geocoder) {
         var addressList: MutableList<Address>?
@@ -164,6 +167,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
 
 
     private fun getAutoCompleteList() {

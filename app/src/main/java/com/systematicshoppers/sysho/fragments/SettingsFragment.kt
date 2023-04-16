@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.systematicshoppers.sysho.R
@@ -49,7 +50,15 @@ class SettingsFragment : Fragment() {
         })
 
         distanceSeekBar.progress = viewModel.distanceFilter.value!!.toInt() // Set initial progress to viewModel.distanceFilter.value
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.content, ResultsFragment()).commit()
+            }
+        }
 
+        // Add the callback to the onBackPressedDispatcher
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         return view
     }

@@ -114,4 +114,12 @@ class SyshoViewModel : ViewModel() {
     fun notifyApiStoreAdapter(passNotice: Boolean) {
         _apiStoreAdapterNotice.value = passNotice
     }
+
+    /** Navigation **/
+    private val _currentFragment = MutableLiveData<String>()
+    val currentFragment: LiveData<String> = _currentFragment
+    fun setCurrentFragment(passCurrentFragment: String) {
+        _currentFragment.value = passCurrentFragment
+        println(_currentFragment.value)
+    }
 }
