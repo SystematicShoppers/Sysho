@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -29,6 +30,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
     private lateinit var apiStoresSelectAdapter: ApiStoresSelectAdapter
     private lateinit var supportFragmentManager: FragmentManager
     private lateinit var store: Store
+    private lateinit var reloadBtn: ImageButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +42,7 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
         val storeName = view.findViewById<TextView>(R.id.storeName_at_interface)
         val imageLogo = view.findViewById<ImageView>(R.id.apiStoreLogo)
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        reloadBtn = view.findViewById(R.id.reloadBtn)
         recyclerView = view.findViewById(R.id.store_interface_recycler_view)
         supportFragmentManager = parentFragmentManager
         viewModel.store.observe(viewLifecycleOwner) {
@@ -58,6 +61,16 @@ class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
             viewModel.apiStoreAdapterNotice.observe(viewLifecycleOwner) {
                 apiStoresSelectAdapter.notifyDataSetChanged()
             }
+        }
+        reloadBtn.setOnClickListener {
+            viewModel.reloadStoreData(store.DocumentId)
+            getAddress(store, geocoder)
+            val latlongstr = store.latitude.toString() + " " + store.longitude.toString()
+            address?.text = latlongstr
+            storeName.text = store.store
+            storeID.text = store.storeId
+            setLogoImage(storeName.text as String?, imageLogo)
+            apiStoresSelectAdapter.notifyDataSetChanged()
         }
         return view
     }
