@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
@@ -22,14 +23,14 @@ class ApiStoresAdapter(private val context: Context, private val data: MutableLi
     }
 
     override fun onBindViewHolder(holder: ApiStoresViewHolder, position: Int) {
-        val data = data[position]
+            val data = data[position]
             holder.storeIDTextView.text = data.storeId
             holder.storeNameTextView.text = data.store
             holder.locationTextView.text = data.address
+            holder.logoImageView.setImageResource(setLogo(data.store))
             holder.itemView.setOnClickListener {
                 onCLick.gotoStore(position, data)
             }
-
     }
 
     override fun getItemCount(): Int {
@@ -40,7 +41,26 @@ class ApiStoresAdapter(private val context: Context, private val data: MutableLi
         val storeIDTextView: TextView = itemView.findViewById(R.id.storeIDTextView)
         val storeNameTextView: TextView = itemView.findViewById(R.id.storeNameTextView)
         val locationTextView: TextView = itemView.findViewById(R.id.locationTextView)
+        val logoImageView: ImageView = itemView.findViewById(R.id.logo)
 
     }
 
+    private fun setLogo(store: String?): Int {
+        when (store) {
+            "WalMart", "Wal Mart", "Wal-Mart", "Wal - Mart", "Walmart" ->
+                return R.drawable.walmart_logo
+            "Aldi", "aldi" ->
+                return R.drawable.aldi_logo
+            "Target", "target" ->
+                return R.drawable.target_logo
+            "Winn Dixie", "winn dixie", "Winn-Dixie", "winn-dixie" ->
+                return R.drawable.winn_dixie_logo
+            "Publix", "publix" ->
+                return R.drawable.publix_logo
+            "Trader Joe's", "trader joe's", "trader joes", "Trader Joes" ->
+                return R.drawable.trader_joes_logo
+            else ->
+                return android.R.color.transparent
+        }
+    }
 }
