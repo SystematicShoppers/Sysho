@@ -1,11 +1,13 @@
 package com.systematicshoppers.sysho.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -160,9 +162,13 @@ class LogInActivity: AppCompatActivity() {
         AuthUI.getInstance()
             .signOut(this)
             .addOnCompleteListener {
-                updateUserEmailDisplay() //update the textview email display
+                updateUserEmailDisplay()
+                // Send a local broadcast to inform the SavedListsFragment that the user has logged out
+                val intent = Intent("USER_LOGGED_OUT")
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
             }
     }
+
 
     // Used to delete the currently authenticated user's account from Firebase Authentication.
     private fun delete() {

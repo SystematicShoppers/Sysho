@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.systematicshoppers.sysho.R
 import android.widget.Toast
@@ -13,6 +14,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.systematicshoppers.sysho.adapters.ListItemAdapter
 import com.systematicshoppers.sysho.database.UserList
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+
 
 private const val TAG = "SavedListsFragment"
 
@@ -41,11 +49,13 @@ class SavedListsFragment : Fragment() {
         return view
     }
 
+    private lateinit var noSavedListsText: TextView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize the RecyclerView and set its layout manager
         recyclerView = view.findViewById<RecyclerView>(R.id.saved_lists_recycler_view)
+        noSavedListsText = view.findViewById<TextView>(R.id.no_saved_lists_text)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // Load the user's saved lists and update the RecyclerView's adapter
@@ -54,8 +64,47 @@ class SavedListsFragment : Fragment() {
             savedLists.addAll(userLists)
             recyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
+
+            // Update the visibility of the "No Saved Lists" message
+            if (savedLists.isEmpty()) {
+                noSavedListsText.visibility = View.VISIBLE
+            } else {
+                noSavedListsText.visibility = View.GONE
+            }
         }
     }
+
+    private val userLoggedOutReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            clearLists()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(userLoggedOutReceiver, IntentFilter("USER_LOGGED_OUT"))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(userLoggedOutReceiver)
+    }
+
+    private fun clearLists() {
+        savedLists.clear()
+        adapter.notifyDataSetChanged()
+        checkEmptyList()
+    }
+
+    private fun checkEmptyList() {
+        if (savedLists.isEmpty()) {
+            noSavedListsText.visibility = View.VISIBLE
+        } else {
+            noSavedListsText.visibility = View.GONE
+        }
+    }
+
+
 
     // Function to load the user's saved lists from Firestore
     private fun loadUserLists(callback: (List<UserList>) -> Unit) {
@@ -76,6 +125,10 @@ class SavedListsFragment : Fragment() {
             }.addOnFailureListener { exception ->
                 Toast.makeText(requireContext(), "Failed to load lists: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
+        } else {
+            // Execute the callback with an empty list for not signed-in users
+            callback(emptyList())
+            noSavedListsText.visibility = View.VISIBLE
         }
     }
 
@@ -92,6 +145,14 @@ class SavedListsFragment : Fragment() {
             userListsRef.document(userList.id).delete().addOnSuccessListener {
                 savedLists.removeAt(position)
                 recyclerView.adapter?.notifyDataSetChanged()
+
+                // Update the visibility of the "No Saved Lists" message
+                if (savedLists.isEmpty()) {
+                    noSavedListsText.visibility = View.VISIBLE
+                } else {
+                    noSavedListsText.visibility = View.GONE
+                }
+
                 Toast.makeText(requireContext(), "List deleted successfully", Toast.LENGTH_SHORT)
                     .show()
             }.addOnFailureListener { exception ->
@@ -103,4 +164,6 @@ class SavedListsFragment : Fragment() {
             }
         }
     }
+
+
 }
