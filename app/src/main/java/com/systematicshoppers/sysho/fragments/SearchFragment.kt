@@ -242,6 +242,9 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         return list
     }
 
+    /**
+     * The saveUserList() function is responsible for saving a user's shopping list to Firestore if the list is not empty.
+     */
     private fun saveUserList() {
         // Check if the list is empty and return early if it is
         if (list.isEmpty()) {
@@ -249,9 +252,13 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
             return
         }
 
+        // Get the current user from FirebaseAuth
         val user = FirebaseAuth.getInstance().currentUser
+        // If the user is not null, proceed with saving the list
         if (user != null) {
+            // Get the user's unique ID
             val userId = user.uid
+            // Get a reference to the user's lists collection in Firestore
             val userListsRef = FirebaseUtils().fireStoreDatabase.collection("Users").document(userId).collection("lists")
 
             // Generate a unique document ID for the new list
@@ -261,5 +268,4 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
             newListRef.set(mapOf("items" to list))
         }
     }
-
 }
