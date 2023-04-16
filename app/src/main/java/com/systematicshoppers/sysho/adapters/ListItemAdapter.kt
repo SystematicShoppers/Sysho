@@ -48,5 +48,6 @@ class ListItemAdapter(private val items: List<UserList>, private val onDelete: (
         }
     }
 
+
     override fun getItemCount(): Int = items.size
 }
