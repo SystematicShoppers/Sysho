@@ -243,6 +243,12 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
     }
 
     private fun saveUserList() {
+        // Check if the list is empty and return early if it is
+        if (list.isEmpty()) {
+            Toast.makeText(requireContext(), "Empty list not saved", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             val userId = user.uid
