@@ -147,13 +147,8 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                 val newFragment = SearchFragment()
                 val transaction = parentFragmentManager.beginTransaction()
                 transaction.replace(R.id.content, newFragment).commit()
-                // Handle back button press here
-                // You can implement your custom logic for back button behavior
-                // For example, show a confirmation dialog or navigate to a different fragment
             }
         }
-
-        // Add the callback to the onBackPressedDispatcher
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         return view
     }

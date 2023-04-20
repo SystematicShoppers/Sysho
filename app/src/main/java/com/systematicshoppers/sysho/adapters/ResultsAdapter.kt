@@ -49,7 +49,7 @@ class ResultsAdapter(private val context: Context,
         holder.storeName.text = data[position].store
         holder.address.text = data[position].address
         holder.logo.setImageResource(setLogo(holder.storeName.text.toString(), holder.itemView))
-        holder.distance.text = String.format("%.2f", data[position].distance)
+        holder.distance.text = String.format("%.2f", data[position].distance) + " miles"
         val locale = Locale.US // Specify the desired locale for dollar format
         val currencyFormatter = NumberFormat.getCurrencyInstance(locale)
         currencyFormatter.minimumFractionDigits = 2
