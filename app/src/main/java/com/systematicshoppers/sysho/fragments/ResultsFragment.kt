@@ -70,6 +70,14 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                             recyclerView = view.findViewById(R.id.resultsRecyclerView)
                             recyclerView.adapter = resultsAdapter
                             recyclerView.layoutManager = recyclerViewLayoutManager
+
+                            //the following sets the default filter toggle to "distance".
+                            toggleDistance.setBackgroundResource(R.drawable.toggle_left)
+                            togglePrice.setBackgroundResource(R.drawable.toggle_off_right)
+                            toggleDistance.isChecked = true
+                            togglePrice.isChecked = false
+                            data.sortBy { it.distance }
+                            resultsAdapter.notifyDataSetChanged()
                         }
                     }
                 }
