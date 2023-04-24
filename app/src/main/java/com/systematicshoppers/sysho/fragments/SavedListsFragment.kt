@@ -19,8 +19,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-
+import com.systematicshoppers.sysho.SyshoViewModel
 
 private const val TAG = "SavedListsFragment"
 
@@ -39,6 +41,7 @@ class SavedListsFragment : Fragment() {
     val adapter = ListItemAdapter(savedLists) { position ->
         deleteList(position)
     }
+    private val viewModel: SyshoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,6 +75,17 @@ class SavedListsFragment : Fragment() {
                 noSavedListsText.visibility = View.GONE
             }
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val transaction = parentFragmentManager.beginTransaction()
+                viewModel.setCurrentFragment("SearchFragment").toString()
+                transaction.replace(R.id.content, SearchFragment()).commit()
+            }
+        }
+        // Add the callback to the onBackPressedDispatcher
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
     }
 
     private val userLoggedOutReceiver = object : BroadcastReceiver() {
@@ -164,6 +178,4 @@ class SavedListsFragment : Fragment() {
             }
         }
     }
-
-
 }

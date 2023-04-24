@@ -154,6 +154,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
             override fun handleOnBackPressed() {
                 val newFragment = SearchFragment()
                 val transaction = parentFragmentManager.beginTransaction()
+                viewModel.setCurrentFragment("SearchFragment").toString()
                 transaction.replace(R.id.content, newFragment).commit()
             }
         }
