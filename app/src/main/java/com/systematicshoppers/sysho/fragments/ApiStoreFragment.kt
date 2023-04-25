@@ -20,15 +20,22 @@ import com.systematicshoppers.sysho.adapters.ApiStoresAdapter
 import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.Store
 import java.util.*
-/**A fragment of ApiActivity that displays the store database and handles click events from its RecyclerView.**/
+
+/**
+ * A fragment of ApiActivity that displays the store database and handles click events from its RecyclerView.
+ */
 class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
 
+    // Declare necessary variables and components
     private lateinit var apiStoresRecyclerView: RecyclerView
     private lateinit var apiStoresAdapter: ApiStoresAdapter
     private val stores = mutableListOf<Store>()
     private lateinit var geocoder: Geocoder
     private val viewModel: SyshoViewModel by activityViewModels()
 
+    /**
+     * Inflate the layout for the fragment
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,9 +44,14 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
         return view
     }
 
+    /**
+     * Initialize components and get store data from Firebase
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         geocoder = Geocoder(requireContext(), Locale.getDefault())
+
+        // Get store data and addresses, then initialize RecyclerView components
         getStores { stores ->
             getAddresses(stores, geocoder) { done -> try {
                 if(isAdded) {
@@ -58,7 +70,9 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
 
     }
 
-    /** Parses Firebase documents into Store objects. Returns as a callback with the store objects.**/
+    /**
+     * Parses Firebase documents into Store objects. Returns as a callback with the store objects.
+     */
     private fun getStores(callback: (MutableList<Store>) -> Unit) {
         FirebaseUtils().fireStoreDatabase.collection("stores")
             .get()
@@ -71,7 +85,9 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
             }
     }
 
-    /**Gets addresses from lat and long values to display them in the UI.**/
+    /**
+     * Gets addresses from latitude and longitude values to update store objects with addresses and display them in the UI
+     */
     private fun getAddresses(stores: MutableList<Store>, geocoder: Geocoder, callback: (Boolean) -> Unit) {
         var addressList: MutableList<Address>?
         var lat: Double?
@@ -91,12 +107,11 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
         callback.invoke(true)
     }
 
-
-
+    /**
+     * Navigate to ApiStoreSelectFragment when a store item is clicked.
+     */
     override fun gotoStore(position: Int, storeData: Store) {
         viewModel.setStoreData(storeData)
         view?.findNavController()?.navigate(R.id.action_apiStoreFragment_to_apiStoreSelectFragment)
     }
-
-
 }
