@@ -77,7 +77,6 @@ class ListItemAdapter(private val items: List<UserList>, private val onDelete: (
         }
     }
 
-
     /**
      * The getItemCount function returns the number of items in the items list,
      * which determines the number of items displayed in the RecyclerView.
