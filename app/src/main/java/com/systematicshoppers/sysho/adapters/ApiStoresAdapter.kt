@@ -9,19 +9,31 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Store
-/**Standard RecyclerView adapter for the Store database of the API. Also has an added function for displaying logos. Items are clickable.**/
+/**
+ * Standard RecyclerView adapter for the Store database of the API.
+ * Also has an added function for displaying logos. Items are clickable.
+ */
 class ApiStoresAdapter(private val context: Context, private val data: MutableList<Store>, private val onCLick: ClickListener): RecyclerView.Adapter<ApiStoresAdapter.ApiStoresViewHolder>() {
 
+    /**
+     * This method creates a new ViewHolder with the api_store_item layout and returns it.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiStoresViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.api_store_item, parent,false)
         return ApiStoresViewHolder(view)
     }
 
+    /**
+     * ClickListener interface to handle the click events on the items in the RecyclerView.
+     */
     interface ClickListener {
         fun gotoStore(position: Int, storeData: Store)
 
     }
 
+    /**
+     * This method binds the data to the views in the ViewHolder and sets an onClickListener for each item.
+     */
     override fun onBindViewHolder(holder: ApiStoresViewHolder, position: Int) {
             val data = data[position]
             holder.storeIDTextView.text = data.storeId
@@ -33,10 +45,16 @@ class ApiStoresAdapter(private val context: Context, private val data: MutableLi
             }
     }
 
+    /**
+     * This method returns the total number of items in the RecyclerView.
+     */
     override fun getItemCount(): Int {
         return data.size
     }
 
+    /**
+     * ViewHolder class for the adapter, which holds the references to the views in the api_store_item layout.
+     */
     inner class ApiStoresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val storeIDTextView: TextView = itemView.findViewById(R.id.storeIDTextView)
         val storeNameTextView: TextView = itemView.findViewById(R.id.storeNameTextView)
@@ -45,6 +63,9 @@ class ApiStoresAdapter(private val context: Context, private val data: MutableLi
 
     }
 
+    /**
+     * This private method sets the store logo based on the store name and returns the corresponding drawable resource.
+     */
     private fun setLogo(store: String?): Int {
         when (store) {
             "WalMart", "Wal Mart", "Wal-Mart", "Wal - Mart", "Walmart" ->
