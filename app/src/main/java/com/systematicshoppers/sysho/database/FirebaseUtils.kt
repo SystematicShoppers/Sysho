@@ -8,17 +8,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.systematicshoppers.sysho.LocationViewModel
 
-
 /**
- *
  * Provides an instance of firebase for the app
  * Provides functions that retrieve information about stores based on coordinates
  * FirebaseLocationsUtil is a utility class specifically for location services.
- *
- * **/
+ */
 class FirebaseUtils  {
     val fireStoreDatabase = FirebaseFirestore.getInstance()
 
+    /**
+     * Get the address string from the provided coordinates using the Geocoder.
+     * Callback function is used to return the address string asynchronously.
+     */
     fun getAddress(coordinates: Coordinates, geocoder: Geocoder, callback: (String) -> Unit) {
         val lat = coordinates.latitude
         val long = coordinates.longitude
@@ -41,7 +42,10 @@ class FirebaseUtils  {
         }
     }
 
-    /**This is a function for resetting a store to the default prices and products database. Used to assist in development.**/
+    /**
+     * This is a function for resetting a store to the default prices and products database.
+     * Used to assist in development.
+     */
     fun updateStoreWithStockField(documentId: String) {
         FirebaseUtils().fireStoreDatabase.collection("metadata").document("basePrices")
             .get()
@@ -65,10 +69,20 @@ class FirebaseUtils  {
     }
 }
 
+/**
+ * Utility class designed to work with location-related data within the context of the fragment.
+ * Primarily focuses on calculating the distance between two sets of coordinates using the current location of the device
+ * and coordinates retrieved from the Firebase database.
+ */
 class FirebaseLocationUtils(private val activity: FragmentActivity) {
     private val locationViewModel: LocationViewModel by lazy {
         ViewModelProvider(activity)[LocationViewModel::class.java]
     }
+
+    /**
+     * Get the distance between the current location and the provided coordinates.
+     * Returns the distance in miles.
+     */
     fun getDistance(coordinates: Coordinates, geocoder: Geocoder): Double {
         val currentLocation = locationViewModel.currentLocation.value
         val distance = FloatArray(1)
@@ -87,5 +101,3 @@ class FirebaseLocationUtils(private val activity: FragmentActivity) {
         }
     }
 }
-
-
