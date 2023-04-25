@@ -15,7 +15,7 @@ import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ApiProductsAdapter
 import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.Product
-
+/**Fragment for ApiActivity to display the products database and handle the click events of its RecyclerView.**/
 class ApiProductFragment : Fragment(), ApiProductsAdapter.ClickListener {
 
     private lateinit var apiProductsRecyclerView: RecyclerView
@@ -49,6 +49,7 @@ class ApiProductFragment : Fragment(), ApiProductsAdapter.ClickListener {
             .commit()
     }
 
+    /**Returns through a callback with a list of Products parsed from Firebase documents.**/
     private fun getProducts(callback: (MutableList<Product>) -> Unit) {
         FirebaseUtils().fireStoreDatabase.collection("products")
             .get()

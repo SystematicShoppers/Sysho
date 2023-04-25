@@ -16,7 +16,7 @@ import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.TAG
 import java.text.DecimalFormat
 
-
+/**Confirmation screen for a SaleDialog which is a dialog of ApiStoreSelectFragment.**/
 class SaleDialogConfirm: DialogFragment() {
 
     private lateinit var activateSaleWarningTextView: TextView

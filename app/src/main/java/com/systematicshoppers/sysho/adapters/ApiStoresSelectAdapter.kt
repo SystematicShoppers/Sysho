@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
-
+/**RecyclerView adapter that lists products and prices of any store clicked in the Store Database of the API. Each item has a button to run possible price manipulating algoriths.**/
 class ApiStoresSelectAdapter(private val context: Context,
                              private val data: List<MutableMap<String, Any>>?,
                              private val onCLick: ClickListener) :  RecyclerView.Adapter<ApiStoresSelectAdapter.ApiStoresSelectViewHolder>() {

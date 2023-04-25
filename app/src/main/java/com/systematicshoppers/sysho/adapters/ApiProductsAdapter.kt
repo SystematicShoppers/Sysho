@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Product
 
+/**Standard RecyclerView adapter for the product data in the Product database. Lists all products as clickable cards with their data displayed.**/
 class ApiProductsAdapter(private val context: Context, private val data: MutableList<Product>, private val onClick: ClickListener): RecyclerView.Adapter<ApiProductsAdapter.ApiProductsViewHolder>() {
     class ApiProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val productIDTextView: TextView = itemView.findViewById(R.id.productIDTextView)

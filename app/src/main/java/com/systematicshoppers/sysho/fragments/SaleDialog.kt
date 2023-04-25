@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 
+/**A dialog for ApiStoreSelectFragment if the user chooses to use the on sale algorithm. On sale reduces all prices in the store by a set percentage.**/
 class SaleDialog: DialogFragment() {
 
     private lateinit var activateSaleTextView: TextView

@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.systematicshoppers.sysho.database.*
-
+/**A central ViewModel for the entire app to communicate data between Fragments. ViewModels are a special structure where data can be store
+ * instead of sent as args between Fragments. ViewModel data lives with the Activity and can exchange data between fragments of that Activity.**/
 class SyshoViewModel : ViewModel() {
 
     private var _stores = MutableLiveData<List<Store>>()

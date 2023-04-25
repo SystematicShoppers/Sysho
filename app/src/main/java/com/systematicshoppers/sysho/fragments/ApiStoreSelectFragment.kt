@@ -22,7 +22,8 @@ import com.systematicshoppers.sysho.database.Product
 import com.systematicshoppers.sysho.database.Store
 import com.systematicshoppers.sysho.database.TAG
 import java.util.*
-
+/**Displays store data from an onclick even on any item from ApiStoreFragment. Also gives the ruser a reload button since they can use the API
+ * to update this data directly from this Fragments view.**/
 class ApiStoreSelectFragment: Fragment(), ApiStoresSelectAdapter.ClickListener {
 
     private val viewModel: SyshoViewModel by activityViewModels()

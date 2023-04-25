@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 
-
+/**A dialog for ApiStoreSelectFragment to increase all prices in a store by a certain percentage.**/
 class SweepDialog: DialogFragment() {
 
     private lateinit var activateSweepTextView: TextView

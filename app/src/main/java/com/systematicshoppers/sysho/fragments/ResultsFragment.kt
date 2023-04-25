@@ -25,7 +25,9 @@ import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ResultsAdapter
 import com.systematicshoppers.sysho.database.*
 import java.util.*
-
+/**The main function of the app and a fragment of MainActivity. ResultsFragment displays the search results from SearchFragment. It also
+ * parses multiple Firebase data points through getTotalPrice(), getAddresses(), and getDistances(). Displays error messages for empty lists,
+ * searching without location services, or empty search results due to distance constraints in the settings.**/
 class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
 
     private val viewModel: SyshoViewModel by activityViewModels()
@@ -47,6 +49,8 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         list = viewModel.resultsList.value
         toggleDistance = view.findViewById(R.id.filterDistance)
         togglePrice = view.findViewById(R.id.filterPrice)
+
+        /**Checks for location services then attempts to perform a series of callback functions on Firebase.**/
         if (locationViewModel.isLocationEnabled.value == true &&
             locationViewModel.isLocationPermissionGranted.value == true
         ) {
@@ -56,6 +60,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                         getTotalPrice { pricesLockedIn, total ->
                             getAddresses()
                             getDistances()
+                            /**Error block for a search with no results due to distance filters.**/
                             if(data.size < 1) {
                                 val errorDistanceLayout: LinearLayout =
                                     view.findViewById(R.id.distanceErrorDisplay)
@@ -65,6 +70,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                                 view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
                             }
                             resultsAdapter = ResultsAdapter(requireContext(), data, this)
+                            /**Because the callbacks cannot ensure when the fragment attaches to the activity, isAdded will check. Prevents async crashes**/
                             if(isAdded)
                                 recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                             recyclerView = view.findViewById(R.id.resultsRecyclerView)
@@ -81,6 +87,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                         }
                     }
                 }
+                /**Code runs here if there is an empty list **/
                 else {
                     val errorEmptyListLayout: LinearLayout =
                         view.findViewById(R.id.resultsEmptyListErrorDisplay)
@@ -95,6 +102,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                         transaction.replace(R.id.content, newFragment).commit()
                     }
                 }
+                /**Displays the empty list error.**/
             } catch (e: Exception) {
                 val errorEmptyListLayout: LinearLayout =
                     view.findViewById(R.id.resultsEmptyListErrorDisplay)
@@ -111,7 +119,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
             }
         }
 
-        //If location permissions are not active
+        /**Displays no location services error.**/
         if(locationViewModel.isLocationEnabled.value != true ||
             locationViewModel.isLocationPermissionGranted.value != true) {
             val errorNoLocationLayout: LinearLayout =
@@ -122,6 +130,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
             view.findViewById<TextView>(R.id.filterTextView).visibility = View.INVISIBLE
         }
 
+        /**Filter toggle UI**/
         toggleDistance.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 toggleDistance.setBackgroundResource(R.drawable.toggle_left)
@@ -153,9 +162,9 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val newFragment = SearchFragment()
-                val transaction = parentFragmentManager.beginTransaction()  // Begin a fragment transaction
-                viewModel.setCurrentFragment("SearchFragment").toString()   // Set the current fragment in the ViewModel to "SearchFragment"
-                transaction.replace(R.id.content, newFragment).commit()     // Replace the current fragment with a new instance of SearchFragment
+                val transaction = parentFragmentManager.beginTransaction()
+                viewModel.setCurrentFragment("SearchFragment").toString()
+                transaction.replace(R.id.content, newFragment).commit()
             }
         }
         // Add the callback to the onBackPressedDispatcher
@@ -163,6 +172,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         return view
     }
 
+    /** This takes the quantity modifier from the SearchList object and gets a total price based on Firebase price data. Returns as a callback with the total.**/
     private fun getTotalPrice(callback: (Boolean, Double) -> Unit) {
         var total = 0.0
         for(store in data) {
@@ -183,11 +193,14 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         callback(true, total)
     }
 
+    /**Prevents Firebase from parsing data that is outside the distance filter.**/
     fun filterDistance(coordinates: Coordinates): Boolean {
         val distance = FirebaseLocationUtils(this.requireActivity()).getDistance(coordinates, geocoder = Geocoder(requireContext(), Locale.getDefault()))
         val maxDistance = viewModel.distanceFilter.value
         return distance < maxDistance!!
     }
+
+    /**Opens Google Maps**/
     override fun gotoMap(address: String, coordinates: Coordinates) {
         val origin = locationViewModel.currentLocation.value
         val geoUri = "google.navigation:q=$address&dirflg=d&origin=${origin?.latitude},${origin?.longitude}"

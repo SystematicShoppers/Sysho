@@ -9,7 +9,7 @@ import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.systematicshoppers.sysho.R
 
-
+/**A dialog pop up for the ApiStoreFragment. Displays a selection of price manipulation algorithms.**/
 class ApiStoreDialog : DialogFragment() {
 
     private lateinit var updatePriceBtn : Button

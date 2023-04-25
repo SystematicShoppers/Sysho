@@ -41,6 +41,7 @@ class FirebaseUtils  {
         }
     }
 
+    /**This is a function for resetting a store to the default prices and products database. Used to assist in development.**/
     fun updateStoreWithStockField(documentId: String) {
         FirebaseUtils().fireStoreDatabase.collection("metadata").document("basePrices")
             .get()

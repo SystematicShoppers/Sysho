@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-
+/**A view model for location services. Updates if there is any change in location caught by the LocationListener.**/
 class LocationViewModel : ViewModel(), LocationListener {
     private lateinit var locationManager: LocationManager
     val currentLocation = MutableLiveData<Location>()

@@ -21,7 +21,9 @@ import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.TAG
 
-
+/**A fragment of ApiActivity that displays specific product data. Loads after an onclick event from any ApiProductsFragment recyclerView item.
+ * Displays Product info and a graph for that products price points in all stores. In the future, as more stores are added, this data would be better
+ * represents as a histograph. Currently a line graph. **/
 class ApiProductSelectFragment: Fragment() {
 
     private val viewModel: SyshoViewModel by activityViewModels()
@@ -56,33 +58,23 @@ class ApiProductSelectFragment: Fragment() {
             // Create an ArrayList to hold Entry objects for plotting
             val entries = ArrayList<Entry>()
             for (i in 0 until data.size) {
-                // Add Entry with x-axis as index and y-axis as the price value
                 entries.add(Entry(i.toFloat(), data[i].toFloat()))
             }
 
-            // Create a LineDataSet from the Entry objects
             val dataSet = LineDataSet(entries, "Price Point for all Stores")
-
-            // Customize the appearance of the LineDataSet
-            dataSet.color = Color.BLUE // Set the line color to blue
-            dataSet.setCircleColor(Color.TRANSPARENT) // Set the circle color to transparent
+            dataSet.color = Color.BLUE
+            dataSet.setCircleColor(Color.TRANSPARENT)
             dataSet.lineWidth = 1.5f
-            dataSet.circleRadius = 0f // Set circle radius to 0 to disable points
+            dataSet.circleRadius = 0f
             dataSet.setDrawCircleHole(false)
             dataSet.valueTextSize = 9f
             dataSet.setDrawValues(false)
 
-            // Create an ArrayList to hold the LineDataSet for passing to LineData
             val dataSets = ArrayList<ILineDataSet>()
             dataSets.add(dataSet)
 
-            // Create a LineData object with the LineDataSet
             val lineData = LineData(dataSets)
-
-            // Set the data to the LineChart
             chart.data = lineData
-
-            // Customize the appearance of the LineChart
             chart.description.isEnabled = false
             chart.setTouchEnabled(true)
             chart.setPinchZoom(true)
@@ -92,8 +84,6 @@ class ApiProductSelectFragment: Fragment() {
             chart.axisRight.isEnabled = false
             chart.axisLeft.spaceTop = 10f
             chart.animateX(1500)
-
-            // Invalidate the chart to refresh the display
             chart.invalidate()
         }
         return view

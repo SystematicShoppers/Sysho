@@ -2,9 +2,7 @@ package com.systematicshoppers.sysho.activities
 
 import android.content.ContentValues
 import android.content.Intent
-import android.location.Address
 import android.location.Geocoder
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -18,7 +16,6 @@ import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.SearchList
-import com.systematicshoppers.sysho.database.Store
 import com.systematicshoppers.sysho.databinding.ActivityMainBinding
 import com.systematicshoppers.sysho.fragments.ResultsFragment
 import com.systematicshoppers.sysho.fragments.SavedListsFragment
@@ -35,21 +32,17 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: SyshoViewModel by viewModels()
     private val locationViewModel: LocationViewModel by viewModels()
 
-    /**TODO: Load settings in onCreate currently loads default 20 mile distance filter.
-     * TODO: Change to: If logged on... load user preference... else... set to 20
-     *
+    /**
+      This init reads the metadata from Firebase for the product database.
+      It returns a list of possible item names for the search autocomplete feature.
      **/
-
     init {
         getAutoCompleteList()
     }
-
     /**
- *
- * Location updates will begin here once the app is started.
- * The user should be prompted for permission.
- *
- * **/
+        Location updates will begin here once the app is started.
+        The user should be prompted for permission.
+     **/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -65,12 +58,17 @@ class MainActivity : AppCompatActivity() {
         loadSettings()
     }
 
-
+    /**Gives the drop down menu the style of nav_menu.xml which includes all the big app destinations.**/
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return true
     }
 
+    /**Sets what happens when a destination is selected from the drop down. There's a bit of a special case here
+     * because the app also employs other forms of navigation. Any time a navigation event happens, the viewModel
+     * updates with the name of the fragment at the top of the stack (this is not the same as FragmentManager tags!!)
+     * In the drop down menu, the name becomes the value of currentFragmentName which then acts as an error check to determine
+     * if a fragment being view is also being selected, and prevent a reload on user error.**/
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val frame = R.id.content
         currentFragmentName = viewModel.currentFragment.value.toString()
@@ -133,43 +131,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun getAddresses(geocoder: Geocoder) {
-        var addressList: MutableList<Address>?
-        var address: Address
-        var store: Store
-        var lat: Double
-        var long: Double
-
-        FirebaseUtils().fireStoreDatabase.collection("stores")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                querySnapshot.forEach { storeDocument ->
-                    store = storeDocument.toObject(Store::class.java)
-                    lat = store.latitude?.toDouble()!!
-                    long = store.longitude?.toDouble()!!
-                    if (Build.VERSION.SDK_INT >= 33) {
-                        val geocodeListener = Geocoder.GeocodeListener { locations ->
-                            addressList = locations
-                            address = addressList!![0]
-
-                        }
-                        geocoder.getFromLocation(lat, long, 1, geocodeListener)
-                    } else {
-                        val addressList = geocoder.getFromLocation(lat, long, 1)
-                        address = addressList!![0]
-                        // For Android SDK < 33, the addresses list will be still obtained from the getFromLocation() method
-                    }
-                }
-            }
-    }
-
+    /**This is an override method for the NavController that Android recommends adding to AppCompat
+     * activities that are acting as a home page for the navigation graph/ **/
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
 
-
+    /**This is the Firebase call to get the search list results from metadata (see init block at top)**/
     private fun getAutoCompleteList() {
             FirebaseUtils().fireStoreDatabase.collection("metadata").document("searchList")
                 .get()
@@ -188,6 +157,9 @@ class MainActivity : AppCompatActivity() {
                 }
     }
 
+    /**This will load default settings to match the displayed default distance in the settings.
+     * This code can be modified to cater to individual user data and settings in the future!
+     * **/
     private fun loadSettings() {
         viewModel.setDistanceFilter(20.0)
     }

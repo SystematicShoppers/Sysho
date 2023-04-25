@@ -20,7 +20,7 @@ import com.systematicshoppers.sysho.adapters.ApiStoresAdapter
 import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.Store
 import java.util.*
-
+/**A fragment of ApiActivity that displays the store database and handles click events from its RecyclerView.**/
 class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
 
     private lateinit var apiStoresRecyclerView: RecyclerView
@@ -40,7 +40,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         geocoder = Geocoder(requireContext(), Locale.getDefault())
-        getStores() {stores ->
+        getStores { stores ->
             getAddresses(stores, geocoder) { done -> try {
                 if(isAdded) {
                     apiStoresAdapter = ApiStoresAdapter(requireContext(), stores, this)
@@ -58,6 +58,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
 
     }
 
+    /** Parses Firebase documents into Store objects. Returns as a callback with the store objects.**/
     private fun getStores(callback: (MutableList<Store>) -> Unit) {
         FirebaseUtils().fireStoreDatabase.collection("stores")
             .get()
@@ -70,6 +71,7 @@ class ApiStoreFragment : Fragment(), ApiStoresAdapter.ClickListener {
             }
     }
 
+    /**Gets addresses from lat and long values to display them in the UI.**/
     private fun getAddresses(stores: MutableList<Store>, geocoder: Geocoder, callback: (Boolean) -> Unit) {
         var addressList: MutableList<Address>?
         var lat: Double?

@@ -3,7 +3,8 @@ package com.systematicshoppers.sysho.database
 import android.util.Log
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.PropertyName
-
+/**A class for creating Products with their various data properties. Data is store for products in Firebase as Hashmaps.
+ * mapToProduct ensures the map data can be parsed to a Product.**/
 const val TAG = "Product"
 data class Product(
     @get:PropertyName("ID") @set:PropertyName("ID") var id : String ? = null,

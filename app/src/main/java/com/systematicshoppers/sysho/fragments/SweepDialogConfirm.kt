@@ -16,7 +16,7 @@ import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.TAG
 import java.text.DecimalFormat
 
-
+/**Confirmation screen for SweepDialog which is a Dialog of ApiStoreSelectFragment.**/
 class SweepDialogConfirm: DialogFragment() {
 
     private lateinit var activateSweepWarningTextView: TextView

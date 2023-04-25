@@ -12,7 +12,8 @@ import com.systematicshoppers.sysho.database.Coordinates
 import com.systematicshoppers.sysho.database.Store
 import java.text.NumberFormat
 import java.util.*
-
+/**RecyclerView adapter that lists the results of a search. Items are clickable and the click opens an intent to
+ * Google Maps for navigation.**/
 class ResultsAdapter(private val context: Context,
                      private val data: MutableList<Store>,
                      private val onCLick: ClickListener): RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() {
@@ -25,9 +26,8 @@ class ResultsAdapter(private val context: Context,
     interface ClickListener {
         fun gotoMap(address: String, coordinates: Coordinates)
     }
-
+    /**Set the logo in a results item if it matches a popular store.**/
     private fun setLogo(store: String?, view: View): Int {
-        val img: ImageView = ImageView(view.context)
         when (store) {
             "WalMart", "Wal Mart", "Wal-Mart", "Wal - Mart", "Walmart" ->
                 return R.drawable.walmart_logo
@@ -61,7 +61,7 @@ class ResultsAdapter(private val context: Context,
             onCLick.gotoMap(holder.address.text.toString(), coordinates)
         }
     }
-
+/**Converts the lat and long variables of a Store object to a Coordinate object that can be used by Google Maps navigation.**/
     private fun getCoordinates(store: Store): Coordinates {
         val lat = store.latitude
         val long = store.longitude

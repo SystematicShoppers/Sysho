@@ -14,6 +14,8 @@ import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.TAG
 import java.text.DecimalFormat
 
+/**Dialog for updating a price by a set amount entered by the user. Helper function updatePrice() will check if the entered price is a proper format and
+ * update Firebase accordingly.**/
 
 class UpdatePriceDialog: DialogFragment() {
 

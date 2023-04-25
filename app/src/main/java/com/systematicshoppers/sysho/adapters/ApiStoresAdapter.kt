@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.Store
-
+/**Standard RecyclerView adapter for the Store database of the API. Also has an added function for displaying logos. Items are clickable.**/
 class ApiStoresAdapter(private val context: Context, private val data: MutableList<Store>, private val onCLick: ClickListener): RecyclerView.Adapter<ApiStoresAdapter.ApiStoresViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiStoresViewHolder {

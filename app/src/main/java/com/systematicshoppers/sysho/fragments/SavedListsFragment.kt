@@ -1,28 +1,27 @@
 package com.systematicshoppers.sysho.fragments
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import com.systematicshoppers.sysho.R
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.systematicshoppers.sysho.R
+import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ListItemAdapter
 import com.systematicshoppers.sysho.database.UserList
-
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.activityViewModels
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.systematicshoppers.sysho.SyshoViewModel
 
 private const val TAG = "SavedListsFragment"
 
@@ -32,6 +31,8 @@ private const val TAG = "SavedListsFragment"
  * and provides functionality to delete a list.
  */
 class SavedListsFragment : Fragment() {
+
+    private val viewModel: SyshoViewModel by activityViewModels()
 
     // Initialize an empty mutable list of UserList objects
     private var savedLists = mutableListOf<UserList>()
@@ -43,7 +44,6 @@ class SavedListsFragment : Fragment() {
     val adapter = ListItemAdapter(savedLists) { position ->
         deleteList(position)
     }
-    private val viewModel: SyshoViewModel by activityViewModels()
 
     /**
      * Inflates the fragment_saved_lists layout.

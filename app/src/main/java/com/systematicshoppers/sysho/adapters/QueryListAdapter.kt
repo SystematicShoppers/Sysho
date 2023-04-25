@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.systematicshoppers.sysho.R
 import com.systematicshoppers.sysho.database.QueryItem
 
-
+/** RecyclerView adapter used by the SearchFragment to display the listed products. Checkboxes are clickable to delete selected items.
+ * The plus and minus button are clickable on each item to change their quantity. There is an added function removeItems which notifies the
+ * adapter when items were removed. **/
 class QueryListAdapter(private val queryList: MutableList<QueryItem>, private val onCLick: ClickListener) :
     RecyclerView.Adapter<QueryListAdapter.ViewHolder>() {
 

@@ -31,9 +31,6 @@
             android:id="@+id/action_resultsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_resultsFragment_to_storeFragment"
-            app:destination="@id/storeFragment" />
-        <action
             android:id="@+id/action_resultsFragment_to_savedListsFragment"
             app:destination="@id/savedListsFragment" />
         <action
@@ -50,24 +47,6 @@
         android:name="com.systematicshoppers.sysho.fragments.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings"/>
-    <fragment
-        android:id="@+id/storeFragment"
-        android:name="com.systematicshoppers.sysho.fragments.StoreFragment"
-        android:label="StoreFragment"
-        tools:layout="@layout/fragment_store">
-        <action
-            android:id="@+id/action_storeFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_storeFragment_to_savedListsFragment"
-            app:destination="@id/savedListsFragment" />
-        <action
-            android:id="@+id/action_storeFragment_to_logInActivity"
-            app:destination="@id/logInActivity" />
-        <action
-            android:id="@+id/action_storeFragment_to_resultsFragment"
-            app:destination="@id/resultsFragment" />
-    </fragment>
     <fragment
         android:id="@+id/savedListsFragment"
         android:name="com.systematicshoppers.sysho.fragments.SavedListsFragment"
