@@ -16,38 +16,59 @@ import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.TAG
 import java.text.DecimalFormat
 
-/**Confirmation screen for a SaleDialog which is a dialog of ApiStoreSelectFragment.**/
+/**
+ * Confirmation screen for a SaleDialog which is a dialog of ApiStoreSelectFragment.
+ */
 class SaleDialogConfirm: DialogFragment() {
 
+    // Declare UI elements
     private lateinit var activateSaleWarningTextView: TextView
     private lateinit var activateSaleYesBtn: Button
     private lateinit var activateSaleNoBtn: Button
+    // Get access to the shared ViewModel
     private val viewModel: SyshoViewModel by activityViewModels()
 
+    /**
+     * Inflate the dialog layout and handle user interactions
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout
         val view = inflater.inflate(R.layout.dialog_activate_sale_warning, container, false)
+
+        // Initialize UI elements
         activateSaleWarningTextView = view.findViewById(R.id.activateSaleWarningTextView)
         activateSaleYesBtn = view.findViewById(R.id.activateSaleYesBtn)
         activateSaleNoBtn = view.findViewById(R.id.activateSaleNoBtn)
+
+        // Set click listener for the "No" button
         activateSaleNoBtn.setOnClickListener{
             viewModel.setSalePercent(0.0)
             dismiss()
         }
+
+        // Set click listener for the "Yes" button
         activateSaleYesBtn.setOnClickListener{
+            // Get the sale percentage from the ViewModel
             val percent = viewModel.salePercent.value ?: 0.0
+
+            // Update the sale prices in the database and notify the adapter
             setSale(percent) {
                 viewModel.notifyApiStoreAdapter(true)
                 dismiss()
             }
         }
 
+        // Return the view
         return view
     }
 
+    /**
+     * Update the sale prices in the database and execute the callback
+     */
     private fun setSale(percent: Double, callback: (Boolean) -> Unit) {
         val storeId = viewModel.store.value?.storeId
         if (storeId != null) {
@@ -88,6 +109,9 @@ class SaleDialogConfirm: DialogFragment() {
         }
     }
 
+    /**
+     * Apply the sale percentage to each item's price and return the updated stock array
+     */
     private fun updateStock(stockArray: ArrayList<HashMap<String, String>>, percent: Double): ArrayList<HashMap<String, String>> {
         for (item in stockArray) {
             val price = item["Price"]
@@ -102,5 +126,4 @@ class SaleDialogConfirm: DialogFragment() {
         }
         return stockArray
     }
-
 }
