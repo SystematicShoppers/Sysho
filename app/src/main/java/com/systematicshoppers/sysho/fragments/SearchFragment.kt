@@ -1,4 +1,3 @@
-
 package com.systematicshoppers.sysho.fragments
 
 import android.graphics.Color
@@ -24,8 +23,14 @@ import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.ListItem
 import com.systematicshoppers.sysho.database.QueryItem
 
+/**
+ * The SearchFragment class contains the logic for a search screen
+ * where users can search for and add items to their shopping list,
+ * as well as manage item quantities and delete items.
+ */
 class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
 
+    // Class properties
     private val deleteList: MutableList<QueryItem> = mutableListOf()
     val queryList: MutableList<QueryItem> = mutableListOf()
     private val viewModel: SyshoViewModel by activityViewModels()
@@ -35,13 +40,17 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
     private lateinit var list: MutableList<ListItem>
     private lateinit var shopBtn: Button
 
-
-
+    /**
+     * This method is called when the fragment view is being created
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_search, container, false)
+
+        // Initialize UI components and adapters
         val recyclerView = view.findViewById<RecyclerView>(R.id.searchFragmentRecyclerView)
         list = mutableListOf()
         shopBtn = view.findViewById(R.id.shopBtn)
@@ -51,26 +60,22 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         /**
          * This is the setup for the recyclerview display. This replaced the old ScrollView
          * because there was no cap on the amount of items a list can contain.
-         *
-         * **/
-
+         */
         recyclerView.adapter = searchFragmentRecyclerViewAdapter
         val recyclerViewLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
         recyclerView.layoutManager = recyclerViewLayoutManager
 
 
         /**
-         *
          * This key listener takes in either hardware key 13 (ENTER) or ENTER on the Android soft keyboard
          * and builds QueryItems based on the text field. QueryItem is a custom object in the database package
          * with two fields: a name (String) and isChecked (Boolean). isChecked is used in the recyclerview adapter
          * and shopbtn to control states of the fragments UI. The listener will also handle logic, throwing any
          * entry that is not an auto complete entry or is already listed. Anytime ENTER is triggered, focus is
          * brought back to the searchbar.
-         *
-         * **/
-
+         */
         searchbar.setOnKeyListener { _, keyCode, event ->
+            // Code for handling ENTER key press
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 val query = searchbar.text.toString()
                 if(autoCompleteList.contains(query)) {
@@ -108,8 +113,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
          * 3. if something is checked it will call the adapter to remove any checked items, change
          *    back to a ready state.
          *
-         * **/
-
+         */
         shopBtn.setOnClickListener {
             var somethingIsChecked = false
             for(i in queryList.indices) {
@@ -136,14 +140,11 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
 
 
         /**
-         *
          * The viewmodel here is taking all data from firebase's product database and creating an
          * autocomplete list from it. Because firebase is async (see documentation for Firebase Promises),
          * this list may not appear if the user opens the app and tries to enter information quickly. It
          * needs 1 - 2 seconds to load.
-         *
-         * **/
-
+         */
         viewModel.autoComplete.observe(viewLifecycleOwner) { it ->
             autoCompleteList = it
             val adapter = activity?.let {
@@ -152,6 +153,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
              searchbar.setAdapter(adapter)
         }
 
+        // Set up a callback for handling the back button press
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 requireActivity().moveTaskToBack(true)
@@ -164,7 +166,9 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         return view
     }
 
-
+    /**
+     * Helper method to check if a query is not already in the list
+     */
     fun queryIsNotListed(query: String): Boolean {
         for(i in queryList.indices) {
             if(query == queryList[i].name)
@@ -173,11 +177,16 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         return true
     }
 
-    //wrapper
+    /**
+     * Implementation of the onCheckBoxClick method from the QueryListAdapter.ClickListener interface
+     */
     override fun onCheckBoxClick() {
         onCheckBoxChecked()
     }
 
+    /**
+     * Implementation of the onMinusClick method from the QueryListAdapter.ClickListener interface
+     */
     override fun onMinusClick(quantity: Int, product: String): String {
         var newQuantity = quantity
         if(quantity > 0) {
@@ -190,6 +199,9 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         return newQuantity.toString()
     }
 
+    /**
+     * Implementation of the onPlusClick method from the QueryListAdapter.ClickListener interface
+     */
     override fun onPlusClick(quantity: Int, product: String): String {
         var newQuantity = quantity
         if(quantity < 99) {
@@ -202,6 +214,9 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         return newQuantity.toString()
     }
 
+    /**
+     * Helper method to update the state of the Shop button based on checked items
+     */
     private fun onCheckBoxChecked() {
         var somethingIsChecked = false
         for(i in queryList.indices) {
@@ -222,6 +237,9 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
         }
     }
 
+    /**
+     * Helper method to generate a list of ListItems from a list of QueryItems
+     */
     fun getProductList(queryList: MutableList<QueryItem>, list: MutableList<ListItem>): MutableList<ListItem> {
         if (list.isEmpty()) {
             // Resize list to match the size of queryList
@@ -244,6 +262,7 @@ class SearchFragment : Fragment(), QueryListAdapter.ClickListener {
 
     /**
      * The saveUserList() function is responsible for saving a user's shopping list to Firestore if the list is not empty.
+     * The saved lists are later used in the SavedListFragment
      */
     private fun saveUserList() {
         // Check if the list is empty and return early if it is
