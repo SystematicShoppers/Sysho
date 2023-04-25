@@ -12,21 +12,35 @@ import com.systematicshoppers.sysho.database.Coordinates
 import com.systematicshoppers.sysho.database.Store
 import java.text.NumberFormat
 import java.util.*
-/**RecyclerView adapter that lists the results of a search. Items are clickable and the click opens an intent to
- * Google Maps for navigation.**/
-class ResultsAdapter(private val context: Context,
-                     private val data: MutableList<Store>,
-                     private val onCLick: ClickListener): RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() {
 
+/**
+ * RecyclerView adapter that lists the results of a search.
+ * Items are clickable and the click opens an intent to Google Maps for navigation.
+ */
+class ResultsAdapter(
+    private val context: Context,
+    private val data: MutableList<Store>,
+    private val onCLick: ClickListener
+    ) : RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() {
+
+    /**
+     * Creates a new ResultsViewHolder with the results_layout and returns it.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultsViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.results_layout, parent,false)
         return ResultsViewHolder(view)
     }
 
+    /**
+     * ClickListener interface to handle the click events on the results items in the RecyclerView.
+     */
     interface ClickListener {
         fun gotoMap(address: String, coordinates: Coordinates)
     }
-    /**Set the logo in a results item if it matches a popular store.**/
+
+    /**
+     * Set the logo in a results item if it matches a popular store.
+     */
     private fun setLogo(store: String?, view: View): Int {
         when (store) {
             "WalMart", "Wal Mart", "Wal-Mart", "Wal - Mart", "Walmart" ->
@@ -45,6 +59,10 @@ class ResultsAdapter(private val context: Context,
                 return android.R.color.transparent
         }
     }
+
+    /**
+     * Binds the data to the views in the ResultsViewHolder and sets an onClickListener for each item.
+     */
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
         holder.storeName.text = data[position].store
         holder.address.text = data[position].address
@@ -61,7 +79,10 @@ class ResultsAdapter(private val context: Context,
             onCLick.gotoMap(holder.address.text.toString(), coordinates)
         }
     }
-/**Converts the lat and long variables of a Store object to a Coordinate object that can be used by Google Maps navigation.**/
+
+    /**
+     * Converts the lat and long variables of a Store object to a Coordinate object that can be used by Google Maps navigation.
+     */
     private fun getCoordinates(store: Store): Coordinates {
         val lat = store.latitude
         val long = store.longitude
@@ -72,10 +93,16 @@ class ResultsAdapter(private val context: Context,
         return coordinates
     }
 
+    /**
+     * Returns the total number of items in the RecyclerView.
+     */
     override fun getItemCount(): Int {
         return data.size
     }
 
+    /**
+     * ViewHolder class for the adapter, which holds the references to the views in the results_layout.
+     */
     inner class ResultsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val storeName: TextView = itemView.findViewById(R.id.storeName)
         val address: TextView = itemView.findViewById(R.id.address)
@@ -83,5 +110,4 @@ class ResultsAdapter(private val context: Context,
         val total: TextView = itemView.findViewById(R.id.total)
         val logo: ImageView = itemView.findViewById(R.id.logo)
     }
-
 }
