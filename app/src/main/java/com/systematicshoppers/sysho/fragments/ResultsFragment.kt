@@ -1,4 +1,3 @@
-
 package com.systematicshoppers.sysho.fragments
 
 import android.content.ContentValues
@@ -25,9 +24,12 @@ import com.systematicshoppers.sysho.SyshoViewModel
 import com.systematicshoppers.sysho.adapters.ResultsAdapter
 import com.systematicshoppers.sysho.database.*
 import java.util.*
-/**The main function of the app and a fragment of MainActivity. ResultsFragment displays the search results from SearchFragment. It also
+
+/**
+ * The main function of the app and a fragment of MainActivity. ResultsFragment displays the search results from SearchFragment. It also
  * parses multiple Firebase data points through getTotalPrice(), getAddresses(), and getDistances(). Displays error messages for empty lists,
- * searching without location services, or empty search results due to distance constraints in the settings.**/
+ * searching without location services, or empty search results due to distance constraints in the settings.
+ */
 class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
 
     private val viewModel: SyshoViewModel by activityViewModels()
@@ -39,6 +41,8 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var resultsAdapter: ResultsAdapter
     private lateinit var recyclerViewLayoutManager: LinearLayoutManager
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -102,7 +106,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
                         transaction.replace(R.id.content, newFragment).commit()
                     }
                 }
-                /**Displays the empty list error.**/
+            /**Displays the empty list error.**/
             } catch (e: Exception) {
                 val errorEmptyListLayout: LinearLayout =
                     view.findViewById(R.id.resultsEmptyListErrorDisplay)
@@ -172,7 +176,10 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         return view
     }
 
-    /** This takes the quantity modifier from the SearchList object and gets a total price based on Firebase price data. Returns as a callback with the total.**/
+    /**
+     * This takes the quantity modifier from the SearchList object and gets a total price based on Firebase price data.
+     * Returns as a callback with the total.
+     */
     private fun getTotalPrice(callback: (Boolean, Double) -> Unit) {
         var total = 0.0
         for(store in data) {
@@ -193,14 +200,18 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         callback(true, total)
     }
 
-    /**Prevents Firebase from parsing data that is outside the distance filter.**/
+    /**
+     * Prevents Firebase from parsing data that is outside the distance filter.
+     */
     fun filterDistance(coordinates: Coordinates): Boolean {
         val distance = FirebaseLocationUtils(this.requireActivity()).getDistance(coordinates, geocoder = Geocoder(requireContext(), Locale.getDefault()))
         val maxDistance = viewModel.distanceFilter.value
         return distance < maxDistance!!
     }
 
-    /**Opens Google Maps**/
+    /**
+     * Opens Google Maps with the specified address and coordinates.
+     */
     override fun gotoMap(address: String, coordinates: Coordinates) {
         val origin = locationViewModel.currentLocation.value
         val geoUri = "google.navigation:q=$address&dirflg=d&origin=${origin?.latitude},${origin?.longitude}"
@@ -211,11 +222,9 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
 
 
     /**
-     *
-     * Firebase loads coordinates data here and then filters out any results
+     * This method loads coordinates data from Firebase and then filters out any results
      * outside of the settings distance filter
-     *
-     * */
+     */
     private fun loadStores(callback: (Boolean) -> Unit) {
         var lat: String
         var long: String
@@ -237,6 +246,9 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
             }
     }
 
+    /**
+     * Retrieves the addresses of the stores using their coordinates.
+     */
     private fun getAddresses() {
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         var lat: String
@@ -254,6 +266,9 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
         }
     }
 
+    /**
+     * Retrieves the distances of the stores from the current location.
+     */
     private fun getDistances() {
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         var lat: String
@@ -268,6 +283,4 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
             }
         }
     }
-
-
 }
