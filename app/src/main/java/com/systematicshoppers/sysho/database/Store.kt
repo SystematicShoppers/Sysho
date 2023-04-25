@@ -7,7 +7,7 @@ import com.google.firebase.firestore.PropertyName
  * get/set properties are coming from Firebase.
  * Address, Distance, and Total Price are all part of the Store
  * so that useful display data can be bundled into a RecyclerView
- * **/
+ */
 data class Store(
     @get:PropertyName("Latitude") @set:PropertyName("Latitude") var latitude : String ? = null,
     @get:PropertyName("Longitude") @set:PropertyName("Longitude") var longitude : String ? = null,
