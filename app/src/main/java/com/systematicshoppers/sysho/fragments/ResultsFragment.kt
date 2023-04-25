@@ -149,15 +149,16 @@ class ResultsFragment : Fragment(), ResultsAdapter.ClickListener {
             }
         }
 
-
+        // Overload the back button press to reset the view to the search fragment
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val newFragment = SearchFragment()
-                val transaction = parentFragmentManager.beginTransaction()
-                viewModel.setCurrentFragment("SearchFragment").toString()
-                transaction.replace(R.id.content, newFragment).commit()
+                val transaction = parentFragmentManager.beginTransaction()  // Begin a fragment transaction
+                viewModel.setCurrentFragment("SearchFragment").toString()   // Set the current fragment in the ViewModel to "SearchFragment"
+                transaction.replace(R.id.content, newFragment).commit()     // Replace the current fragment with a new instance of SearchFragment
             }
         }
+        // Add the callback to the onBackPressedDispatcher
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         return view
     }

@@ -50,10 +50,12 @@ class SettingsFragment : Fragment() {
         })
 
         distanceSeekBar.progress = viewModel.distanceFilter.value!!.toInt() // Set initial progress to viewModel.distanceFilter.value
+
+        // Overload the back button press to reset the view to the search fragment
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.content, ResultsFragment()).commit()
+                val transaction = parentFragmentManager.beginTransaction()      // Begin a fragment transaction
+                transaction.replace(R.id.content, ResultsFragment()).commit()   // Replace the current fragment with a new instance of ResultsFragment
             }
         }
 
