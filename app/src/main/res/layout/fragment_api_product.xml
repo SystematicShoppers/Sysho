@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- RecyclerView to display the list of products retrieved from the API -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/api_products_recycler_view"
         android:layout_width="match_parent"
