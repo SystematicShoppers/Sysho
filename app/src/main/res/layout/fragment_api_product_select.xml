@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- TextView to display the product ID -->
     <TextView
         android:id="@+id/apiProductSelectId"
         android:layout_width="wrap_content"
@@ -15,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Product ID: 100" />
 
+    <!-- TextView to display the product name -->
     <TextView
         android:id="@+id/apiProductSelectName"
         android:layout_width="wrap_content"
@@ -28,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/apiProductSelectId"
         tools:text="Chicken Fingers" />
 
+    <!-- FrameLayout to hold the price graph -->
     <FrameLayout
         android:id="@+id/apiProductSelectPriceGraph"
         android:layout_width="match_parent"
@@ -37,10 +40,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/apiProductSelectName">
 
+        <!-- LineChart to display the price history of the product -->
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
