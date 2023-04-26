@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".fragments.SavedListsFragment">
 
+    <!-- TextView for displaying "No Saved Lists" message when there are no saved lists -->
     <TextView
         android:id="@+id/no_saved_lists_text"
         android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- RecyclerView for displaying the list of saved lists -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/saved_lists_recycler_view"
         android:layout_width="match_parent"
@@ -27,6 +29,4 @@
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/list_item_layout" />
-
-
 </LinearLayout>
