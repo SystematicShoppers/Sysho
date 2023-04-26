@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!-- CardView to display product information in a card format with rounded corners and elevation -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -21,10 +22,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- ConstraintLayout to position TextViews and ImageView within the CardView -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- TextView to display the product ID -->
             <TextView
                 android:id="@+id/productIDTextView"
                 android:layout_width="wrap_content"
@@ -36,6 +39,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Product ID: 123" />
 
+            <!-- TextView to display the product name -->
             <TextView
                 android:id="@+id/productNameTextView"
                 android:layout_width="wrap_content"
@@ -47,6 +51,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/productIDTextView"
                 tools:text="Apples" />
 
+            <!-- TextView to display the product price -->
             <TextView
                 android:id="@+id/priceTextView"
                 android:layout_width="wrap_content"
@@ -58,7 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/productNameTextView"
                 tools:text="$9.99" />
 
-
+            <!-- ImageView to display a button for changing the product price -->
             <ImageView
                 android:id="@+id/changePriceBtn"
                 android:layout_width="54dp"
