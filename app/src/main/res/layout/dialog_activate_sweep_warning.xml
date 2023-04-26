@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- TextView to display a warning message about the price increase -->
     <TextView
         android:id="@+id/activateSweepWarningTextView"
         android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Button to confirm the price increase -->
     <Button
         android:id="@+id/activateSweepYesBtn"
         android:layout_width="wrap_content"
@@ -28,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activateSweepWarningTextView" />
 
+    <!-- Button to cancel the price increase -->
     <Button
         android:id="@+id/activateSweepNoBtn"
         android:layout_width="wrap_content"
