@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- RelativeLayout for the layout of a saved list item in the RecyclerView -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
 
+    <!-- TextView for displaying the list number -->
     <TextView
         android:id="@+id/list_number"
         android:layout_width="wrap_content"
@@ -12,6 +14,7 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <!-- ImageButton for deleting the saved list -->
     <ImageButton
         android:id="@+id/delete_list_button"
         android:layout_width="wrap_content"
@@ -24,6 +27,7 @@
         android:contentDescription="Delete List"
         android:src="@android:drawable/ic_menu_delete" />
 
+    <!-- LinearLayout to contain the list items -->
     <LinearLayout
         android:id="@+id/item_container"
         android:layout_width="match_parent"
@@ -31,6 +35,7 @@
         android:layout_below="@+id/list_number"
         android:orientation="vertical" />
 
+    <!-- Divider line below the list items -->
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -38,5 +43,4 @@
         android:layout_below="@+id/item_container"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider" />
-
 </RelativeLayout>
