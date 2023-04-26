@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Main navigation graph for managing the application's fragments -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph.xml"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/searchFragment">
+
+    <!-- Search Fragment -->
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.systematicshoppers.sysho.fragments.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search">
+        <!-- Actions for navigating from Search Fragment to other fragments and LogInActivity -->
         <action
             android:id="@+id/action_searchFragment_to_resultsFragment"
             app:destination="@id/resultsFragment" />
@@ -22,11 +26,14 @@
             android:id="@+id/action_searchFragment_to_logInActivity"
             app:destination="@id/logInActivity" />
     </fragment>
+
+    <!-- Results Fragment -->
     <fragment
         android:id="@+id/resultsFragment"
         android:name="com.systematicshoppers.sysho.fragments.ResultsFragment"
         android:label="ResultsFragment"
         tools:layout="@layout/fragment_results">
+        <!-- Actions for navigating from Results Fragment to other fragments and LogInActivity -->
         <action
             android:id="@+id/action_resultsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -42,20 +49,25 @@
             app:popUpTo="@id/searchFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <!-- Settings Fragment -->
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.systematicshoppers.sysho.fragments.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings"/>
+
+    <!-- Saved Lists Fragment -->
     <fragment
         android:id="@+id/savedListsFragment"
         android:name="com.systematicshoppers.sysho.fragments.SavedListsFragment"
         android:label="SavedListsFragment"
         tools:layout="@layout/fragment_saved_lists"/>
+
+    <!-- Log In Activity -->
     <activity
         android:id="@+id/logInActivity"
         android:name="com.systematicshoppers.sysho.activities.LogInActivity"
         android:label="LogInActivity"
         tools:layout="@layout/activity_login"/>
-
 </navigation>
