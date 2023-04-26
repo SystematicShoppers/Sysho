@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <!-- TextView to display a label for the price increase input -->
     <TextView
         android:id="@+id/activateSweepTextView"
         android:layout_width="wrap_content"
@@ -18,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- EditText to input the price increase percentage -->
     <EditText
         android:id="@+id/activateSweepEditTextNumber"
         android:layout_width="139dp"
@@ -28,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activateSweepTextView" />
 
+    <!-- TextView to display the percent sign next to the input field -->
     <TextView
         android:id="@+id/percentSign"
         android:layout_width="wrap_content"
@@ -39,6 +42,7 @@
         app:layout_constraintStart_toEndOf="@id/activateSweepEditTextNumber"
         app:layout_constraintTop_toTopOf="@+id/activateSweepEditTextNumber" />
 
+    <!-- Button to confirm the price increase -->
     <Button
         android:id="@+id/activateSweepConfirmBtn"
         android:layout_width="wrap_content"
@@ -51,6 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activateSweepEditTextNumber" />
 
+    <!-- ImageView to close the dialog -->
     <ImageView
         android:id="@+id/closeActivateSweepDialog"
         android:layout_width="wrap_content"
