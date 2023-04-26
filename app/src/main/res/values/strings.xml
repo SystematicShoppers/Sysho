@@ -1,4 +1,6 @@
+<!-- Application strings and string-array resources -->
 <resources>
+    <!-- General strings -->
     <string name="app_name">Sysho</string>
     <string name="search">Search</string>
     <string name="map">Map</string>
@@ -15,11 +17,12 @@
     <string name="sale_price">Sale Price: </string>
     <string name="app_logo">app_logo</string>
 
+    <!-- User-related strings -->
     <string name="not_signed_in">Not Signed In</string>
     <string name="sign_out">Sign Out</string>
     <string name="user_display">User Logged In: %1$s</string>
 
-
+    <!-- Sample search database -->
     <string-array name="search_ex_database">
         <item>Bananas</item>
         <item>Oranges</item>
@@ -28,8 +31,11 @@
         <item>Cherries</item>
         <item>Cookies</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- Placeholder string -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Other strings -->
     <string name="ready_to_shop">Ready to Shop</string>
     <string name="delete_btn">Delete</string>
     <string name="store_database">Store Database</string>
