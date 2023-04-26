@@ -25,6 +25,9 @@ class SweepDialog: DialogFragment() {
     // Access the shared ViewModel
     private val viewModel: SyshoViewModel by activityViewModels()
 
+    /**
+     * Inflates the layout for SweepDialog and sets the required click listeners.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -14,13 +14,19 @@ import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.TAG
 import java.text.DecimalFormat
 
-/**Dialog for updating a price by a set amount entered by the user. Helper function updatePrice() will check if the entered price is a proper format and
- * update Firebase accordingly.**/
-
+/**
+ * Dialog for updating a price by a set amount entered by the user.
+ * Helper function updatePrice() will check if the entered price is a proper format and
+ * update Firebase accordingly.
+ */
 class UpdatePriceDialog: DialogFragment() {
 
+    // Access the shared ViewModel
     val viewModel: SyshoViewModel by activityViewModels()
 
+    /**
+     * Inflates the layout for UpdatePriceDialog and sets the required click listeners.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +41,7 @@ class UpdatePriceDialog: DialogFragment() {
         dialog?.setTitle("Update Price")
         editText.requestFocus()
 
-
+        // Sets click listener for the update button and triggers the updatePrice method.
         updateBtn.setOnClickListener{
             viewModel.setDialogEditText(editText.text.toString())
             if (viewModel.dialogEditText.value != null) {
@@ -44,9 +50,12 @@ class UpdatePriceDialog: DialogFragment() {
                 Toast.makeText(requireContext(), "Price has been updated!", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // Sets click listener for the close button, dismissing the dialog.
         closeBtn.setOnClickListener {
             dismiss()
         }
+
         viewModel.product.observe(viewLifecycleOwner) {
             currentPrice.text = (buildString {
                 append(getString(R.string.current_price))
@@ -57,6 +66,10 @@ class UpdatePriceDialog: DialogFragment() {
         return view
     }
 
+    /**
+     * updatePrice function updates the price of a single product in the Firebase Firestore.
+     * @param callback Callback function to be executed after the price update is complete.
+     */
     private fun updatePrice(callback: (Boolean) -> Unit) {
         val storeId = viewModel.store.value?.storeId
         if (storeId != null) {
@@ -107,6 +120,12 @@ class UpdatePriceDialog: DialogFragment() {
         }
     }
 
+    /**
+     * updateStockAt function updates the price of a single product in the stock array.
+     * @param stockArray The stock array containing products with their details.
+     * @param id The ID of the product whose price needs to be updated.
+     * @return Returns the updated stock array with the new price for the product.
+     */
     private fun updateStockAt(stockArray: ArrayList<HashMap<String, String>>, id: String?): ArrayList<HashMap<String, String>> {
         for (item in stockArray) {
             if( item["ID"] == id) {
