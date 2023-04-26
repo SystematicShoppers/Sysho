@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
+    <!-- Custom Toolbar for the MainActivity -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -17,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Fragment container to host the navigation graph -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/content"
         android:name="androidx.navigation.fragment.NavHostFragment"
