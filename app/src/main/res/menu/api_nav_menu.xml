@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Menu resource file for defining menu items -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- MenuItem for navigating to the Product Database API fragment -->
     <item
         android:id="@+id/apiProductFragment"
         android:title="@string/product_database"
         android:icon="@drawable/ic_baseline_add_24" />
+
+    <!-- MenuItem for navigating to the Store Database API fragment -->
     <item
         android:id="@+id/apiStoreFragment"
         android:title="@string/store_database"
