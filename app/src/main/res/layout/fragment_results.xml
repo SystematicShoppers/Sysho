@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- ToggleButton for filtering by distance -->
     <androidx.appcompat.widget.AppCompatToggleButton
         android:id="@+id/filterDistance"
         android:layout_width="110dp"
@@ -19,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- ToggleButton for filtering by price -->
     <androidx.appcompat.widget.AppCompatToggleButton
         android:id="@+id/filterPrice"
         android:layout_width="110dp"
@@ -32,6 +34,7 @@
         app:layout_constraintStart_toEndOf="@+id/filterDistance"
         app:layout_constraintTop_toTopOf="@+id/filterDistance" />
 
+    <!-- FrameLayout container for RecyclerView and error messages -->
     <FrameLayout
         android:id="@+id/resultsTopFrame"
         android:layout_width="match_parent"
@@ -41,12 +44,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filterDistance">
 
+        <!-- RecyclerView for displaying results -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/resultsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/results_layout"/>
 
+        <!-- LinearLayout for displaying error message when search list is empty -->
         <LinearLayout
             android:id="@+id/resultsEmptyListErrorDisplay"
             android:layout_width="match_parent"
@@ -57,19 +62,20 @@
             tools:elevation="40dp"
             tools:visibility="visible">
 
-
+            <!-- ImageView for empty list error display -->
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/grey_clipboard"
-                />
+                app:srcCompat="@drawable/grey_clipboard"/>
 
+            <!-- Space element for spacing between ImageView and TextView -->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
+            <!-- TextView for displaying empty list error message -->
             <TextView
                 android:id="@+id/resultsEmptyListTextView"
                 android:layout_width="match_parent"
@@ -81,6 +87,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="Uh oh. It looks like you are searching with an empty list! Why not go back and pick some items?" />
 
+            <!-- Button for navigating back to the search screen -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/resultsEmptyListButton"
                 android:layout_width="wrap_content"
@@ -91,11 +98,10 @@
                 android:background="@drawable/rounded_button"
                 android:visibility="invisible"
                 tools:visibility="visible">
-
             </com.google.android.material.button.MaterialButton>
-
         </LinearLayout>
 
+        <!-- LinearLayout for displaying error message when location is not enabled -->
         <LinearLayout
             android:id="@+id/resultsNoLocationErrorDisplay"
             android:layout_width="match_parent"
@@ -103,22 +109,22 @@
             android:visibility="invisible"
             android:elevation="2dp"
             android:orientation="vertical"
-            tools:visibility="invisible"
-            >
+            tools:visibility="invisible">
 
-
+            <!-- ImageView for no location error display -->
             <ImageView
                 android:id="@+id/noLocationErrorImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/baseline_search_off_24"
-                />
+                app:srcCompat="@drawable/baseline_search_off_24"/>
 
+            <!-- Space element for spacing between ImageView and TextView -->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
+            <!-- TextView for displaying no location error message -->
             <TextView
                 android:id="@+id/noLocationErrorTextView"
                 android:layout_width="match_parent"
@@ -128,9 +134,9 @@
                 android:textSize="22sp"
                 android:textAlignment="center"
                 android:text="It looks like your Location is not enabled! Please enable Location Settings in your app." />
-
-
         </LinearLayout>
+
+        <!-- LinearLayout for displaying error message when no results are found within the distance filter -->
         <LinearLayout
             android:id="@+id/distanceErrorDisplay"
             android:layout_width="match_parent"
@@ -140,32 +146,33 @@
             android:orientation="vertical"
             tools:visibility="invisible">
 
-        <ImageView
-            android:id="@+id/distanceErrorImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/baseline_search_off_24"
-            />
+            <!-- ImageView for distance error display -->
+            <ImageView
+                android:id="@+id/distanceErrorImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/baseline_search_off_24" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            <!-- Space element for spacing between ImageView and TextView -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
 
-        <TextView
-            android:id="@+id/distanceErrorTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:textAlignment="center"
-            android:text="No results Found! Try extending your distance filter" />
-
-
-    </LinearLayout>
+            <!-- TextView for displaying distance error message -->
+            <TextView
+                android:id="@+id/distanceErrorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:text="No results Found! Try extending your distance filter" />
+        </LinearLayout>
     </FrameLayout>
 
+    <!-- TextView for filter label -->
     <TextView
         android:id="@+id/filterTextView"
         android:layout_width="89dp"
@@ -179,5 +186,4 @@
         app:layout_constraintEnd_toStartOf="@+id/filterDistance"
         app:layout_constraintTop_toTopOf="@+id/filterDistance"
         app:layout_constraintVertical_bias="0.0" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
