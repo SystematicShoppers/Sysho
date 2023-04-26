@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- Top spacer for SearchFragment -->
     <Space
         android:id="@+id/topSpacerOfSearchFragment"
         android:layout_width="match_parent"
@@ -14,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- ImageView for displaying the app logo -->
     <ImageView
         android:id="@+id/searchFragmentLogo"
         android:layout_width="match_parent"
@@ -25,6 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/topSpacerOfSearchFragment"
         app:srcCompat="@drawable/name_logo_green" />
 
+    <!-- RecyclerView for displaying the search results -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchFragmentRecyclerView"
         android:layout_width="match_parent"
@@ -32,21 +35,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_bar"
-        tools:listitem="@layout/query_item">
+        tools:listitem="@layout/query_item" />
 
-    </androidx.recyclerview.widget.RecyclerView>
-
+    <!-- Bottom spacer for SearchFragment -->
     <Space
         android:id="@+id/bottomSpacerOfSearchFragment"
         android:layout_width="match_parent"
         android:layout_height="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchFragmentRecyclerView">
+        app:layout_constraintTop_toBottomOf="@id/searchFragmentRecyclerView" />
 
-    </Space>
-
-
+    <!-- AutoCompleteTextView for searching items -->
     <AutoCompleteTextView
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
@@ -58,6 +58,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchFragmentLogo" />
 
+    <!-- Button for navigating to the Results Fragment -->
     <Button
         android:id="@+id/shopBtn"
         android:layout_width="match_parent"
@@ -69,5 +70,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottomSpacerOfSearchFragment" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
