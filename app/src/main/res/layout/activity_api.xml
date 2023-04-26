@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- FragmentContainerView to hold the NavHostFragment, which is responsible for managing navigation within the app -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/content"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -16,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- BottomNavigationView for displaying the bottom navigation menu and handling user interaction -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
