@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Menu resource file for defining main menu items with the dropdown menu -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- MenuItem for opening a dropdown menu with additional options -->
     <item
         android:id="@+id/menu_dropdown"
         android:icon="@drawable/baseline_menu_24"
         android:title=""
         android:orderInCategory="100"
         app:showAsAction="always">
+
+        <!-- Nested menu containing additional options -->
         <menu>
+            <!-- MenuItem for navigating to the Search Fragment -->
             <item
                 android:id="@+id/searchFragment"
                 android:title="@string/search"
                 android:icon="@drawable/ic_baseline_search_24" />
+
+            <!-- MenuItem for navigating to the Results Fragment -->
             <item
                 android:id="@+id/resultsFragment"
                 android:title="@string/results"
                 android:icon="@drawable/ic_baseline_store_24"/>
+
+            <!-- MenuItem for navigating to the Settings Fragment -->
             <item
                 android:id="@+id/settingsFragment"
                 android:title="@string/settings"
                 android:icon="@drawable/ic_baseline_settings_24"/>
+
+            <!-- MenuItem for navigating to the Login Activity -->
             <item
                 android:id="@+id/logInActivity"
                 android:title="@string/user"
                 android:icon="@drawable/ic_baseline_person_pin_24"/>
+
+            <!-- MenuItem for navigating to the Saved Lists fragment -->
             <item
                 android:id="@+id/savedListsFragment"
                 android:title="@string/saved_lists"
