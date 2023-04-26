@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
+    <!-- TextView to display the current price -->
     <TextView
         android:id="@+id/dialogCurrentPriceTextView"
         android:layout_width="wrap_content"
@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Current Price: 9.99"/>
 
+    <!-- Button to update the new price -->
     <Button
         android:id="@+id/dialogUpdateNewPriceBtn"
         android:layout_width="wrap_content"
@@ -28,6 +29,7 @@
         app:layout_constraintStart_toEndOf="@+id/priceEditText"
         app:layout_constraintTop_toTopOf="@+id/priceEditText" />
 
+    <!-- EditText to input the new price -->
     <EditText
         android:id="@+id/priceEditText"
         android:layout_width="116dp"
@@ -41,6 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialogCurrentPriceTextView" />
 
+    <!-- Space to provide some separation between the button and the end of the layout -->
     <Space
         android:layout_width="7dp"
         android:layout_height="match_parent"
@@ -51,6 +54,7 @@
         app:layout_constraintStart_toEndOf="@+id/dialogUpdateNewPriceBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- ImageView to close the update price dialog -->
     <ImageView
         android:id="@+id/closeUpdatePriceDialog"
         android:layout_width="wrap_content"
