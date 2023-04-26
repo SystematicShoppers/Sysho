@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!-- Provides a card-like container for displaying store information, with rounded corners and elevation for a modern look -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -21,10 +22,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- A nested layout within the CardView to position the TextViews and ImageView properly -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- Displays the store ID. Positioned to the right of the logo -->
             <TextView
                 android:id="@+id/storeIDTextView"
                 android:layout_width="wrap_content"
@@ -34,6 +37,7 @@
                 app:layout_constraintTop_toTopOf="@+id/logo"
                 tools:text="Store ID: 123" />
 
+            <!-- Displays the store address. Positioned below the store name TextView and to the right of the logo -->
             <TextView
                 android:id="@+id/locationTextView"
                 android:layout_width="wrap_content"
@@ -44,6 +48,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/storeNameTextView"
                 tools:text="3000 Hollywood Blvd, Christmas, Florida" />
 
+            <!-- Displays the store name. Positioned below the store ID TextView and to the right of the logo -->
             <TextView
                 android:id="@+id/storeNameTextView"
                 android:layout_width="wrap_content"
@@ -53,6 +58,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/storeIDTextView"
                 tools:text="Walmart" />
 
+            <!-- Displays the store logo. Positioned at the top left corner of the card, with a small margin from the parent container -->
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="60dp"
