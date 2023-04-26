@@ -3,6 +3,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent">
 
+    <!-- LinearLayout to hold the buttons in a vertical arrangement -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -10,19 +11,21 @@
         android:padding="16dp"
         android:background="#FFFFFF">
 
-
+        <!-- Button to trigger the Update Price Dialog -->
         <Button
             android:id="@+id/updatePriceBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/update_price_dialog" />
 
+        <!-- Button to trigger the Activate Sale Dialog -->
         <Button
             android:id="@+id/saleBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/activate_sale_dialog" />
 
+        <!-- Button to trigger the Price Sweep Dialog -->
         <Button
             android:id="@+id/offSaleBtn"
             android:layout_width="match_parent"
@@ -30,5 +33,4 @@
             android:text="@string/price_sweep_dialog" />
 
     </LinearLayout>
-
 </RelativeLayout>
