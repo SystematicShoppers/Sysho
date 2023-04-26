@@ -16,12 +16,19 @@ import com.systematicshoppers.sysho.database.FirebaseUtils
 import com.systematicshoppers.sysho.database.TAG
 import java.text.DecimalFormat
 
-/**Confirmation screen for SweepDialog which is a Dialog of ApiStoreSelectFragment.**/
+/**
+ * SweepDialogConfirm is a DialogFragment that acts as a confirmation screen
+ * for SweepDialog which is a Dialog of ApiStoreSelectFragment.
+ * It shows a warning message and two buttons: Yes and No.
+ */
 class SweepDialogConfirm: DialogFragment() {
 
+    // UI elements declarations
     private lateinit var activateSweepWarningTextView: TextView
     private lateinit var activateSweepYesBtn: Button
     private lateinit var activateSweepNoBtn: Button
+
+    // Access the shared ViewModel
     private val viewModel: SyshoViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -29,17 +36,29 @@ class SweepDialogConfirm: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.dialog_activate_sweep_warning, container, false)
+
+        // Initialize UI elements
         activateSweepWarningTextView = view.findViewById(R.id.activateSweepWarningTextView)
         activateSweepYesBtn = view.findViewById(R.id.activateSweepYesBtn)
         activateSweepNoBtn = view.findViewById(R.id.activateSweepNoBtn)
+
+        // Set a click listener for the No button
         activateSweepNoBtn.setOnClickListener{
+            // Reset salePercent to 0.0 and dismiss the dialog
             viewModel.setSalePercent(0.0)
             dismiss()
         }
+
+        // Set a click listener for the Yes button
         activateSweepYesBtn.setOnClickListener{
+            // Get the sale percentage from the ViewModel
             val percent = viewModel.salePercent.value ?: 0.0
+
+            // Call setSweep function with the percentage and a callback function
             setSweep(percent) {
+                // Notify the ApiStoreAdapter and dismiss the dialog
                 viewModel.notifyApiStoreAdapter(true)
                 dismiss()
             }
@@ -48,6 +67,9 @@ class SweepDialogConfirm: DialogFragment() {
         return view
     }
 
+    /**
+     * setSweep function updates the prices in Firestore based on the given percentage.
+     */
     private fun setSweep(percent: Double, callback: (Boolean) -> Unit) {
         val storeId = viewModel.store.value?.storeId
         if (storeId != null) {
@@ -88,6 +110,12 @@ class SweepDialogConfirm: DialogFragment() {
         }
     }
 
+    /**
+     * updateStock function updates the prices in the stockArray based on the given percentage.
+     * @param stockArray The list of products with their details as HashMaps.
+     * @param percent The percentage to update the prices.
+     * @return The updated stockArray with new prices.
+     */
     private fun updateStock(stockArray: ArrayList<HashMap<String, String>>, percent: Double): ArrayList<HashMap<String, String>> {
         for (item in stockArray) {
             val price = item["Price"]
@@ -102,5 +130,4 @@ class SweepDialogConfirm: DialogFragment() {
         }
         return stockArray
     }
-
 }
