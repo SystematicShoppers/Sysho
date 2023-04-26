@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- RecyclerView to display a list of API stores -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/api_stores_recycler_view"
         android:layout_width="match_parent"
