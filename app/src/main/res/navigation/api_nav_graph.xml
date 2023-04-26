@@ -1,36 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Navigation graph for managing API-related fragments -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/api_nav_graph.xml"
     app:startDestination="@id/apiStoreFragment">
 
+    <!-- API Product Fragment -->
     <fragment
         android:id="@+id/apiProductFragment"
         android:name="com.systematicshoppers.sysho.fragments.ApiProductFragment"
         android:label="ApiProductFragment" >
+        <!-- Action for navigating from API Product Fragment to API Store Fragment -->
         <action
             android:id="@+id/action_apiProductFragment_to_apiStoreFragment"
             app:destination="@id/apiStoreFragment" />
     </fragment>
+
+    <!-- API Store Fragment -->
     <fragment
         android:id="@+id/apiStoreFragment"
         android:name="com.systematicshoppers.sysho.fragments.ApiStoreFragment"
         android:label="ApiStoreFragment" >
+        <!-- Action for navigating from API Store Fragment to API Store Select Fragment -->
         <action
             android:id="@+id/action_apiStoreFragment_to_apiStoreSelectFragment"
             app:destination="@id/apiStoreSelectFragment" />
+        <!-- Action for navigating from API Store Fragment to API Product Fragment -->
         <action
             android:id="@+id/action_apiStoreFragment_to_apiProductFragment"
             app:destination="@id/apiProductFragment" />
     </fragment>
+
+    <!-- API Store Select Fragment -->
     <fragment
         android:id="@+id/apiStoreSelectFragment"
         android:name="com.systematicshoppers.sysho.fragments.ApiStoreSelectFragment"
         android:label="ApiStoreSelectFragment" >
+        <!-- Action for navigating from API Store Select Fragment to API Store Select Dialog Fragment -->
         <action
             android:id="@+id/action_apiStoreSelectFragment_to_apiStoreSelectDialogFragment"
             app:destination="@id/apiStoreSelectDialogFragment" />
     </fragment>
+
+    <!-- API Store Select Dialog Fragment -->
     <dialog
         android:id="@+id/apiStoreSelectDialogFragment"
         android:name="com.systematicshoppers.sysho.fragments.UpdatePriceDialog"
