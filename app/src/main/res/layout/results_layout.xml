@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- MaterialCardView for the layout of a store item in the RecyclerView -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,12 +12,14 @@
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp">
 
+    <!-- ConstraintLayout as the root layout for organizing child views -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="12dp">
 
+        <!-- TextView for displaying the store's name -->
         <TextView
             android:id="@+id/storeName"
             android:layout_width="wrap_content"
@@ -30,6 +33,7 @@
             app:layout_constraintTop_toTopOf="@+id/logo"
             tools:text="Store Name" />
 
+        <!-- TextView for displaying the store's address -->
         <TextView
             android:id="@+id/address"
             android:layout_width="wrap_content"
@@ -42,6 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/storeName"
             tools:text="store address" />
 
+        <!-- TextView for displaying the distance to the store -->
         <TextView
             android:id="@+id/distance"
             android:layout_width="wrap_content"
@@ -54,6 +59,7 @@
             app:layout_constraintTop_toBottomOf="@+id/address"
             tools:text="distance" />
 
+        <!-- TextView for displaying the total cost of items at the store -->
         <TextView
             android:id="@+id/total"
             android:layout_width="wrap_content"
@@ -64,6 +70,7 @@
             app:layout_constraintVertical_bias="1.0"
             tools:text="total" />
 
+        <!-- ImageView for displaying the store's logo -->
         <ImageView
             android:id="@+id/logo"
             android:layout_width="64dp"
@@ -74,8 +81,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </com.google.android.material.card.MaterialCardView>
