@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <!-- TextView to display the prompt for entering the sale amount -->
     <TextView
         android:id="@+id/activateSaleTextView"
         android:layout_width="wrap_content"
@@ -18,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- EditText to input the sale amount -->
     <EditText
         android:id="@+id/activateSaleEditTextNumber"
         android:layout_width="140dp"
@@ -28,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activateSaleTextView" />
 
+    <!-- TextView to display the percent sign next to the EditText -->
     <TextView
         android:id="@+id/percentSign"
         android:layout_width="wrap_content"
@@ -39,6 +42,7 @@
         app:layout_constraintStart_toEndOf="@id/activateSaleEditTextNumber"
         app:layout_constraintTop_toTopOf="@+id/activateSaleEditTextNumber" />
 
+    <!-- Button to confirm the entered sale amount -->
     <Button
         android:id="@+id/activateSaleConfirmBtn"
         android:layout_width="wrap_content"
@@ -51,6 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activateSaleEditTextNumber" />
 
+    <!-- ImageView to display a close button for the dialog -->
     <ImageView
         android:id="@+id/closeActivateSaleDialog"
         android:layout_width="wrap_content"
